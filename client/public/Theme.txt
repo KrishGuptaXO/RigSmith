@@ -1,0 +1,15 @@
+Background      #1A1325
+
+Surface         #241C38
+
+Hover           #2E2447
+
+Border          #3A2F5B
+
+Primary         #31D8FF
+
+Secondary       #FF8B2B
+
+Text            #F7F8FF
+
+Muted           #888CA3

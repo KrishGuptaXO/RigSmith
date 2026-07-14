@@ -1,1 +1,2 @@
 - Categories -> Server/ Enterprise level builds (for a whole Enterprise altogether assembled).
+- Splash screen startup with logo

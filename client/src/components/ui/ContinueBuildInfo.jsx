@@ -1,9 +1,11 @@
+import Button from "./common/Button";
+import Card from "./common/Card";
 import ProgressBar from "./ProgressBar";
 
 export default function ContinueBuildInfo ({cont}) {
     const { name, progress, completedComponents, totalComponents, lastEdited} = cont;
     return (
-        <div className="w-full rounded-xl border border-zinc-800 bg-[#161B22] p-4">
+        <Card>
             <h3 className="mt-4 text-xl font-semibold text-white">
                 {name}
             </h3>
@@ -18,9 +20,9 @@ export default function ContinueBuildInfo ({cont}) {
                 Last Edited: {lastEdited}
             </p>
 
-            <button className="mt-4 w-fit rounded-lg bg-blue-600 px-6 py-2 font-medium hover:bg-blue-700 hover:-translate-y-1 hover:border-blue-500/30 transition-all duration-200 cursor-pointer">
+            <Button className="mt-4 w-full">
                 Continue Build
-            </button>
-        </div>
+            </Button>
+        </Card>
     );
 }

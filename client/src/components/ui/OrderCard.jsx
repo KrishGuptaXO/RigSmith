@@ -1,14 +1,16 @@
-import orders from "../../data/orders";
+import Badge from "./common/Badge";
+import Button from "./common/Button";
+import Card from "./common/Card";
 
 export default function OrderCard({order}){
     const { id, build, date, status } = order;
-    const statusStyles = {
-        Delivered: "bg-green-500/20 text-green-400",
-        Processing: "bg-yellow-500/20 text-yellow-400",
-        Cancelled: "bg-red-500/20 text-red-400",
+    const statusVariant = {
+        Delivered: "success",
+        Processing: "warning",
+        Cancelled: "danger",
     };
     return(
-        <section className="rounded-xl border border-zinc-800 bg-[#161B22] p-4 mt-3 hover:border-blue-500/30 hover:-translate-y-1 transition-all">
+        <Card>
             <h3 className="mt-2 text-xl font-semibold text-white">
                 {build}
             </h3>
@@ -17,15 +19,15 @@ export default function OrderCard({order}){
                 {id} • {date}
             </p>
 
-            <p className={`mt-3 inline-block rounded-full px-3 py-1 text-sm font-medium ${statusStyles[status]}`} >
+            <Badge variant={statusVariant[status]}>
                 {status}
-            </p>
+            </Badge>
 
             <div className="mt-4">
-            <button className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors cursor-pointer">
+            <Button variant="outline">
                 Track Order →
-            </button>
+            </Button>
             </div>
-        </section>
+        </Card>
     );
 }

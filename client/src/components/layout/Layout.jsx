@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ProSidebar from "./AppSidebar"
 import Header from "./Header"
+import { Outlet } from "react-router-dom";
 
-export default function Layout({ children }) {
+export default function Layout() {
     const [collapsed, setCollapsed] = useState(false);
   return (
     <div className="flex min-h-screen">
@@ -14,7 +15,7 @@ export default function Layout({ children }) {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 p-6">
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>

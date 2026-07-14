@@ -1,4 +1,5 @@
 import { Search, Bell, ShoppingCart, CircleUser } from 'lucide-react';
+import Button from '../ui/common/Button';
 
 export default function Header(){
     return (
@@ -17,21 +18,21 @@ export default function Header(){
             {/* Right */}
             <div className='flex items-center gap-4'>
 
-                <button className='p-2 rounded-lg hover:bg-zinc-800 transition'>
+                <Button>
                     <Search size={20} />
-                </button>
+                </Button>
 
-                <button className='p-2 rounded-lg hover:bg-zinc-800 transition'>
+                <Button>
                     <Bell size={20} />
-                </button>
+                </Button>
 
-                <button className='p-2 rounded-lg hover:bg-zinc-800 transition'>
+                <Button>
                     <ShoppingCart size={20} />
-                </button>
+                </Button>
 
-                <button className='p-2 rounded-lg hover:bg-zinc-800 transition'>
+                <Button>
                     <CircleUser size={20} />
-                </button>
+                </Button>
             </div>
         </header>
     );

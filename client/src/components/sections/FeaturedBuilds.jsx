@@ -1,17 +1,19 @@
+import Button from "../ui/common/Button"
 import featuredBuilds from "../../data/featuredBuilds";
 import BuildCard from "../ui/BuildCard";
+import Card from "../ui/common/Card";
 
 export default function FeaturedBuilds(){
     return(
-        <section>
+        <Card>
             {/* Title Row */}
 
             <div>
                 <h2>Featured Builds</h2>
 
-                <button>
+                <Button>
                     View All
-                </button>
+                </Button>
             </div>
 
             {/* Cards */}
@@ -25,6 +27,6 @@ export default function FeaturedBuilds(){
                 ))}
             </div>
 
-        </section>
+        </Card>
     );
 }
