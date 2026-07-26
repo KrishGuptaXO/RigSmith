@@ -13,11 +13,7 @@ export default function AnimatedSubtitle ({easterEgg}) {
     
     useEffect(() => {
         if (easterEgg) {
-            return (
-                <p>
-                    You still gonna do it, <span className="italic">*hmph*</span> :|
-                </p>
-            );
+            return;
         }
         let  charIndex = 0;
         const typing = setInterval(()=>{
@@ -38,6 +34,14 @@ export default function AnimatedSubtitle ({easterEgg}) {
         return () => clearInterval(typing);
 
     }, [Messageindex, easterEgg]);
+
+    if (easterEgg) {
+        return (
+            <p className="mt-1 text-zinc-400">
+                You still gonna do it, <span className="italic">*hmph*</span> :|
+            </p>
+        );
+    }
 
     return (
         <p className="mt-1 text-zinc-400">

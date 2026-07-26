@@ -11,6 +11,8 @@ export default function Greetings ({user}) {
         greeting = "Good Afternoon";
     } else if (hour >= 17 && hour < 21) {
         greeting = "Good Evening";
+    } else {
+        greeting = "Let's build tonight";
     }
     return (
         <div>

@@ -22,7 +22,7 @@ export default function Layout() {
         `}
       >
         <Header />
-        <main className="flex-1 p-6">
+        <main className="flex-1 overflow-x-hidden p-6">
           <Outlet />
         </main>
       </div>

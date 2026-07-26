@@ -1,5 +1,11 @@
+.featured-builds-container {
+    overflow: hidden;
+    contain: content;
+}
+
 .featured-builds-track {
     width: max-content;
+    will-change: transform;
     animation: marquee 35s linear infinite;
 }
 
