@@ -1,10 +1,11 @@
-import {Routes, Route, Outlet} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import Dashboard from "../pages/user/Dashboard";
 import SavedBuilds from "../pages/user/SavedBuilds";
 import Orders from "../pages/user/Orders";
 import Settings from "../pages/user/Settings";
 import Layout from "../components/layout/Layout";
 import ViewBuild from "../pages/user/ViewBuild/ViewBuild";
+import Checkout from "../pages/Checkout/Checkout";
 
 function AppRoutes(){
     return (
@@ -15,6 +16,7 @@ function AppRoutes(){
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/builds/:id" element={<ViewBuild />} />
+                <Route path="/cart" element={<Checkout />} />
             </Route>
         </Routes>
     );
