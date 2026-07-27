@@ -1,7 +1,7 @@
 export default function Orders() {
     return (
         <h1 className="text-3xl text-white">
-            Orders
+            Your Orders
         </h1>
     );
 }

@@ -5,3 +5,4 @@
 - Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
 - Fix the styles in the View Builds Page.
 - Understand and use Zustand for the Cart page.
+- Include an account section thingy in the sidebar bottom just like GPT has it.
