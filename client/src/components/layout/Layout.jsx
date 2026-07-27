@@ -16,6 +16,7 @@ export default function Layout() {
           flex-1
           flex
           flex-col
+          min-w-0
           transition-all
           duration-300
           ${collapsed ? "ml-20" : "ml-64"}

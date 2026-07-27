@@ -1,6 +1,9 @@
 .featured-builds-container {
     overflow: hidden;
     contain: content;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .featured-builds-track {

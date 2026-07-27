@@ -20,7 +20,7 @@ export default function FeaturedBuilds(){
             </div>
 
             {/* Cards */}
-            <div className="featured-builds-container relative mt-6">
+            <div className="featured-builds-container relative mt-6 w-full min-w-0">
 
                 {/* Infinite */}
                 <div className="featured-builds-track flex gap-4">
