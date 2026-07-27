@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../common/Button";
 import Card from "../../common/Card";
 
 export default function BuildCard({build}) {
     const { name, cpu, gpu, ram, price, image } = build;
+    const navigate = useNavigate();
     return (
         <Card className="w-full">
             
@@ -50,7 +52,7 @@ export default function BuildCard({build}) {
                 <p className="text-lg font-bold">
                     {price}
                 </p>
-                <Button>
+                <Button onClick={() => navigate(`/builds/${build.id}`)}>
                     View Build →
                 </Button>
 
