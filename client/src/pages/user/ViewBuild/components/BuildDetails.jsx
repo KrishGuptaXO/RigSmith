@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { ShoppingCart, ChevronDown, ChevronUp, Shield, Cpu, Monitor, MemoryStick } from "lucide-react";
+import { ShoppingCart, ChevronDown, ChevronUp, Shield, Cpu, Monitor, MemoryStick, CheckCircle } from "lucide-react";
 import Card from "../../../../components/common/Card";
 import Button from "../../../../components/common/Button";
+import useCartStore from "../../../../store/useCartStore";
 
 const specIconMap = {
     "Processor": Cpu,
@@ -11,6 +12,8 @@ const specIconMap = {
 
 export default function BuildDetails({ build }) {
     const [expanded, setExpanded] = useState(false);
+    const [added, setAdded] = useState(false);
+    const addItem = useCartStore((s) => s.addItem);
 
     const quickSpecs = build.specs.filter((s) =>
         ["Processor", "Graphics Card", "Memory"].includes(s.label)
@@ -20,9 +23,14 @@ export default function BuildDetails({ build }) {
         !["Processor", "Graphics Card", "Memory"].includes(s.label)
     );
 
+    const handleAddToCart = () => {
+        addItem(build);
+        setAdded(true);
+        setTimeout(() => setAdded(false), 2000);
+    };
+
     return (
         <Card className="flex h-full flex-col gap-0 p-6">
-            
             {/* Build Name */}
             <div className="mb-3">
                 <h2 className="text-3xl font-bold tracking-tight text-white">
@@ -48,10 +56,7 @@ export default function BuildDetails({ build }) {
                             className="flex items-center gap-3 border-b border-[#3A2F5B] pb-2"
                         >
                             {Icon && (
-                                <Icon
-                                    size={15}
-                                    className="text-cyan-400 shrink-0"
-                                />
+                                <Icon size={15} className="text-cyan-400 shrink-0" />
                             )}
                             <span className="text-gray-400 text-sm w-28 shrink-0">
                                 {spec.label}
@@ -70,21 +75,15 @@ export default function BuildDetails({ build }) {
                 className="flex items-center gap-1 text-cyan-400 text-sm hover:text-cyan-300 transition-colors cursor-pointer mb-3 w-fit"
             >
                 {expanded ? (
-                    <>
-                        <ChevronUp size={14} />
-                        Show less
-                    </>
+                    <><ChevronUp size={14} />Show less</>
                 ) : (
-                    <>
-                        <ChevronDown size={14} />
-                        Expand to see more details…
-                    </>
+                    <><ChevronDown size={14} />Expand to see more details…</>
                 )}
             </button>
 
             {/* Expanded Specs */}
             {expanded && (
-                <div className="space-y-2 mb-4 animate-pulse-once">
+                <div className="space-y-2 mb-4">
                     {remainingSpecs.map((spec) => (
                         <div
                             key={spec.label}
@@ -114,9 +113,16 @@ export default function BuildDetails({ build }) {
 
             {/* Add to Cart */}
             <div className="mt-auto">
-                <Button className="w-full flex items-center justify-center gap-2 text-base py-3">
-                    <ShoppingCart size={18} />
-                    Add to Cart
+                <Button
+                    onClick={handleAddToCart}
+                    className="w-full flex items-center justify-center gap-2 text-base py-3"
+                    variant={added ? "secondary" : "primary"}
+                >
+                    {added ? (
+                        <><CheckCircle size={18} />Added to Cart!</>
+                    ) : (
+                        <><ShoppingCart size={18} />Add to Cart</>
+                    )}
                 </Button>
             </div>
         </Card>

@@ -18,7 +18,8 @@
     "react-dom": "^19.2.7",
     "react-router-dom": "^7.18.1",
     "react-step-progress-bar": "^1.0.3",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.2",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
