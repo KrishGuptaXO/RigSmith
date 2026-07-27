@@ -1,58 +1,62 @@
-# RigForge
+# RigSmith
 
-> Design. Assemble. Dominate.
+> Build Smarter.
 
-RigForge is a full-stack inventory management and custom PC building platform designed for custom PC retailers and system integrators.
+RigSmith is a MERN stack application for custom PC retailers that combines inventory management, pre-built PC browsing, order management, and customer order tracking into a single platform.
 
-The project is being developed as a MERN stack learning project alongside an internship, with a focus on scalable architecture, reusable UI components, and real-world inventory workflows.
+The project is being developed as a portfolio project and internship assessment with a focus on scalable architecture, reusable React components, and modern UI/UX.
 
 ---
 
 ## Features
 
-### Dashboard
+### Customer Experience
+
+- Interactive Dashboard
 - Featured Builds
-- Continue Previous Build
-- Recent Orders
-- Responsive Dashboard
-- Interactive Build Cards
-
-### Inventory Management
-- Product Management
-- Stock Tracking
-- Supplier Management
-- Search & Filters
-- Category Management
-
-### Custom PC Builder
-- Featured Pre-built Systems
-- Continue Saved Builds
-- Build Recommendations
-- PCPartPicker Import (Planned)
-
-### Order Management
+- View Build Details
+- Build Upgrades
+- Shopping Cart
+- Checkout Flow
 - Order History
 - Order Tracking
-- Build Status
+
+### Inventory Management
+
+- Product Inventory
+- Stock Monitoring
+- Product Categories
+- Search & Filters
+- Supplier Management
+
+### Order Management
+
 - Customer Orders
+- Order Status Tracking
+- Delivery Management
+- Purchase History
 
 ### Authentication
+
 - User Accounts
-- Role-based Access
-- Admin Dashboard
-- Employee Dashboard
+- Admin Accounts
+- Employee Accounts
+- Role-based Access Control
 
 ---
 
 ## Tech Stack
 
 ### Frontend
-- React 19
-- Vite
-- React Router
-- Tailwind CSS
 
-### Backend (Planned)
+- React
+- Vite
+- React Router DOM
+- Tailwind CSS
+- Lucide React
+
+### Backend *(Planned)*
+
 - Node.js
 - Express.js
 - MongoDB
@@ -61,55 +65,71 @@ The project is being developed as a MERN stack learning project alongside an int
 
 ---
 
-## Project Status
-
-Currently under active development.
-
-### Current Progress
-
-- Dashboard UI
-- Reusable UI Components
-- Routing
-- Featured Builds
-- Continue Build
-- Recent Orders
-
-Upcoming
-
-- Inventory Module
-- Authentication
-- Backend APIs
-- MongoDB Integration
-
----
 
 ## Folder Structure
 
+```text
 src/
 ├── assets/
 ├── components/
+│   ├── common/
+│   ├── dashboard/
+│   └── layout/
 ├── data/
 ├── layouts/
 ├── pages/
 ├── routes/
-├── ui/
+└── utils/
+```
 
 ---
 
-## Future Roadmap
+## Roadmap
 
-- Inventory CRUD
-- Orders CRUD
-- Supplier Module
+### Customer
+
+- Dashboard
+- View Build
+- Shopping Cart
+- Checkout
+- Orders
+- Order Tracking
+- Account Management
+
+### Admin
+
+- Inventory Management
+- Supplier Management
+- Order Management
 - Analytics Dashboard
-- Build Configurator
-- PCPartPicker Import
-- Price History Tracking
+
+### Future
+
+- PCPartPicker Build Import
+- Native PC Builder
+- Compatibility Checker
+- Price History
+- Notifications
+- Email Integration
+
+---
+
+## Getting Started
+
+```bash
+git clone <repository-url>
+
+cd rigsmith
+
+npm install
+
+npm run dev
+```
 
 ---
 
 ## Author
 
-Krish Gupta
+**Krish Gupta**
 
-Built as a MERN Stack learning project and internship assessment.
+Built as a MERN Stack portfolio project and internship assessment.
