@@ -7,3 +7,4 @@
 - When collapsed have the account option in the nav bar, and while expanded have it in the bottom of the sidebar.
 - Add the View All page for Featured Builds section.
 - Build the PPP link parser.
+- Build a feature for able to have custom or pre-defined avatars.

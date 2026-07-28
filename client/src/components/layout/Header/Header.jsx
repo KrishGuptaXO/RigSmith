@@ -44,9 +44,9 @@ export default function Header() {
                         )}
                     </div>
 
-                    <button className="rounded-xl bg-[#161B22] p-3 mr-3 text-zinc-400 transition-all hover:bg-[#1F2937] hover:text-cyan-400 cursor-pointer">
+                    {/* <button className="rounded-xl bg-[#161B22] p-3 mr-3 text-zinc-400 transition-all hover:bg-[#1F2937] hover:text-cyan-400 cursor-pointer">
                         <CircleUser size={20} />
-                    </button>
+                    </button> */}
 
                 </div>
             </div>

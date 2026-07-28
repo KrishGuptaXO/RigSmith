@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 const messages = [
-    "Welcome to RigSmith.",
-    "Build Smarter.",
-    "Forge Faster.",
-    "Game Harder.",
+    "Welcome to RigSmith!",
+    "Build Smarter 🧠",
+    "Forge Faster ⚒️",
+    "Game Harder 🎮",
 ];
 
 export default function AnimatedSubtitle ({easterEgg}) {
