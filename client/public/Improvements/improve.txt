@@ -5,4 +5,5 @@
 - Understand and use Zustand for the Cart page.
 - Include an account section thingy in the sidebar bottom just like GPT has it.
 - When collapsed have the account option in the nav bar, and while expanded have it in the bottom of the sidebar.
-- When collapsed have the logo be the expand sidebar button.
+- Add the View All page for Featured Builds section.
+- Build the PPP link parser.
