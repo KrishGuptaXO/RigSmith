@@ -11,3 +11,19 @@ body {
   margin: 0;
   font-family: 'Geist Pixel', sans-serif;
 }
+
+@keyframes logoGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 0px rgba(34, 211, 238, .2));
+    opacity: .9;
+  }
+
+  50% {
+    filter: drop-shadow(0 0 20px rgba(34, 211, 238, .6));
+    opacity: 1;
+  }
+}
+
+.logo-glow{
+  animation: logoGlow 2.5s ease-in-out infinite;
+}
