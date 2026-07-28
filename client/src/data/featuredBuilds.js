@@ -11,7 +11,7 @@ const featuredBuilds = [
         name: "Nova X",
         cpu: "AMD Ryzen 7 9850X3D",
         gpu: "NVIDIA Geforce RTX 5070 Ti",
-        ram: "Kingston Fury 32GB DDR5 6000 MT/s",
+        ram: "32GB DDR5 6000 MT/s",
         price: "₹3,59,999",
         image: NovaX,
     },

@@ -190,7 +190,7 @@ const builds = [
             },
             {
                 label: "Memory",
-                value: "64GB DDR5 6000MHz CL30"
+                value: "Kingston Fury 64GB DDR5 6000MHz CL30"
             },
             {
                 label: "Storage",
