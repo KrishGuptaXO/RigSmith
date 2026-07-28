@@ -54,7 +54,7 @@ const useCartStore = create(
                 }, 0),
         }),
         {
-            name: "rigforge-cart", // localStorage key
+            name: "rigsmith-cart", // localStorage key
         }
     )
 );

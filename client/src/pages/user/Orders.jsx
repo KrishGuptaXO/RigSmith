@@ -51,7 +51,7 @@ export default function Orders() {
             {/* ── Page Header ── */}
             <div>
                 <h1 className="text-3xl font-bold text-white tracking-tight">Your Orders</h1>
-                <p className="text-gray-500 text-sm mt-1">Track and manage your RigForge builds.</p>
+                <p className="text-gray-500 text-sm mt-1">Track and manage your RigSmith builds.</p>
             </div>
 
             {/* ── Search + Filter ── */}

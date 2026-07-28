@@ -12,8 +12,8 @@ export default function RecentOrders () {
                 <OrderCard
                     key={order.id}
                     order = {order}
-                    />
-                ))}
+                />
+            ))}
         </Card>
     );
 
