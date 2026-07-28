@@ -1,6 +1,7 @@
 import {navigation} from './navigation.js';
 import { NavLink } from 'react-router-dom';
 import { PanelRight } from 'lucide-react';
+import Logo from "../../../assets/logos/PageLogo.png"
 
 export default function AppSidebar ({collapsed, toggleSidebar}) {
     return (
@@ -18,11 +19,14 @@ export default function AppSidebar ({collapsed, toggleSidebar}) {
             shadow-[4px_0_12px_rgba(0,0,0,0.25)] 
             `}
         >
-            <div className="flex items-center gap-5 px-5 py-5">
+            <div className={`flex items-center px-5 py-5 ${collapsed ? "justify-center" : "justify-between"}`}>
                 {collapsed ? (
-                    <h1 className="text-2xl font-bold text-cyan-400">
-                        RS
-                    </h1>
+                    <img
+                        src={Logo}
+                        alt='RigSmith'
+                        className="h-10 w-10 object-contain select-none transition-all duration-300"
+                        draggable={false}
+                    />
                 ) : (
                     <h1 className="text-2xl font-bold text-white">
                         RigSmith

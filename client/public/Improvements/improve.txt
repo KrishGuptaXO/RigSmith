@@ -1,8 +1,8 @@
 - Categories -> Server/ Enterprise level builds (for a whole Enterprise altogether assembled).
-- Splash screen startup with logo
-- Add the logo instead of the name for when the sidebar is collapsed.
 - Add hidden tags to PC cards for admin role. For user role they serve as filter tags to show them builds upon choosing.
 - Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
 - Fix the styles in the View Builds Page.
 - Understand and use Zustand for the Cart page.
 - Include an account section thingy in the sidebar bottom just like GPT has it.
+- When collapsed have the account option in the nav bar, and while expanded have it in the bottom of the sidebar.
+- When collapsed have the logo be the expand sidebar button.
