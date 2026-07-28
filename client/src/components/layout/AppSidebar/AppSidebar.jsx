@@ -1,6 +1,6 @@
 import {navigation} from './navigation.js';
 import { NavLink } from 'react-router-dom';
-import { PanelRight } from 'lucide-react';
+import { ArrowLeftToLine } from 'lucide-react';
 import Logo from "../../../assets/logos/PageLogo.png"
 
 export default function AppSidebar ({collapsed, toggleSidebar}) {
@@ -21,35 +21,33 @@ export default function AppSidebar ({collapsed, toggleSidebar}) {
         >
             <div className={`flex items-center px-5 py-5 ${collapsed ? "justify-center" : "justify-between"}`}>
                 {collapsed ? (
-                    <img
-                        src={Logo}
-                        alt='RigSmith'
-                        className="h-10 w-10 object-contain select-none transition-all duration-300"
-                        draggable={false}
-                    />
+                    <button onClick={toggleSidebar} className="rounded-xl transition-transform duration-300 hover:scale-105 cursor-pointer">
+                        <img
+                            src={Logo}
+                            alt='RigSmith'
+                            className="h-10 w-10 object-contain select-none transition-all duration-300"
+                            draggable={false}
+                        />
+                    </button>
                 ) : (
-                    <h1 className="text-2xl font-bold text-white">
-                        RigSmith
-                    </h1>
-                )}
+                    <>
+                        <h1 className="text-2xl font-bold text-white">
+                            RigSmith
+                        </h1>
 
-                <button 
-                onClick={toggleSidebar}
-                className="rounded-lg p-2 text-zinc-400 transition-all hover:bg-[#191528] hover:text-cyan-400 cursor-pointer"
-                >
-                    <PanelRight
-                        size={20}
-                        className={`transition-transform duration-300 ${
-                            collapsed ? "rotate-180" : ""}
-                        `} 
-                    />
-                </button>
+                        <button onClick={toggleSidebar} className="rounded-lg p-2 text-zinc-400 transition-all hover:bg-[#191528] hover:text-cyan-400 cursor-pointer">
+                            <ArrowLeftToLine size={20} />
+                        </button>
+                    </>
+                )}
             </div>
+
             <nav className='mt-6 flex flex-col gap-2 px-3'>
                 {navigation.map((item) => {
                     const Icon = item.icon;
                     return (
                         <NavLink
+                            title={collapsed ? item.label : ""}
                             key={item.path}
                             to={item.path}
                             className={({ isActive }) => 
@@ -61,7 +59,7 @@ export default function AppSidebar ({collapsed, toggleSidebar}) {
                                 duration-300
                                 ${
                                     isActive 
-                                    ? "bg-[#191528] text-cyan-400 justify-center px-0" 
+                                    ? "bg-[#191528] text-cyan-400" 
                                     : "text-zinc-400 hover:bg-[#191528] hover:text-cyan-400"
                                 }`
                             }
