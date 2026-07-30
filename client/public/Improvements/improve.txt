@@ -13,3 +13,4 @@
 - Resize the "Your Orders", "Cart" Page (client side) for PC based webpage.
 - Make a Settings Page.
 - Build a small UI for notification icon.
+- For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
