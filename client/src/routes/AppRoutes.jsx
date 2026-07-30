@@ -11,6 +11,7 @@ import Auth from "../pages/Auth/Auth";
 function AppRoutes(){
     return (
         <Routes>
+            
             <Route element={<Layout />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/saved-builds" element={<SavedBuilds />} />
@@ -18,8 +19,9 @@ function AppRoutes(){
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/builds/:id" element={<ViewBuild />} />
                 <Route path="/cart" element={<Checkout />} />
-                <Route path="/auth" element={<Auth />} />
             </Route>
+                
+                <Route path="/auth" element={<Auth />} />
         </Routes>
     );
 }

@@ -11,7 +11,7 @@ function App(){
         <SplashScreen onFinish={()=>setLoading(false)} />
       )}
       {/* <Layout /> */}
-      <AppRoutes />;
+      <AppRoutes />
     </>
   );
 }
