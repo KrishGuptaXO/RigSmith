@@ -1,10 +1,12 @@
 import { UserRound, ChevronRight } from "lucide-react";
 import account from "./accountData";
+import { useNavigate } from "react-router-dom";
 
 export default function AccountsSidebar({collapsed}) {
+    const navigate = useNavigate();
     if (collapsed) {
         return (
-            <button className="
+            <button onClick={() => navigate("/auth")} className="
                 group relative 
                 flex items-center justify-center
                 h-12 w-12
@@ -35,7 +37,7 @@ export default function AccountsSidebar({collapsed}) {
     }
 
     return (
-        <button className="
+        <button onClick={() => navigate("/auth")} className="
             flex items-center
             w-full gap-3
             rounded-xl

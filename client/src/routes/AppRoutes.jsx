@@ -6,6 +6,7 @@ import Settings from "../pages/user/Settings";
 import Layout from "../components/layout/Layout";
 import ViewBuild from "../pages/user/ViewBuild/ViewBuild";
 import Checkout from "../pages/Checkout/Checkout";
+import Auth from "../pages/Auth/Auth";
 
 function AppRoutes(){
     return (
@@ -17,6 +18,7 @@ function AppRoutes(){
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/builds/:id" element={<ViewBuild />} />
                 <Route path="/cart" element={<Checkout />} />
+                <Route path="/auth" element={<Auth />} />
             </Route>
         </Routes>
     );
