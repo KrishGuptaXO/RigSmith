@@ -12,7 +12,9 @@ export default function AuthInput ({
             </label>
 
             <div className="flex items-center rounded-xl border border-[#2A3240] bg-[#0F141D] px-4 focus-within:border-cyan-400 transition-colors">
-                <Icon size={18} className="text-zinc-500" />
+                {Icon && (
+                    <Icon size={18} className="text-zinc-500 shrink-0" />
+                )}
 
                 <input
                     type={type}

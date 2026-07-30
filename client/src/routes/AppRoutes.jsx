@@ -22,7 +22,6 @@ function AppRoutes(){
             </Route>
                 
                 <Route path="/auth" element={<Auth />} />
-                <Route path="/settings" element={<Settings />} />
         </Routes>
     );
 }

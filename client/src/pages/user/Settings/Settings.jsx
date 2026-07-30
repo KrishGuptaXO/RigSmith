@@ -26,7 +26,7 @@ export default function Settings() {
     };
     
     return (
-        <div className="grid gap-6 lg:grid-cols-[#320px_1fr]">
+        <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
             <ProfileCard />
             
             <div className="space-y-6">

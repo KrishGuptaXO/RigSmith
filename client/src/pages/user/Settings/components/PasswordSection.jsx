@@ -23,7 +23,7 @@ export default function PasswordSection() {
             </div>
 
             <div className="mt-8 flex justify-end">
-                <Button>
+                <Button className="cursor-pointer">
                     Update Password
                 </Button>
             </div>
