@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import featuredBuilds from "../../../data/featuredBuilds";
 import BuildCard from "./BuildCard";
 import "./FeaturedBuilds.css";
@@ -13,10 +14,11 @@ export default function FeaturedBuilds(){
                 <h1 className="text-2xl font-semibold tracking-tight text-white">
                     Featured Builds
                 </h1>
-
-                <button className="text-cyan-400 hover:text-cyan-300 transition-colors font-medium cursor-pointer">
+                
+                <Link to="/featured-builds" className="text-cyan-400 hover:text-cyan-300 transition">
                     View All →
-                </button>
+                </Link>
+                
             </div>
 
             {/* Cards */}

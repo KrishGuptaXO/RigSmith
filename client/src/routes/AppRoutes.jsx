@@ -7,6 +7,7 @@ import ViewBuild from "../pages/user/ViewBuild/ViewBuild";
 import Checkout from "../pages/Checkout/Checkout";
 import Auth from "../pages/Auth/Auth";
 import Settings from "../pages/user/Settings/Settings";
+import FeaturedBuilds from "../pages/user/FeaturedBuilds/FeaturedBuilds";
 
 function AppRoutes(){
     return (
@@ -22,6 +23,7 @@ function AppRoutes(){
             </Route>
                 
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/featured-builds" element={<FeaturedBuilds />} />
         </Routes>
     );
 }

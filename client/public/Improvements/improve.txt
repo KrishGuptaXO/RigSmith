@@ -1,17 +1,19 @@
-## Future:
+## Future upgrades:
 - Categories -> Server/ Enterprise level builds (for a whole Enterprise altogether assembled).
 - Add hidden tags to PC cards for admin role. For user role they serve as filter tags to show them builds upon choosing.
-- Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
 - Build the PPP link parser.
 - Make use of AuthInput.jsx file for other files.
-- Add an eye icon (show/hide) for Password field.
 - Build the page for mobile responsiveness.
-- Add a footer (why choose us) for the Dashboard page.
-- Logo loading animation has a blend of both cyan and orange for outline-animation.
 - Make a payment options page for various options.
 
+## Future fixes:
+- Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
+- Add an eye icon (show/hide) for Password field.
+- Add a footer (why choose us) for the Dashboard page.
+- Logo loading animation has a blend of both cyan and orange for outline-animation.
+- For the new "View All" Page - fix margins, add home button, upon hover only one card should expand, Price should be in the same line as Build Name, Get the data rendered within their details.
+
 ## Current (Priority):
-- Add the View All page for Featured Builds section.
 - Build a feature for able to have custom or pre-defined avatars.
 - Add Login/SignUp pages field animations.
 - Resize the "Your Orders", "Cart" Page (client side) for PC based webpage.
