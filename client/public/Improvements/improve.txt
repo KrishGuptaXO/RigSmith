@@ -11,7 +11,6 @@
 - Make a payment options page for various options.
 
 ## Current (Priority):
-- Fix the styles in the View Builds Page.
 - Add the View All page for Featured Builds section.
 - Build a feature for able to have custom or pre-defined avatars.
 - Add Login/SignUp pages field animations.
