@@ -23,9 +23,9 @@ export default function EmiCard({ build }) {
     const emiAmount = build?.emi?.match(/₹[\d,]+/) ? build.emi.match(/₹[\d,]+/)[0] : "₹3,372";
 
     return (
-        <div className="rounded-xl border border-[#5B1FE8] bg-gradient-to-br from-[#1e0b3b] via-[#2a0f54] to-[#1a0730] shadow-lg shadow-purple-900/30 overflow-hidden mt-5">
+        <div className="mt-5 overflow-hidden rounded-2xl border border-zinc-800 bg-[#241C38] shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-3 bg-[#6B21E8]/90">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800 bg-[#0F141D] mt-5">
                 <span className="text-white text-sm font-semibold tracking-wide">
                     EMI plans and Pay Later
                 </span>
@@ -36,12 +36,12 @@ export default function EmiCard({ build }) {
             </div>
 
             {/* Body */}
-            <div className="grid grid-cols-2 divide-x divide-[#5B1FE8]/40 px-1">
+            <div className="grid grid-cols-2 divide-x divide-zinc-800 px-1">
                 {/* EMI Section */}
                 <div className="px-4 py-5">
                     <p className="text-white font-semibold text-sm leading-snug mb-3">
                         EMI plans starting from{" "}
-                        <span className="text-cyan-300">{emiAmount}/month</span>
+                        <span className="text-cyan-400 font-bold">{emiAmount}/month</span>
                     </p>
 
                     {/* Partner logos */}
@@ -54,12 +54,12 @@ export default function EmiCard({ build }) {
                                 {p.label}
                             </span>
                         ))}
-                        <span className="bg-[#3a1a6e] rounded-full w-7 h-7 flex items-center justify-center text-white text-[9px] font-semibold border border-purple-700">
+                        <span className="flex h-7 w-7 items-center justify-center rounded-full border border-zinc-700 bg-[#1A2230] text-[9px] font-semibold text-zinc-300">
                             +13
                         </span>
                     </div>
 
-                    <button className="flex items-center gap-1 bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-semibold px-4 py-2 rounded-full transition-all duration-200 cursor-pointer hover:-translate-y-0.5 active:scale-95">
+                    <button className="flex cursor-pointer items-center gap-2 rounded-xl bg-cyan-400 px-4 py-2 text-xs font-semibold text-black transition-all hover:bg-cyan-300">
                         <CreditCard size={12} />
                         View plans
                         <ChevronRight size={12} />
@@ -70,7 +70,7 @@ export default function EmiCard({ build }) {
                 <div className="px-4 py-5">
                     <p className="text-white font-semibold text-sm leading-snug mb-3">
                         Pay Later available at{" "}
-                        <span className="text-cyan-300">0% interest</span>
+                        <span className="text-cyan-400 font-bold">0% interest</span>
                     </p>
 
                     {/* Pay Later icon */}
@@ -82,7 +82,7 @@ export default function EmiCard({ build }) {
                         </span>
                     </div>
 
-                    <button className="flex items-center gap-1 border border-[#7C3AED] text-purple-300 hover:bg-[#7C3AED]/20 text-xs font-semibold px-4 py-2 rounded-full transition-all duration-200 cursor-pointer hover:-translate-y-0.5 active:scale-95">
+                    <button className="flex cursor-pointer items-center gap-2 rounded-xl border border-cyan-400 px-4 py-2 text-xs font-semibold text-cyan-400 transition-all hover:bg-cyan-400/10">
                         <Landmark size={12} />
                         View options
                         <ChevronRight size={12} />
