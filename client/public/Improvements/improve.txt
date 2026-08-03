@@ -15,7 +15,7 @@
 - For the new "View All" Page - fix margins, add home button, upon hover only one card should expand, Price should be in the same line as Build Name, Get the data rendered within their details.
 
 ## Current (Top Priority):
-- Build a feature for able to have custom or pre-defined avatars.
+- Avatar feature done. Fix bugs.
 - Add Login/SignUp pages field animations.
 - Resize the "Your Orders", "Cart" Page (client side) for PC based webpage.
 - Fix styles in the Settings Page.
