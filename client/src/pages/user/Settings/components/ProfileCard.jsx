@@ -1,6 +1,10 @@
 import { Camera, Package, Heart, Wrench, ShieldCheck, Shield } from "lucide-react";
+import Av1 from "../../../../assets/images/Avatars/Avatar1.png"
+import AvatarModals from "./AvatarModal";
+import { useState } from "react";
 
 export default function ProfileCard() {
+    const [showAvatarModal, setShowAvatarModal] = useState(0);
     return (
         <div className="rounded-2xl border border-zinc-800 bg-[#111827] overflow-hidden">
             
@@ -9,12 +13,14 @@ export default function ProfileCard() {
                 <div className="relative">
                     
                     <img
-                        src="https://i.pravatar.cc/150?img=12"
+                        src={Av1}
                         alt="Profile"
                         className="h-32 w-32 rounded-full border-4 border-[#111827] object-cover"
                     />
 
-                    <button className="absolute bottom-1 right-1 rounded-full bg-cyan-500 p-2 text-black transition hover:scale-110">
+                    <button 
+                        onClick={() => setShowAvatarModal(true)}
+                        className="absolute bottom-1 right-1 rounded-full bg-cyan-500 p-2 text-black transition duration-200 hover:scale-110 cursor-pointer">
                         <Camera size={16} />
                     </button>
 
@@ -28,6 +34,7 @@ export default function ProfileCard() {
                     Customer
                 </p>
             </div>
+            <AvatarModals open={showAvatarModal} onClose={() => setShowAvatarModal(0)} />
 
             {/* Divider */}
             <div className="my-6 border-t border-zinc-800" />
