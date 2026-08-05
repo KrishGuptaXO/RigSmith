@@ -1,4 +1,4 @@
-import { Home, Plus } from "lucide-react";
+import { Home } from "lucide-react";
 import Button from "../../../../components/common/Button";
 
 export default function AddressSection() {
@@ -16,8 +16,7 @@ export default function AddressSection() {
                 </div>
 
                 <Button>
-                    <Plus size={18} />
-                    Add address
+                    + Add address
                 </Button>
             </div>
 
