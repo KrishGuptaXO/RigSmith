@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import Greetings from '../../common/Greetings';
 import useCartStore from '../../../store/useCartStore';
+import NotificationButton from './NotificationButton';
 
 export default function Header() {
     const navigate = useNavigate();
@@ -21,9 +22,9 @@ export default function Header() {
 
                     {/* Notifications */}
                     <div className='relative'>
-                        <button className="rounded-xl bg-[#161B22] p-3 text-zinc-400 transition-all duration-300 hover:bg-[#1F2937] hover:text-cyan-400 cursor-pointer">
-                            <Bell size={20} />
-                        </button>
+                        
+                        <NotificationButton />
+                        
                         <span className='absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-cyan-400 text-[11px] font-bold text-black'>
                             2
                         </span>

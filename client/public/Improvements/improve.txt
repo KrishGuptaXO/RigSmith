@@ -19,3 +19,4 @@
 - Build a small UI for notification icon.
 - For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
 - Add a wishlist page for the user to save from featured builds list.
+- Optimise Code using AG.
