@@ -14,9 +14,8 @@
 - Add a footer (why choose us) for the Dashboard page.
 - Logo loading animation has a blend of both cyan and orange for outline-animation.
 - For the new "View All" Page - fix margins, add home button, upon hover only one card should expand, Price should be in the same line as Build Name, Get the data rendered within their details.
+- For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
 
 ## Current (Top Priority):
-- Build a small UI for notification icon.
-- For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
-- Add a wishlist page for the user to save from featured builds list.
+- Add a wishlist page for the user to save from featured builds list and then also add a wishlist button for the "View Build" Page.
 - Optimise Code using AG.
