@@ -18,4 +18,6 @@
 
 ## Current (Top Priority):
 - Add a wishlist page for the user to save from featured builds list and then also add a wishlist button for the "View Build" Page.
+- The wishlist button states [wishlisted, !wishlisted] and it remains on the image if yes.
+- Make a wishlist sidebar page option for user side.
 - Optimise Code using AG.
