@@ -2,7 +2,8 @@ import {
     House,
     Cpu,
     PackageOpen,
-    Cog
+    Cog,
+    Heart
 } from 'lucide-react';
 
 export const navigation = [
@@ -15,6 +16,11 @@ export const navigation = [
         label: "Inventory",
         path: "/builds",
         icon: Cpu,
+    },
+    {
+        label: "Wishlist",
+        path: "/wishlisted-builds",
+        icon: Heart,
     },
     {
         label: "Orders",
