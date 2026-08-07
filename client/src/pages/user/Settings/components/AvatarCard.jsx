@@ -1,9 +1,9 @@
 import { Check } from "lucide-react";
 
-export default function AvatarCard ({avatar, selected, onSelect}) {
+export default function AvatarCard ({avatar, selected, onSelected}) {
     return (
         <button 
-            onClick={() => onSelect(avatar)} 
+            onClick={() => onSelected(avatar)} 
             className = {`
                 group 
                 relative
