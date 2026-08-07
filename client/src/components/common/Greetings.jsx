@@ -12,7 +12,7 @@ export default function Greetings ({user}) {
     } else if (hour >= 17 && hour < 21) {
         greeting = "Good Evening";
     } else {
-        greeting = "Let's build tonight";
+        greeting = "Got to Sleep bruv";
     }
     return (
         <div>

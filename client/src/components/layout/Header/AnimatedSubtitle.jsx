@@ -38,7 +38,7 @@ export default function AnimatedSubtitle ({easterEgg}) {
     if (easterEgg) {
         return (
             <p className="mt-1 text-zinc-400">
-                You still gonna do it, <span className="italic">*hmph*</span> :|
+                You surely one persistent person, <span className="italic">hmph</span> :|
             </p>
         );
     }

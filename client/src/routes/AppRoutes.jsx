@@ -9,6 +9,7 @@ import Auth from "../pages/Auth/Auth";
 import Settings from "../pages/user/Settings/Settings";
 import FeaturedBuilds from "../pages/user/FeaturedBuilds/FeaturedBuilds";
 import Wishlist from "../pages/user/Wishlist/Wishlist";
+import Inventory from "../pages/user/Inventory/Inventory";
 
 function AppRoutes(){
     return (
@@ -22,6 +23,8 @@ function AppRoutes(){
                 <Route path="/builds/:id" element={<ViewBuild />} />
                 <Route path="/cart" element={<Checkout />} />
                 <Route path="/wishlisted-builds" element={<Wishlist />} />
+                <Route path="/inventory" element={<Inventory />} />
+
             </Route>
                 
                 <Route path="/auth" element={<Auth />} />

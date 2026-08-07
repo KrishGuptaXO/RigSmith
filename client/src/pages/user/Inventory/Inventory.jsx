@@ -1,6 +1,6 @@
 import CategoryTabs from "./components/CategoryTabs";
 import InventorySearch from "./components/InventorySearch";
-import FilterSidebar from "./components/Fliter Sidebar";
+import FilterSidebar from "./components/FilterSidebar";
 import InventoryGrid from "./components/InventoryGrid";
 import { useState } from "react";
 

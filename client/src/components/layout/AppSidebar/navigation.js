@@ -14,7 +14,7 @@ export const navigation = [
     },
     {
         label: "Inventory",
-        path: "/builds",
+        path: "/inventory",
         icon: Cpu,
     },
     {
