@@ -1,6 +1,5 @@
-import { useState } from "react";
-
 const categories = [
+    "All",
     "CPU",
     "GPU",
     "Motherboard",
@@ -11,8 +10,7 @@ const categories = [
     "Monitor",
 ];
 
-export default function CategoryTabs () {
-    const [activeCategory, setActiveCategory] = useState("CPU");
+export default function CategoryTabs ({activeCategory, setActiveCategory}) {
 
     return (
         <div className="flex flex-wrap gap-3">

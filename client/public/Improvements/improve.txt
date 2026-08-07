@@ -2,11 +2,9 @@
 - Categories -> Server/ Enterprise level builds (for a whole Enterprise altogether assembled).
 - Add hidden tags to PC cards for admin role. For user role they serve as filter tags to show them builds upon choosing.
 - Build the PPP link parser.
-- Make use of AuthInput.jsx file for other files.
 - Build the page for mobile responsiveness.
 - Make a payment options page for various options.
 - Custom Avatar options (compressing image, uploading image, storing in DB or local cache?, selecting image size UI, etc.)
-- Resize the "Your Orders", "Cart" Page (client side) for PC based webpage.
 
 ## Future fixes (Medium Priority):
 - Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
@@ -15,7 +13,10 @@
 - Logo loading animation has a blend of both cyan and orange for outline-animation.
 - For the new "View All" Page - fix margins, add home button, upon hover only one card should expand, Price should be in the same line as Build Name, Get the data rendered within their details.
 - For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
-- Sidebar account panel overflowing - fix AG.
 
 ## Current (Top Priority):
 - Optimise Code using AG.
+- Merge conflicted removed Avatar card changes. Revisit them and fix it...
+- Make use of AuthInput.jsx file for other files.
+- Sidebar account panel overflowing - fix AG.
+- Resize the "Your Orders", "Cart" Page (client side) for PC based webpage.

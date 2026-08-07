@@ -6,6 +6,7 @@ import { useState } from "react";
 
 export default function Inventory() {
     const [search, setSearch] = useState("");
+    const [activeCategory, setActiveCategory] = useState("All");
     return (
         <section className="space-y-8">
 
@@ -21,7 +22,7 @@ export default function Inventory() {
             </div>
 
             {/* Categories */}
-            <CategoryTabs />
+            <CategoryTabs activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
 
             {/* Search */}
             <InventorySearch value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -33,7 +34,7 @@ export default function Inventory() {
                 </aside>
 
                 <main className="col-span-9">
-                    <InventoryGrid />
+                    <InventoryGrid setActiveCategory={activeCategory} />
                 </main>
             </div>
         </section>
