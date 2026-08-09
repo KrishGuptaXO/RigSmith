@@ -1,6 +1,5 @@
 import CategoryTabs from "./components/CategoryTabs";
 import InventorySearch from "./components/InventorySearch";
-import FilterSidebar from "./components/FilterSidebar";
 import InventoryGrid from "./components/InventoryGrid";
 import { useState } from "react";
 
@@ -28,14 +27,10 @@ export default function Inventory() {
             <InventorySearch value={search} onChange={(e) => setSearch(e.target.value)} />
 
             {/* Main Layout */}
-            <div className="grid grid-cols-12 gap-8">
-                <aside className="col-span-3">
-                    <FilterSidebar />
-                </aside>
-
-                <main className="col-span-9">
-                    <InventoryGrid setActiveCategory={activeCategory} />
-                </main>
+            <div className="w-full px-4">
+                <div className="mx-auto max-w-6xl">                    
+                    <InventoryGrid activeCategory={activeCategory} />                    
+                </div>
             </div>
         </section>
     );

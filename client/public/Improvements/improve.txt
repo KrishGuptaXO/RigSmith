@@ -13,6 +13,7 @@
 - Logo loading animation has a blend of both cyan and orange for outline-animation.
 - For the new "View All" Page - fix margins, add home button, upon hover only one card should expand, Price should be in the same line as Build Name, Get the data rendered within their details.
 - For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
+- Fix the weird animation for wishlist button (Heart).
 
 ## Current (Top Priority):
 - Optimise Code using AG.

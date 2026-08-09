@@ -7,7 +7,7 @@ export default function BuildImage({ build }) {
             
             {/* Wishlist Button */}
             <div className="absolute right-5 top-5 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <WishlistButton build={build} />
+                <WishlistButton build={build} size="md" />
             </div>
 
             {/* Build Image */}

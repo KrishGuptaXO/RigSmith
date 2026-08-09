@@ -5,7 +5,7 @@ import Greetings from '../../common/Greetings';
 import useCartStore from '../../../store/useCartStore';
 import NotificationButton from './NotificationButton';
 
-export default function Header() {
+export default function Header({ showSearchBar = true, showGreeting = true }) {
     const navigate = useNavigate();
     const items = useCartStore((s) => s.items);
     const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
@@ -13,11 +13,12 @@ export default function Header() {
     return (
         <header className='flex flex-col gap-6 bg-[#0D1117] px-8 py-6'>
 
-            {/* Search Row */}
-            <div className='flex items-center justify-between'>
+            {/* Navbar Row — always visible (search bar is optional, notif+cart always show) */}
+            <div className={`flex items-center ${showSearchBar ? 'justify-between' : 'justify-end'}`}>
 
-                <SearchBar />
+                {showSearchBar && <SearchBar />}
 
+                {/* Notification + Cart group — always present */}
                 <div className='flex items-center gap-3'>
 
                     {/* Notifications */}
@@ -52,8 +53,8 @@ export default function Header() {
                 </div>
             </div>
 
-            {/* Greetings */}
-            <Greetings user="Krish" />
+            {/* Greetings — only shown when showGreeting is true */}
+            {showGreeting && <Greetings user="Krish" />}
 
         </header>
     );

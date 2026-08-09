@@ -1,13 +1,8 @@
-import {ShoppingCart} from "lucide-react";
-import {useNavigate} from "react-router-dom";
-
 import Card from "../../../../components/common/Card";
 import WishlistButton from "../../../../components/common/WishlistButton";
-import Button from "../../../../components/common/Button";
 
 export default function InventoryCard({ product }) {
-    const navigate = useNavigate();
-
+    
     return (
         <Card className="group transition-all duration-300 hover:border-cyan-400">
 
@@ -23,7 +18,7 @@ export default function InventoryCard({ product }) {
                     />
 
                     <div className="absolute right-2 top-2">
-                        <WishlistButton build={product} />
+                        <WishlistButton build={product} size="sm" />
                     </div>
 
                 </div>
@@ -74,18 +69,13 @@ export default function InventoryCard({ product }) {
 
                     <div className="mt-5 flex gap-3">
 
-                        <Button
-                            onClick={() => navigate(`/inventory/${product.id}`)}
-                        >
-                            View
-                        </Button>
-
                         <button
                             className="
+                                mx-2
                                 rounded-xl
                                 border
                                 border-cyan-400
-                                p-3
+                                p-4
                                 text-cyan-400
                                 transition-all
                                 hover:bg-cyan-400
@@ -93,7 +83,7 @@ export default function InventoryCard({ product }) {
                                 cursor-pointer
                             "
                         >
-                            <ShoppingCart size={18} />
+                            Add to Cart +
                         </button>
 
                     </div>
