@@ -25,20 +25,6 @@ import Wishlist from "../pages/user/Wishlist/Wishlist";
 // Auth
 import Auth from "../pages/Auth/Auth";
 
-/* ── Routes ───────────────────────────────────────────────────── */
-/*
- *  Layout Props Cheat Sheet:
- *  ─────────────────────────
- *  <Layout />                                                      → sidebar ✓  search ✓  greeting ✓
- *  <Layout showGreeting={false} />                                 → sidebar ✓  search ✓  greeting ✗
- *  <Layout showSearchBar={false} />                                → sidebar ✓  search ✗  greeting ✓
- *  <Layout showSearchBar={false} showGreeting={false} />           → sidebar ✓  search ✗  greeting ✗
- *  <Layout showSidebar={false} />                                  → sidebar ✗  search ✓  greeting ✓
- *  <Layout showSidebar={false} showSearchBar={false} showGreeting={false} /> → sidebar ✗  search ✗  greeting ✗  (navbar only)
- *
- *  The Navbar (🔔 + 🛒) is ALWAYS present when using Layout.
- *  For pages that need NO layout at all (e.g. Auth), place them outside any <Layout> wrapper.
- */
 
 function AppRoutes(){
     return (
@@ -48,9 +34,8 @@ function AppRoutes(){
             {/* Used for the main dashboard experience */}
             <Route element={<Layout />}>
                 <Route path="/" element={<Dashboard />} />                  {/* Home / Dashboard */}
-                <Route path="/saved-builds" element={<SavedBuilds />} />    {/* User's saved builds */}
-                <Route path="/orders" element={<Orders />} />               {/* Order history */}
-                <Route path="/settings" element={<Settings />} />           {/* Account settings */}
+                <Route path="/saved-builds" element={<SavedBuilds />} />    {/* User's saved builds (Future Scope) */}
+                <Route path="/orders" element={<Orders />} />               {/* Orders & history */}
                 <Route path="/wishlisted-builds" element={<Wishlist />} />   {/* Wishlist */}
             </Route>
 
@@ -60,6 +45,7 @@ function AppRoutes(){
                 <Route path="/inventory" element={<Inventory />} />         {/* Component inventory */}
                 <Route path="/builds/:id" element={<ViewBuild />} />        {/* Individual build view */}
                 <Route path="/cart" element={<Checkout />} />               {/* Cart / Checkout */}
+                <Route path="/settings" element={<Settings />} />           {/* Account settings */}
             </Route>
 
             {/* ── No Layout (standalone pages) ─────────────────────── */}
