@@ -3,9 +3,14 @@ import { Trash2, ShoppingCart } from "lucide-react";
 import Card from "../../../../components/common/Card";
 import Button from "../../../../components/common/Button";
 import useWishlistStore from "../../../../store/wishlistStore";
+import toast from "react-hot-toast";
+import useCartStore from "../../../../store/useCartStore";
+import { useState } from "react";
 
 export default function WishlistCard ({build}) {
     const navigate = useNavigate();
+    const addItem = useCartStore((state) => state.addItem);
+    const [loading, setLoading] = useState(false);
 
     const removeBuild = useWishlistStore(
         (state) => state.removeBuild
@@ -63,14 +68,21 @@ export default function WishlistCard ({build}) {
                 {/* Buttons */}
                 <div className="mt-6 flex gap-3">
                     <Button className="flex-1" onClick={() => navigate(`/builds/${build.id}`)}>
-                        View Build
+                        View Build →
                     </Button>
 
                     <button className="flex items-center justify-center rounded-xl border border-zinc-700 px-4 transition-all hover:border-red-400 hover:text-red-400 cursor-pointer" onClick={() => removeBuild(build.id)}>
                         <Trash2 size={18} />
                     </button>
 
-                    <button className="flex items-center justify-center rounded-xl border border-zinc-700 px-4 transition-all hover:border-cyan-400 hover:text-cyan-400 cursor-pointer">
+                    <button
+                        onClick={() => {
+                                setLoading(true);
+                                addItem(build, "");
+                                toast.success(`${build.name} added to cart`);
+                                setTimeout(() => setLoading(false), 500);
+                        }}
+                        className="flex items-center justify-center rounded-xl border border-zinc-700 px-4 transition-all hover:border-cyan-400 hover:text-cyan-400 cursor-pointer">
                         <ShoppingCart size={18} />
                     </button>
                 </div>
