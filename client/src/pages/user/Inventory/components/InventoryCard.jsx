@@ -1,9 +1,12 @@
 import Card from "../../../../components/common/Card";
 import WishlistButton from "../../../../components/common/WishlistButton";
+import toast from "react-hot-toast";
 import useCartStore from "../../../../store/useCartStore";
+import { useState } from "react";
 
 export default function InventoryCard({ product }) {
     const addItem = useCartStore((state) => state.addItem);
+    const [loading, setLoading] = useState(false);
 
     return (
         <Card className="group transition-all duration-300 hover:border-cyan-400">
@@ -72,7 +75,12 @@ export default function InventoryCard({ product }) {
                     <div className="mt-5 flex gap-3">
 
                         <button
-                            onClick={() => addItem(product, "")}
+                            onClick={() => {
+                                setLoading(true);
+                                addItem(product, "");
+                                toast.success(`${product.name} added to cart`);
+                                setTimeout(() => setLoading(false), 500);
+                            }}
                             className="
                                 mx-2
                                 rounded-xl
