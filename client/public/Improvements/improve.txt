@@ -15,6 +15,7 @@
 - For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
 - Fix the weird animation for wishlist button (Heart).
 - Merge conflicted removed Avatar card changes. Revisit them and fix it...
+- Add notable UI to confirm the selected product was added in the Cart.
 
 ## Current (AG):
 - Make use of AuthInput.jsx file for other files.

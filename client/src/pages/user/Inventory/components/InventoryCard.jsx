@@ -1,8 +1,10 @@
 import Card from "../../../../components/common/Card";
 import WishlistButton from "../../../../components/common/WishlistButton";
+import useCartStore from "../../../../store/useCartStore";
 
 export default function InventoryCard({ product }) {
-    
+    const addItem = useCartStore((state) => state.addItem);
+
     return (
         <Card className="group transition-all duration-300 hover:border-cyan-400">
 
@@ -70,6 +72,7 @@ export default function InventoryCard({ product }) {
                     <div className="mt-5 flex gap-3">
 
                         <button
+                            onClick={() => addItem(product, "")}
                             className="
                                 mx-2
                                 rounded-xl
