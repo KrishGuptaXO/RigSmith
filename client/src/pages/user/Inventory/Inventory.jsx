@@ -6,6 +6,8 @@ import { useState } from "react";
 export default function Inventory() {
     const [search, setSearch] = useState("");
     const [activeCategory, setActiveCategory] = useState("All");
+    const [sort, setSort] = useState("");
+
     return (
         <section className="space-y-8">
 
@@ -26,10 +28,19 @@ export default function Inventory() {
             {/* Search */}
             <InventorySearch value={search} onChange={(e) => setSearch(e.target.value)} />
 
+            {/* Sort */}
+            {activeCategory !== "All" && (
+                <select value={sort} onChange={(e) => setSort(e.target.value)} className="rounded-lg border border-zinc-700 bg-[#111827] px-4 py-2 text-sm text-white outline-none">
+                    <option value="">Sort By ↓</option>
+                    <option value="low">Price: Low → High </option>
+                    <option value="high">Price: High → Low </option>
+                </select>  
+            )}
+    
             {/* Main Layout */}
             <div className="w-full px-4">
-                <div className="mx-auto max-w-6xl">                    
-                    <InventoryGrid activeCategory={activeCategory} />                    
+                <div className="mx-auto max-w-6xl">
+                    <InventoryGrid activeCategory={activeCategory} search={search} sort={sort} />
                 </div>
             </div>
         </section>
