@@ -166,7 +166,7 @@ const builds = [
         ]
     },
     {
-        id: "nova-x",
+        id: "nova",
         name: "Nova X",
         image: NovaX,
         price: "₹3,59,999",
