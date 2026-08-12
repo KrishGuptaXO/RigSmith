@@ -1,5 +1,6 @@
 import { Mail, Lock, UserRound } from "lucide-react";
 import Button from "../../../components/common/Button";
+import AuthInput from "../../../components/common/AuthInput";
 
 export default function AuthForm ({isLogin, setIsLogin}) {
     return (
@@ -22,78 +23,30 @@ export default function AuthForm ({isLogin, setIsLogin}) {
                 }
             </p>
 
-            {/* Name */}
+            {/* Name — only shown on Sign Up */}
             {!isLogin && (
-                <div className="mb-5">
-                    <label className="mb-2 block text-sm text-zinc-400">
-                        Full Name
-                    </label>
-
-                    <div className="
-                        flex items-center 
-                        rounded-xl 
-                        border border-[#2A3240]
-                        bg-[#0F141D]
-                        px-4"
-                    >
-                        <UserRound size={18} className="text-zinc-500" />
-                        
-                        <input
-                            type="text"
-                            placeholder="John Doe"
-                            className="w-full bg-transparent px-3 py-4 text-white outline-none placeholder:text-zinc-600"
-                        />
-                        
-                    </div>
-                </div>
+                <AuthInput
+                    label="Full Name"
+                    placeholder="John Doe"
+                    icon={UserRound}
+                />
             )}
 
             {/* Email */}
-            <div className="mb-5">
-                <label className="mb-2 block text-sm text-zinc-400">
-                    Email
-                </label>
-
-                <div className="
-                    flex items-center
-                    rounded-xl
-                    border border-[#2A3240]
-                    bg-[#0F141D]
-                    px-4
-                ">
-                    <Mail size={18} className="text-zinc-500" />
-
-                    <input
-                        type="email"
-                        placeholder="name@example.com"
-                        className="w-full bg-transparent px-3 py-4 text-white outline-none placeholder:text-zinc-600"
-                    />
-                </div>
-            </div>
+            <AuthInput
+                label="Email"
+                type="email"
+                placeholder="name@example.com"
+                icon={Mail}
+            />
 
             {/* Password */}
-            <div className="mb-5">
-                <label className="mb-2 block text-sm text-zinc-400">
-                    Password
-                </label>
-
-                <div className="
-                    flex items-center
-                    rounded-xl
-                    border
-                    border-[#2A3240]
-                    bg-[#0F141D]
-                    px-4
-                ">
-                    <Lock size={18} className="text-zinc-500" />
-
-                    <input
-                        type="password"
-                        placeholder="••••••••"
-                        className="w-full bg-transparent px-3 py-4 text-white outline-none placeholder:text-zinc-600"
-                    />
-                </div>
-            </div>
+            <AuthInput
+                label="Password"
+                type="password"
+                placeholder="••••••••"
+                icon={Lock}
+            />
 
             {/* Forgot Password */}
             {isLogin && (
