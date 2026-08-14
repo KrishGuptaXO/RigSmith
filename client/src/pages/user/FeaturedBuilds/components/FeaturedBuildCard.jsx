@@ -1,63 +1,63 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../components/common/Button";
 import Card from "../../../../components/common/Card";
 
 export default function FeaturedBuildCard({build}) {
-    const { name, cpu, gpu, ram, price, image } = build;
+    const { name, price, image, specs = [] } = build;
     const navigate = useNavigate();
+    const [hovered, setHovered] = useState(false);
+
+    // Show first 3 specs (typically Processor, Graphics, Memory)
+    const previewSpecs = specs.slice(0, 3);
+
     return (
-        <Card className="group w-full overflow-hidden">
+        <Card
+            className="w-full overflow-hidden"
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
             
             {/* Image Container */}
             <div className="h-64 overflow-hidden rounded-xl">
-                <img src={image} alt={name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img
+                    src={image}
+                    alt={name}
+                    className={`h-full w-full object-cover transition-transform duration-500 ${hovered ? "scale-105" : ""}`}
+                />
             </div>
 
-            {/* Always Visible */}
-            <div className="mt-4">
+            {/* Name + Price — same line */}
+            <div className="mt-4 flex items-center justify-between">
                 <h3 className="text-xl font-semibold text-white">
                     {name}
                 </h3>
 
-                <p className="mt-2 text-lg font-bold text-cyan-400">
+                <p className="text-lg font-bold text-cyan-400">
                     {price}
                 </p>
             </div>
 
-            {/* Expandable Section */}
-            <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-500 group-hover:mt-5 group-hover:max-h-56 group-hover:opacity-100">
+            {/* Expandable Section — only this card */}
+            <div
+                className={`overflow-hidden transition-all duration-500 ${
+                    hovered ? "mt-5 max-h-64 opacity-100" : "max-h-0 opacity-0"
+                }`}
+            >
                 <div className="border-t border-zinc-700 pt-5">
                     <div className="space-y-4">
 
-                        <div>
-                            <p className="text-xs uppercase tracking-widest text-zinc-500">
-                                Processor
-                            </p>
+                        {previewSpecs.map((spec) => (
+                            <div key={spec.label}>
+                                <p className="text-xs uppercase tracking-widest text-zinc-500">
+                                    {spec.label}
+                                </p>
 
-                            <p className="text-sm text-white">
-                                {cpu}
-                            </p>
-                        </div>
-
-                        <div>
-                            <p className="text-xs uppercase tracking-widest text-zinc-500">
-                                Graphics
-                            </p>
-
-                            <p className="text-sm text-white">
-                                {gpu}
-                            </p>
-                        </div>
-                    
-                        <div>
-                            <p className="text-xs uppercase tracking-widest text-zinc-500">
-                                Memory
-                            </p>
-
-                            <p className="text-sm text-white">
-                                {ram}
-                            </p>
-                        </div>
+                                <p className="text-sm text-white">
+                                    {spec.value}
+                                </p>
+                            </div>
+                        ))}
 
                     </div>
 
