@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Minus, Plus, Trash2, ChevronDown, ChevronUp, CreditCard, Truck, MapPin, Package, CheckCircle, ShoppingBag, ArrowLeft } from "lucide-react";
+import { ChevronDown, ChevronUp, CreditCard, CheckCircle, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import useCartStore from "../../store/useCartStore";
 import CartItem from "./components/CartItem";
@@ -50,7 +50,7 @@ export default function Checkout() {
     }
 
     return (
-        <section className="space-y-6 pb-16 max-w-3xl mx-auto">
+        <section className="space-y-6 pb-16 max-w-6xl mx-auto">
 
             {/* Page Header */}
             <div className="flex items-center gap-3">
