@@ -19,6 +19,5 @@
 - If inventory not in stock disable button for add to cart. Change the stock field from string to int.
 
 ## Current (AG):
-- Make use of AuthInput.jsx file for other files.
 - Sidebar account panel overflowing
 - Resize the "Your Orders", "Cart" Page (client side) for PC based webpage.
