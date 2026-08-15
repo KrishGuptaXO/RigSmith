@@ -12,7 +12,7 @@ const inventory = [
         brand: "Gigabyte",
         image: R50,
         price: "₹79,999",
-        stock: "In Stock",
+        stock: 12,
         specs: [
             "16GB GDDR7",
             "PCIe 5.0",
@@ -27,7 +27,7 @@ const inventory = [
         brand: "AMD",
         image: R7,
         price: "₹54,999",
-        stock: "Limited Stock",
+        stock: 3,
         specs: [
             "8 Cores",
             "16 Threads",
@@ -42,7 +42,7 @@ const inventory = [
         brand: "Corsair",
         image: C32,
         price: "₹18,499",
-        stock: "In Stock",
+        stock: 25,
         specs: [
             "32GB",
             "DDR5",
@@ -57,7 +57,7 @@ const inventory = [
         brand: "Samsung",
         image: S9,
         price: "₹15,999",
-        stock: "Out of Stock",
+        stock: 0,
         specs: [
             "2TB",
             "PCIe Gen4",
