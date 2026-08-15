@@ -7,6 +7,7 @@ import BillSummary from "./components/BillSummary";
 import PaymentOptions from "./components/PaymentOptions";
 import DeliveryOptions from "./components/DeliveryOptions";
 import EmptyCart from "./components/EmptyCart";
+import toast from "react-hot-toast";
 
 export default function Checkout() {
     const navigate = useNavigate();
@@ -133,7 +134,7 @@ export default function Checkout() {
                 </div>
 
                 {/* Payment Options Expandable */}
-                {paymentOpen && <PaymentOptions onPay={() => setOrdered(true)} grandTotal={grandTotal} />}
+                {paymentOpen && <PaymentOptions onPay={() => { setOrdered(true); toast.success("Order placed successfully! 🎉"); }} grandTotal={grandTotal} />}
 
             </div>
 

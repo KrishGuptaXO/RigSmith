@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react";
 import useWishlistStore from "../../store/wishlistStore";
+import toast from "react-hot-toast";
 
 export default function WishlistButton({build, size="md"}) {
     const toggleBuild = useWishlistStore(
@@ -23,9 +24,18 @@ export default function WishlistButton({build, size="md"}) {
 
     const currentSize = sizes[size];
 
+    const handleToggle = () => {
+        toggleBuild(build);
+        if (isWishlisted) {
+            toast(`${build.name} removed from wishlist`, { icon: "💔" });
+        } else {
+            toast.success(`${build.name} added to wishlist`);
+        }
+    };
+
     return (
         <button 
-            onClick={() => toggleBuild(build)} 
+            onClick={handleToggle} 
             className={`flex ${currentSize.btn} items-center justify-center rounded-full bg-[#111827]/80 backdrop-blur-sm transition-all duration-300 hover:bg-[#191528] hover:scale-110 active:scale-90 cursor-pointer ${
                 isWishlisted
                     ? "bg-red-500/20"

@@ -3,6 +3,7 @@ import { ShoppingCart, ChevronDown, ChevronUp, Shield, Cpu, Monitor, MemoryStick
 import Card from "../../../../components/common/Card";
 import Button from "../../../../components/common/Button";
 import useCartStore from "../../../../store/useCartStore";
+import toast from "react-hot-toast";
 
 const specIconMap = {
     "Processor": Cpu,
@@ -26,6 +27,7 @@ export default function BuildDetails({ build }) {
     const handleAddToCart = () => {
         addItem(build);
         setAdded(true);
+        toast.success(`${build.name} added to cart`);
         setTimeout(() => setAdded(false), 2000);
     };
 
