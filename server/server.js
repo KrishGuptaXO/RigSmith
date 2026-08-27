@@ -1,3 +1,4 @@
+import InventoryRoutes from "./routes/InventoryRoutes.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -18,6 +19,8 @@ app.get("/", (req, res) => {
         message: "RigSmith API is running.",
     });
 });
+
+app.use("/api/inventory", InventoryRoutes);
 
 // Connect to MongoDB, then start server
 const startServer = async () => {
