@@ -44,7 +44,7 @@ export default function AppSidebar ({collapsed, toggleSidebar}) {
             </div>
 
             <div className="flex h-[calc(100%-88px)] flex-col">
-                <nav className='mt-6 flex flex-col gap-2 px-3'>
+                <nav className={`mt-6 flex flex-1 flex-col gap-2 px-3 ${collapsed ? '' : 'overflow-y-auto'}`}>
                     {navigation.map((item) => {
                         const Icon = item.icon;
                         return (
@@ -112,8 +112,9 @@ export default function AppSidebar ({collapsed, toggleSidebar}) {
                     })}
                 </nav>
                 
-                <div className='mx-3 mb-3 mt-75 border-t border-[#252B36]'>
-                    <div className='mt-auto px-3 pb-5'>
+                {/* Account panel — pinned to bottom */}
+                <div className='mx-3 mb-3 mt-auto border-t border-[#252B36]'>
+                    <div className='px-3 pt-3 pb-2'>
                         <AccountsSidebar collapsed={collapsed}/>
                     </div>
                 </div>

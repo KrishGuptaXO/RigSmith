@@ -8,6 +8,18 @@ export default function InventoryCard({ product }) {
     const addItem = useCartStore((state) => state.addItem);
     const [loading, setLoading] = useState(false);
 
+    const outOfStock = product.stock <= 0;
+    const stockLabel = outOfStock
+        ? "Out of Stock"
+        : product.stock <= 5
+            ? `Low Stock (${product.stock} left)`
+            : `In Stock (${product.stock})`;
+    const stockColor = outOfStock
+        ? "text-red-400"
+        : product.stock <= 5
+            ? "text-yellow-400"
+            : "text-green-400";
+
     return (
         <Card className="group transition-all duration-300 hover:border-cyan-400">
 
@@ -68,33 +80,33 @@ export default function InventoryCard({ product }) {
                         {product.price}
                     </p>
 
-                    <p className="mt-1 text-sm text-green-400">
-                        {product.stock}
+                    <p className={`mt-1 text-sm ${stockColor}`}>
+                        {stockLabel}
                     </p>
 
                     <div className="mt-5 flex gap-3">
 
                         <button
+                            disabled={outOfStock}
                             onClick={() => {
                                 setLoading(true);
                                 addItem(product, "");
                                 toast.success(`${product.name} added to cart`);
                                 setTimeout(() => setLoading(false), 500);
                             }}
-                            className="
+                            className={`
                                 mx-2
                                 rounded-xl
                                 border
-                                border-cyan-400
                                 p-4
-                                text-cyan-400
                                 transition-all
-                                hover:bg-cyan-400
-                                hover:text-black
-                                cursor-pointer
-                            "
+                                ${outOfStock
+                                    ? "border-zinc-700 text-zinc-600 cursor-not-allowed opacity-50"
+                                    : "border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black cursor-pointer"
+                                }
+                            `}
                         >
-                            Add to Cart +
+                            {outOfStock ? "Sold Out" : "Add to Cart +"}
                         </button>
 
                     </div>

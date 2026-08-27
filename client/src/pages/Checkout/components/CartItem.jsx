@@ -1,5 +1,6 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
 import useCartStore from "../../../store/useCartStore";
+import toast from "react-hot-toast";
 
 export default function CartItem({ item }) {
     const { build, quantity, customizations } = item;
@@ -68,7 +69,7 @@ export default function CartItem({ item }) {
                     ₹{lineTotal.toLocaleString("en-IN")} /-
                 </p>
                 <button
-                    onClick={() => removeItem(build.id)}
+                    onClick={() => { removeItem(build.id); toast(`${build.name} removed from cart`, { icon: "🗑️" }); }}
                     className="mt-1.5 flex items-center gap-1 text-[11px] text-gray-600 hover:text-red-400 transition-colors duration-200 cursor-pointer ml-auto"
                 >
                     <Trash2 size={11} />

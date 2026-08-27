@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Truck, Package, MapPin, ChevronDown, ChevronUp, Plus } from "lucide-react";
+import AuthInput from "../../../components/common/AuthInput";
 
 const deliveryChoices = [
     {
@@ -90,32 +91,17 @@ export default function DeliveryOptions() {
                     </div>
 
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <Field label="Full Name" value={address.name} onChange={handleChange("name")} placeholder="John Doe" />
-                        <Field label="Phone" value={address.phone} onChange={handleChange("phone")} placeholder="+91 98765 43210" type="tel" />
-                        <Field label="Address Line 1" value={address.line1} onChange={handleChange("line1")} placeholder="House / Flat / Block No." className="sm:col-span-2" />
-                        <Field label="Address Line 2" value={address.line2} onChange={handleChange("line2")} placeholder="Street, Locality (Optional)" className="sm:col-span-2" />
-                        <Field label="City" value={address.city} onChange={handleChange("city")} placeholder="Mumbai" />
-                        <Field label="State" value={address.state} onChange={handleChange("state")} placeholder="Maharashtra" />
-                        <Field label="PIN Code" value={address.pincode} onChange={handleChange("pincode")} placeholder="400001" type="number" />
+                        <AuthInput label="Full Name"       value={address.name}    onChange={handleChange("name")}    placeholder="John Doe" />
+                        <AuthInput label="Phone"           value={address.phone}   onChange={handleChange("phone")}   placeholder="+91 98765 43210" type="tel" />
+                        <AuthInput label="Address Line 1"  value={address.line1}   onChange={handleChange("line1")}   placeholder="House / Flat / Block No." className="sm:col-span-2" />
+                        <AuthInput label="Address Line 2"  value={address.line2}   onChange={handleChange("line2")}   placeholder="Street, Locality (Optional)" className="sm:col-span-2" />
+                        <AuthInput label="City"            value={address.city}    onChange={handleChange("city")}    placeholder="Mumbai" />
+                        <AuthInput label="State"           value={address.state}   onChange={handleChange("state")}   placeholder="Maharashtra" />
+                        <AuthInput label="PIN Code"        value={address.pincode} onChange={handleChange("pincode")} placeholder="400001" type="number" />
                     </div>
                 </div>
             )}
 
-        </div>
-    );
-}
-
-function Field({ label, value, onChange, placeholder, type = "text", className = "" }) {
-    return (
-        <div className={className}>
-            <label className="block text-gray-400 text-xs font-medium mb-1.5">{label}</label>
-            <input
-                type={type}
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-                className="w-full rounded-xl border border-[#2a2a3e] bg-[#0f0f18] px-4 py-2.5 text-white text-sm placeholder-gray-600 outline-none focus:border-cyan-400/60 focus:ring-1 focus:ring-cyan-400/20 transition-all duration-200"
-            />
         </div>
     );
 }

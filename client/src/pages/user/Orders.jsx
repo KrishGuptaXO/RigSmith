@@ -46,7 +46,7 @@ export default function Orders() {
     const hasAny = filtered.length > 0;
 
     return (
-        <section className="space-y-6 pb-16 max-w-3xl mx-auto">
+        <section className="space-y-6 pb-16 max-w-6xl mx-auto">
 
             {/* ── Page Header ── */}
             <div>
