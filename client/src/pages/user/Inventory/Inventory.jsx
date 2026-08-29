@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Inventory() {
     const [search, setSearch] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
     const [activeCategory, setActiveCategory] = useState("All");
     const [sort, setSort] = useState("");
     
@@ -13,15 +14,43 @@ export default function Inventory() {
     const [error, setError] = useState("");
 
     useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 400);
+
+        return () => clearTimeout(timer);
+    }, [search]);
+
+    useEffect(() => {
         const fetchInventory = async () => {
             const maxAttempts = 3;
             const retryDelay = 1500;
 
+            const params = new URLSearchParams();
+
+            if (activeCategory !== "All") {
+                params.append("category", activeCategory);
+            }
+
+            if (debouncedSearch.trim()) {
+                params.append("search", search.trim());
+            }
+
+            if (sort) {
+                params.append("sort", sort);
+            }
+
+            const queryString = params.toString();
+
+            const url = queryString
+                ? `http://localhost:5000/api/inventory?${queryString}`
+                : "http://localhost:5000/api/inventory";
+
+            setError("");
+
             for (let attempt = 1; attempt <= maxAttempts; attempt++) {
                 try {
-                    const response = await fetch(
-                        "http://localhost:5000/api/inventory"
-                    );
+                    const response = await fetch(url);
 
                     if (!response.ok) {
                         throw new Error("Failed to fetch inventory");
@@ -30,7 +59,6 @@ export default function Inventory() {
                     const data = await response.json();
 
                     setInventory(data);
-                    setError("");
                     setLoading(false);
 
                     return;
@@ -51,11 +79,12 @@ export default function Inventory() {
             setError(
                 "Unable to reach the servers. Please try again later."
             );
+
             setLoading(false);
         };
 
         fetchInventory();
-    }, []);
+    }, [activeCategory, debouncedSearch, sort]);
 
     return (
         <section className="space-y-8">

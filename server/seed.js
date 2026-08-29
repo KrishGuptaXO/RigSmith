@@ -10,7 +10,7 @@ const inventory = [
         category: "GPU",
         name: "RTX 5070 Ti Gaming OC",
         brand: "Gigabyte",
-        image: "Gb-5070-Ti.webp",
+        image: "/images/inventory/Gb-5070-Ti.webp",
         price: 79999,
         stock: 12,
         specs: [
@@ -26,7 +26,7 @@ const inventory = [
         category: "CPU",
         name: "Ryzen 7 9800X3D",
         brand: "AMD",
-        image: "A-R7-9800x3d.webp",
+        image: "/images/inventory/A-R7-9800x3d.webp",
         price: 54999,
         stock: 3,
         specs: [
@@ -42,7 +42,7 @@ const inventory = [
         category: "RAM",
         name: "Corsair Dominator Titanium",
         brand: "Corsair",
-        image: "C-32gb.webp",
+        image: "/images/inventory/C-32gb.webp",
         price: 18499,
         stock: 25,
         specs: [
@@ -58,7 +58,7 @@ const inventory = [
         category: "SSD",
         name: "Samsung 990 Pro",
         brand: "Samsung",
-        image: "S-990.webp",
+        image: "/images/inventory/S-990.webp",
         price: 15999,
         stock: 0,
         specs: [
