@@ -1,12 +1,39 @@
 import CategoryTabs from "./components/CategoryTabs";
 import InventorySearch from "./components/InventorySearch";
 import InventoryGrid from "./components/InventoryGrid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Inventory() {
     const [search, setSearch] = useState("");
     const [activeCategory, setActiveCategory] = useState("All");
     const [sort, setSort] = useState("");
+    
+    const [inventory, setInventory] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect (() => {
+        const fetchInventory = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/inventory");
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch inventory");
+                }
+                
+                const data = await response.json();
+
+                setInventory(data);
+            } catch (error) {
+                console.error ("Inventory fetch failed: ", error);
+                setError("Unable to load inventory.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchInventory();
+    }, []);
 
     return (
         <section className="space-y-8">
@@ -40,7 +67,7 @@ export default function Inventory() {
             {/* Main Layout */}
             <div className="w-full px-4">
                 <div className="mx-auto max-w-6xl">
-                    <InventoryGrid activeCategory={activeCategory} search={search} sort={sort} />
+                    <InventoryGrid inventory={inventory} activeCategory={activeCategory} search={search} sort={sort} />
                 </div>
             </div>
         </section>

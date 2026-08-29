@@ -1,7 +1,7 @@
-import R50 from "../assets/images/Gb-5070-Ti.webp";
-import R7 from "../assets/images/A-R7-9800x3d.webp";
-import C32 from "../assets/images/C-32gb.webp";
-import S9 from "../assets/images/S-990.webp";
+import R50 from "../../public/images/inventory/Gb-5070-Ti.webp";
+import R7 from "../../public/images/inventory/A-R7-9800x3d.webp";
+import C32 from "../../public/images/inventory/C-32gb.webp";
+import S9 from "../../public/images/inventory/S-990.webp";
 
 
 const inventory = [
