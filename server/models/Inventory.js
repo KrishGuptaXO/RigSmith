@@ -31,6 +31,12 @@ const inventorySchema = new mongoose.Schema (
             required: true,
         },
 
+        price: {
+            type: Number,
+            required: true,
+            min: 0,
+        },
+
         stock: {
             type: Number,
             required: true,
