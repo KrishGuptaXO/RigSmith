@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/inventory", InventoryRoutes);
+app.use("/api/auth", authRoutes);
 
 // Connect to MongoDB, then start server
 const startServer = async () => {
