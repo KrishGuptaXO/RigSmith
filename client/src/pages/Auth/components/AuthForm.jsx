@@ -3,6 +3,7 @@ import Button from "../../../components/common/Button";
 import AuthInput from "../../../components/common/AuthInput";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import useAuthStore from "../../../store/authStore";
 
 export default function AuthForm ({isLogin, setIsLogin}) {
     const [loading, setLoading] = useState(false);
@@ -12,6 +13,7 @@ export default function AuthForm ({isLogin, setIsLogin}) {
         email: "",
         password: "",
     });
+    const login = useAuthStore((state) => state.login);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -47,7 +49,15 @@ export default function AuthForm ({isLogin, setIsLogin}) {
 
             console.log("Auth response: ", data);
 
-            toast.success(isLogin ? "Login successful" : "Account created successfully!");
+            if (isLogin) {
+                login(data.token, data.user);
+            }
+
+            toast.success(isLogin
+                ? "Login successful!" 
+                : "Account created successfully!"
+            );
+
         }  catch (error) {
             console.error("Authentication failed: ", error);
             setError(error.message);
