@@ -2,6 +2,7 @@ import express from "express";
 import argon2 from "argon2";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
