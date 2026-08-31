@@ -2,12 +2,14 @@ import CategoryTabs from "./components/CategoryTabs";
 import InventorySearch from "./components/InventorySearch";
 import InventoryGrid from "./components/InventoryGrid";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function Inventory() {
-    const [search, setSearch] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [search, setSearch] = useState( searchParams.get("search") || "");
     const [debouncedSearch, setDebouncedSearch] = useState("");
-    const [activeCategory, setActiveCategory] = useState("All");
-    const [sort, setSort] = useState("");
+    const [activeCategory, setActiveCategory] = useState( searchParams.get("category") || "All");
+    const [sort, setSort] = useState( searchParams.get("sort") || "");
     
     const [inventory, setInventory] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -20,6 +22,30 @@ export default function Inventory() {
 
         return () => clearTimeout(timer);
     }, [search]);
+
+    useEffect(() => {
+        if (activeCategory === "All" && sort) {
+            setSort("");
+        }
+    }, [activeCategory, sort]);
+
+    useEffect (() => {
+        const params = {};
+
+        if (activeCategory !== "All") {
+            params.category = activeCategory;
+        }
+
+        if (search.trim()) {
+            params.search = search.trim();
+        }
+
+        if (sort) {
+            params.sort = sort;
+        }
+
+        setSearchParams(params, {replace: true});
+    }, [activeCategory, search, sort, setSearchParams]);
 
     useEffect(() => {
         const fetchInventory = async () => {

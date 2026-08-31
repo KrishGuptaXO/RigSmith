@@ -7,9 +7,6 @@ const router = express.Router();
 router.get ("/", async (req, res) => {
     try {
         const { category, search, sort } = req.query;
-        console.log("Inventory query:", req.query);
-        console.log("Sort value:", sort);
-        
         const filter = {};
 
         // Category filter
@@ -32,20 +29,14 @@ router.get ("/", async (req, res) => {
         let query = Inventory.find(filter);
 
         if (sort === "low") {
-            console.log("Applying LOW → HIGH sort");
             query = query.sort({price: 1});
         }
         
         if (sort === "high") {
-            console.log("Applying H → L sort");
             query = query.sort({price: -1});
         }
         
         const inventory = await query;
-        console.log(
-            "Result order:",
-            inventory.map((product) => `${product.name} - ${product.price}`)
-        );
 
         res.status(200).json(inventory);
     } catch (error) {
