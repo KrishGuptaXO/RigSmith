@@ -3,7 +3,7 @@ import Button from "../../../components/common/Button";
 import AuthInput from "../../../components/common/AuthInput";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useAuthStore from "../../../store/authStore";
+import authStore from "../../../store/authStore";
 
 export default function AuthForm ({isLogin, setIsLogin}) {
     const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ export default function AuthForm ({isLogin, setIsLogin}) {
         email: "",
         password: "",
     });
-    const login = useAuthStore((state) => state.login);
+    const login = authStore((state) => state.login);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
