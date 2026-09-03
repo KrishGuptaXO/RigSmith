@@ -30,19 +30,21 @@ import Auth from "../pages/Auth/Auth";
 function AppRoutes(){
     return (
         <Routes>
-            
+
+            {/* Public Dashboard */}
+            <Route element={<Layout />}>
+                <Route path="/" element={<Dashboard />} />
+            </Route>
+
+            {/* Protected Routes */}
             <Route element={<ProtectedRoutes />}>
-                {/* ── Full Layout: Sidebar + Search + Greeting ──────────── */}
-                {/* Used for the main dashboard experience */}
+
                 <Route element={<Layout />}>
-                    <Route path="/" element={<Dashboard />} />                  {/* Home / Dashboard */}
                     <Route path="/saved-builds" element={<SavedBuilds />} />    {/* User's saved builds (Future Scope) */}
                     <Route path="/orders" element={<Orders />} />               {/* Orders & history */}
                     <Route path="/wishlisted-builds" element={<Wishlist />} />   {/* Wishlist */}
                 </Route>
 
-                {/* ── Sidebar + Navbar only (no search, no greeting) ───── */}
-                {/* Used for pages that have their own search/header */}
                 <Route element={<Layout showSearchBar={false} showGreeting={false} />}>
                     <Route path="/inventory" element={<Inventory />} />         {/* Component inventory */}
                     <Route path="/builds/:id" element={<ViewBuild />} />        {/* Individual build view */}
@@ -52,8 +54,7 @@ function AppRoutes(){
 
             </Route>
 
-            {/* ── No Layout (standalone pages) ─────────────────────── */}
-            {/* These pages render without sidebar, header, or navbar */}
+            {/* Public */}
             <Route path="/auth" element={<Auth />} />                       {/* Login / Register */}
             <Route path="/featured-builds" element={<FeaturedBuilds />} />  {/* Featured builds showcase */}
 
