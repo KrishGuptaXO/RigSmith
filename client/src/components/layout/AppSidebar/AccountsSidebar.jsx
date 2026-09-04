@@ -1,12 +1,14 @@
 import { UserRound, ChevronRight } from "lucide-react";
-import account from "./accountData";
+import authStore from "../../../store/authStore";
 import { useNavigate } from "react-router-dom";
 
 export default function AccountsSidebar({collapsed}) {
     const navigate = useNavigate();
+    const { user, isAuthenticated } = authStore();
+
     if (collapsed) {
         return (
-            <button onClick={() => navigate("/auth")} className="
+            <button onClick={() => navigate(isAuthenticated ? "/settings" : "/auth")} className="
                 group relative 
                 flex items-center justify-center
                 h-12 w-12
@@ -30,14 +32,14 @@ export default function AccountsSidebar({collapsed}) {
                     transition-all duration-200
                     group-hover:opacity-100 group-hover:translate-x-0
                 ">
-                    {account.loggedIn ? account.name : "Sign In"}
+                    {isAuthenticated ? user?.name : "Sign In"}
                 </div>
             </button>  
         );
     }
 
     return (
-        <button onClick={() => navigate("/auth")} className="
+        <button onClick={() => navigate(isAuthenticated ? "/settings" : "/auth")} className="
             flex items-center
             w-full gap-3
             rounded-xl
@@ -57,13 +59,13 @@ export default function AccountsSidebar({collapsed}) {
             
             <div className="flex-1 text-left">
                 <p className="font-medium text-white">
-                    {account.loggedIn ? account.name : "Guest"}
+                    {isAuthenticated ? user?.name : "Guest"}
                 </p>
 
                 <p>
-                    {account.loggedIn
-                    ? account.email
-                    : "Click to Sign In"
+                    {isAuthenticated
+                        ? user?.email
+                        : "Click to Sign In"
                     }
                 </p>
             </div>
