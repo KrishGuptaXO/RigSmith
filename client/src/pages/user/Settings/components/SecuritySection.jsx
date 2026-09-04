@@ -1,7 +1,10 @@
 import { ShieldCheck, Smartphone, Monitor, Clock } from "lucide-react";
 import Button from "../../../../components/common/Button";
+import authStore from "../../../../store/authStore";
 
 export default function SecuritySection() {
+    const logout = authStore((state) => state.logout);
+
     return (
         <div className="rounded-2xl border border-zinc-800 bg-[#111827] p-8">
 
@@ -48,7 +51,7 @@ export default function SecuritySection() {
                         Current Session
                     </h3>
                 </div>
-                
+
                 <p className="text-zinc-400">
                     Windows 11 • Chrome • Delhi
                 </p>
@@ -57,7 +60,15 @@ export default function SecuritySection() {
                     Active Now
                 </p>
 
-            </div>
+                <div className="mt-5 flex justify-end">
+                    <Button
+                        onClick={logout}
+                        className="border border-red-500/30 text-black hover:bg-red-500/10 hover:text-red-400"
+                    >
+                        Sign Out
+                    </Button>
+                </div>
+        </div>
 
             {/* Login History */}
             <div className="mb-6 rounded-xl border border-zinc-700 bg-[#0F141D] p-5">
