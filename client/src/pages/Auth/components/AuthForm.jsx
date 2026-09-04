@@ -2,12 +2,14 @@ import { Mail, Lock, UserRound } from "lucide-react";
 import Button from "../../../components/common/Button";
 import AuthInput from "../../../components/common/AuthInput";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import authStore from "../../../store/authStore";
 
 export default function AuthForm ({isLogin, setIsLogin}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -51,6 +53,7 @@ export default function AuthForm ({isLogin, setIsLogin}) {
 
             if (isLogin) {
                 login(data.token, data.user);
+                navigate("/");
             }
 
             toast.success(isLogin
