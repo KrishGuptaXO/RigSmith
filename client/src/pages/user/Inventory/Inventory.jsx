@@ -84,7 +84,11 @@ export default function Inventory() {
 
                     const data = await response.json();
 
-                    setInventory(data);
+                    setInventory(data.map((item) => ({
+                            ...item,
+                            id: item._id,
+                        }))
+                    );
                     setLoading(false);
 
                     return;

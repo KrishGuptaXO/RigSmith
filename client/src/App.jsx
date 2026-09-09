@@ -3,6 +3,8 @@ import SplashScreen from "./components/Splash/SplashScreen";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import authStore from "./store/authStore";
+import wishlistStore from "./store/wishlistStore";
+import useWishlistStore from "./store/wishlistStore";
 
 function App(){
   const [loading, setLoading] = useState(true);
@@ -14,17 +16,27 @@ function App(){
   const restoreSession = authStore(
     (state) => state.restoreSession
   );
+  
+  const fetchWishlist = useWishlistStore(
+    (state) => state.fetchWishlist
+  );
 
   useEffect(() => {
     if (!hasHydrated) return;
 
     const initializeApp = async () => {
-      await restoreSession();
+      const sessionRestored = await restoreSession();
+
+      if (sessionRestored) {
+        await fetchWishlist();
+      }
+
       setLoading(false);
     };
 
     initializeApp();
-  }, [hasHydrated, restoreSession]);
+  }, [hasHydrated, restoreSession, fetchWishlist]);
+
 
   return (
     <>

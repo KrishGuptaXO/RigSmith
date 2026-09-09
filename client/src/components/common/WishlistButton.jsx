@@ -24,12 +24,21 @@ export default function WishlistButton({build, size="md"}) {
 
     const currentSize = sizes[size];
 
-    const handleToggle = () => {
-        toggleBuild(build);
-        if (isWishlisted) {
-            toast(`${build.name} removed from wishlist`, { icon: "💔" });
-        } else {
-            toast.success(`${build.name} added to wishlist`);
+    const handleToggle = async() => {
+        try {
+            await toggleBuild(build);
+
+            if (isWishlisted) {
+                toast(`${build.name} removed from wishlist`, {
+                    icon: "💔",
+                });
+            } else {
+                toast.success(`${build.name} added to wishlist.`);
+            }
+        } catch (error) {
+            toast.error(
+                error.message || "Failed to update wishlist."
+            );
         }
     };
 

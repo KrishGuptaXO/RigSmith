@@ -21,6 +21,13 @@ const userSchema = new mongoose.Schema(
             required: true,
             minlength: 6,
         },
+
+        wishlist: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Inventory",
+            },
+        ],
     },
     {
         timestamps: true,
