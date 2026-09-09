@@ -113,7 +113,7 @@ const useWishlistStore = create((set,get) => ({
                 );
             }
 
-            set((store) => ({
+            set((state) => ({
                 wishlist: state.wishlist.filter(
                     (build) => build.id !== id
                 ),
@@ -134,7 +134,7 @@ const useWishlistStore = create((set,get) => ({
         if (exists) {
             await get().removeBuild(id);
         } else {
-            await get().addBuild(id);
+            await get().addBuild(build);
         }
     },
 
