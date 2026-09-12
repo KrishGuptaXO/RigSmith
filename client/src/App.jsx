@@ -3,8 +3,8 @@ import SplashScreen from "./components/Splash/SplashScreen";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import authStore from "./store/authStore";
-import wishlistStore from "./store/wishlistStore";
 import useWishlistStore from "./store/wishlistStore";
+import useCartStore from "./store/useCartStore";
 
 function App(){
   const [loading, setLoading] = useState(true);
@@ -21,6 +21,10 @@ function App(){
     (state) => state.fetchWishlist
   );
 
+  const fetchCart = useCartStore(
+    (state) => state.fetchCart
+  );
+
   useEffect(() => {
     if (!hasHydrated) return;
 
@@ -29,13 +33,14 @@ function App(){
 
       if (sessionRestored) {
         await fetchWishlist();
+        await fetchCart();
       }
 
       setLoading(false);
     };
 
     initializeApp();
-  }, [hasHydrated, restoreSession, fetchWishlist]);
+  }, [hasHydrated, restoreSession, fetchWishlist, fetchCart,]);
 
 
   return (

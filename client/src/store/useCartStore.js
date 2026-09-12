@@ -63,6 +63,11 @@ const useCartStore = create((set, get) => ({
         }
 
         const inventoryId = build._id || build.id;
+        console.log("=== CART DEBUG ===");
+        console.log("Build:", build);
+        console.log("Build _id:", build._id);
+        console.log("Build id:", build.id);
+        console.log("Inventory ID being sent:", inventoryId);
 
         try {
             const response = await fetch(API_URL, {

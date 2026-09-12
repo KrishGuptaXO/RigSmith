@@ -85,7 +85,6 @@ export default function InventoryCard({ product }) {
                     </p>
 
                     <div className="mt-5 flex gap-3">
-
                         <button
                             disabled={outOfStock}
                             onClick={() => {

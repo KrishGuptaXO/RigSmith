@@ -83,6 +83,7 @@ export default function Inventory() {
                     }
 
                     const data = await response.json();
+                    console.log("RAW INVENTORY DATA: ", data);
 
                     setInventory(data.map((item) => ({
                             ...item,
