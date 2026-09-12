@@ -82,8 +82,7 @@ export default function Inventory() {
                         throw new Error("Failed to fetch inventory");
                     }
 
-                    const data = await response.json();
-                    console.log("RAW INVENTORY DATA: ", data);
+                    const data = await response.json();                    
 
                     setInventory(data.map((item) => ({
                             ...item,
