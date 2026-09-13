@@ -61,7 +61,7 @@ export default function FeaturedBuildCard({build}) {
 
                     </div>
 
-                    <Button className="mt-6 w-full" onClick={() => navigate(`/builds/${build.id}`)}>
+                    <Button className="mt-6 w-full" onClick={() => navigate(`/builds/${build._id}`)}>
                         View Build →
                     </Button>
                 </div>
