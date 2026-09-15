@@ -22,12 +22,19 @@ const userSchema = new mongoose.Schema(
             minlength: 6,
         },
 
+        role: {
+            type: String,
+            enum: ["customer", "partner", "admin"],
+            default: "customer",
+        },
+
         buildWishlist: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Build",
             },
         ],
+
         inventoryWishlist: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -35,9 +42,7 @@ const userSchema = new mongoose.Schema(
             },
         ],
     },
-    {
-        timestamps: true,
-    }
+    { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
 
@@ -9,6 +10,7 @@ const authMiddleware = (req, res, next) => {
                 message: "Authentication required.",
             });
         }
+        
         const token = authHeader.split(" ")[1];
     
         const decoded = jwt.verify(
@@ -16,8 +18,19 @@ const authMiddleware = (req, res, next) => {
             process.env.JWT_SECRET
         );
 
+        const user = await User.findById(decoded.userId).select(
+            "_id role"
+        );
+
+        if (!user) {
+            return res.status(401).json({
+                message: "User account no longer exists."
+            });
+        }
+
         req.user = {
-            userId: decoded.userId
+            userId: user._id,
+            role: user.role,
         };
 
         next();
@@ -25,7 +38,7 @@ const authMiddleware = (req, res, next) => {
         console.error("Authentication failed: ", error.message);
 
         return res.status(401).json({
-            message: "Invalid or expired token"
+            message: "Invalid or expired token",
         });
     }
 };
