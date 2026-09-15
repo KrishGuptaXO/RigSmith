@@ -6,29 +6,41 @@ import useCartStore from "../../../../store/useCartStore";
 import toast from "react-hot-toast";
 
 const specIconMap = {
-    "Processor": Cpu,
-    "Graphics Card": Monitor,
-    "Memory": MemoryStick,
+    cpu: Cpu,
+    gpu: Monitor,
+    ram: MemoryStick,
 };
+
+const quickCategories = ["CPU", "GPU", "RAM"];
 
 export default function BuildDetails({ build }) {
     const [expanded, setExpanded] = useState(false);
     const [added, setAdded] = useState(false);
+
     const addItem = useCartStore((s) => s.addItem);
 
-    const quickSpecs = build.specs.filter((s) =>
-        ["Processor", "Graphics Card", "Memory"].includes(s.label)
+    const components = build.components || [];
+    const specs = build.specs || [];
+
+    const quickComponents = components.filter((component) =>
+        quickCategories.includes(component.inventoryId?.category)
+    );
+    
+    const remainingComponents = components.filter((component) => 
+        !quickCategories.includes(component.inventoryId?.category)
     );
 
-    const remainingSpecs = build.specs.filter((s) =>
-        !["Processor", "Graphics Card", "Memory"].includes(s.label)
-    );
+    const handleAddToCart = async () => {
+        try {
+            await addItem(build);
 
-    const handleAddToCart = () => {
-        addItem(build);
-        setAdded(true);
-        toast.success(`${build.name} added to cart`);
-        setTimeout(() => setAdded(false), 2000);
+            setAdded(true);
+            toast.success(`${build.name} added to cart.`);
+
+            setTimeout(() => setAdded(false), 2000);
+        } catch (error) {
+            toast.error(error.message || "Failed to add build to cart.");
+        }
     };
 
     return (
@@ -42,59 +54,96 @@ export default function BuildDetails({ build }) {
 
             {/* Price */}
             <div className="mb-5">
-                <p className="text-4xl font-extrabold text-cyan-400 tracking-tight">
-                    {build.price}
+                <p className="text-4xl font-extrabold tracking-tight text-cyan-400">
+                    ₹{build.price.toLocaleString("en-IN")}
                 </p>
-                <p className="text-sm text-gray-400 mt-1">{build.emi}</p>
+
+                <p className="mt-1 text-sm text-gray-400">
+                    {build.emi}
+                </p>
             </div>
 
             {/* Quick Specs */}
-            <div className="space-y-2 mb-2">
-                {quickSpecs.map((spec) => {
-                    const Icon = specIconMap[spec.label];
+            <div className="mb-2 space-y-2">
+                {quickComponents.map((component) => {
+                    const inventoryItem = component.inventoryId;
+                    const Icon = specIconMap[inventoryItem?.category?.trim().toLowerCase()];
+
                     return (
                         <div
-                            key={spec.label}
+                            key={inventoryItem._id}
                             className="flex items-center gap-3 border-b border-[#3A2F5B] pb-2"
                         >
                             {Icon && (
-                                <Icon size={15} className="text-cyan-400 shrink-0" />
+                                <Icon
+                                    size={15}
+                                    className="shrink-0 text-cyan-400"
+                                />
                             )}
-                            <span className="text-gray-400 text-sm w-28 shrink-0">
-                                {spec.label}
+
+                            <span className="w-28 shrink-0 text-sm text-gray-400">
+                                {inventoryItem.category}
                             </span>
-                            <span className="font-medium text-sm text-right text-white leading-snug">
-                                {spec.value}
+
+                            <span className="text-right text-sm font-medium leading-snug text-white">
+                                {inventoryItem.name}
                             </span>
                         </div>
                     );
                 })}
             </div>
 
-            {/* Expand / Collapse More Specs */}
+            {/* Expand / Collapse */}
             <button
                 onClick={() => setExpanded(!expanded)}
-                className="flex items-center gap-1 text-cyan-400 text-sm hover:text-cyan-300 transition-colors cursor-pointer mb-3 w-fit"
+                className="mb-3 flex w-fit cursor-pointer items-center gap-1 text-sm text-cyan-400 transition-colors hover:text-cyan-300"
             >
                 {expanded ? (
-                    <><ChevronUp size={14} />Show less</>
+                    <>
+                        <ChevronUp size={14} />
+                        Show less
+                    </>
                 ) : (
-                    <><ChevronDown size={14} />Expand to see more details…</>
+                    <>
+                        <ChevronDown size={14} />
+                        Expand to see more details…
+                    </>
                 )}
             </button>
 
-            {/* Expanded Specs */}
+            {/* Expanded Hardware Components */}
             {expanded && (
-                <div className="space-y-2 mb-4">
-                    {remainingSpecs.map((spec) => (
+                <div className="mb-4 space-y-2">
+                    {remainingComponents.map((component) => {
+                        const inventoryItem = component.inventoryId;
+
+                        return (
+                            <div
+                                key={inventoryItem._id}
+                                className="flex items-start gap-3 border-b border-[#3A2F5B] pb-2"
+                            >
+                                <span className="w-28 shrink-0 text-sm text-gray-400">
+                                    {inventoryItem.category}
+                                </span>
+
+                                <span className="text-sm font-medium leading-snug text-white">
+                                    {inventoryItem.name}
+                                </span>
+                            </div>
+                        );
+                    })}
+
+                    {/* Build-level specifications */}
+                    {specs.map((spec) => (
                         <div
                             key={spec.label}
                             className="flex items-start gap-3 border-b border-[#3A2F5B] pb-2"
                         >
-                            <span className="text-gray-400 text-sm w-28 shrink-0">
+                            <span className="w-28 shrink-0 text-sm text-gray-400">
                                 {spec.label}
                             </span>
-                            <span className="font-medium text-sm text-white leading-snug">
+
+                            <span className="text-sm font-medium leading-snug text-white">
                                 {spec.value}
                             </span>
                         </div>
@@ -103,13 +152,20 @@ export default function BuildDetails({ build }) {
             )}
 
             {/* Warranty Badge */}
-            <div className="flex items-center gap-2 rounded-lg bg-[#1a1230] border border-[#3A2F5B] px-4 py-3 mb-4">
-                <Shield size={18} className="text-cyan-400 shrink-0" />
+            <div className="mb-4 flex items-center gap-2 rounded-lg border border-[#3A2F5B] bg-[#1a1230] px-4 py-3">
+                <Shield
+                    size={18}
+                    className="shrink-0 text-cyan-400"
+                />
+
                 <div>
                     <p className="text-sm font-semibold text-white">
-                        {build.warranty.duration} Warranty
+                        {build.warranty?.duration || "Standard"} Warranty
                     </p>
-                    <p className="text-xs text-gray-400">{build.warranty.coverage}</p>
+
+                    <p className="text-xs text-gray-400">
+                        {build.warranty?.coverage}
+                    </p>
                 </div>
             </div>
 
@@ -117,13 +173,19 @@ export default function BuildDetails({ build }) {
             <div className="mt-auto">
                 <Button
                     onClick={handleAddToCart}
-                    className="w-full flex items-center justify-center gap-2 text-base py-3"
+                    className="flex w-full items-center justify-center gap-2 py-3 text-base"
                     variant={added ? "secondary" : "primary"}
                 >
                     {added ? (
-                        <><CheckCircle size={18} />Added to Cart!</>
+                        <>
+                            <CheckCircle size={18} />
+                            Added to Cart!
+                        </>
                     ) : (
-                        <><ShoppingCart size={18} />Add to Cart</>
+                        <>
+                            <ShoppingCart size={18} />
+                            Add to Cart
+                        </>
                     )}
                 </Button>
             </div>
