@@ -1,26 +1,38 @@
 import mongoose from "mongoose";
 
-const CartItemSchema = new mongoose.Schema(
+const cartItemSchema = new mongoose.Schema(
     {
+        itemType: {
+            type: String,
+            enum: ["inventory", "build"],
+            required: true,
+        },
+
         inventoryId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Inventory",
-            required: true,
+            default: null,
         },
+
+        buildId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Build",
+            default: null,
+        },
+
         quantity: {
             type: Number,
             required: true,
             min: 1,
         },
+
         customizations: {
             type: String,
             default: "",
             trim: true,
         },
     },
-    {
-        _id: false,
-    }
+    { _id: false }
 );
 
 const cartSchema = new mongoose.Schema(
@@ -31,14 +43,13 @@ const cartSchema = new mongoose.Schema(
             required: true,
             unique: true,
         },
+
         items: {
-            type: [CartItemSchema],
+            type: [cartItemSchema],
             default: [],
         },
     },
-    {
-        timestamps: true,
-    }
+    { timestamps: true }
 );
 
 const Cart = mongoose.model("Cart", cartSchema);

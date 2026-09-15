@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 export default function Checkout() {
     const navigate = useNavigate();
     const items = useCartStore((s) => s.items);
-    const totalPrice = useCartStore((s) => s.totalPrice);
+    const totalPrice = useCartStore((s) => s.getTotalPrice);
     const clearCart = useCartStore((s) => s.clearCart);
 
     const [billOpen, setBillOpen] = useState(false);

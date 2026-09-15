@@ -1,15 +1,25 @@
 import express from "express";
+import mongoose from "mongoose";
 import Cart from "../models/Cart.js";
 import Inventory from "../models/Inventory.js";
+import Build from "../models/Build.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// GET api/cart
-// Get current user's cart
-router.get("/", authMiddleware, async (req, res) => {
+router.use(authMiddleware);
+
+// GET /api/cart
+router.get("/", async (req, res) => {
     try {
-        let cart = await Cart.findOne({userId: req.user.userId}).populate("items.inventoryId");
+        let cart = await Cart.findOne({ userId: req.user.userId })
+            .populate("items.inventoryId")
+            .populate({
+                path: "items.buildId",
+                populate: {
+                    path: "components.inventoryId",
+                },
+            });
 
         if (!cart) {
             cart = await Cart.create({
@@ -20,31 +30,68 @@ router.get("/", authMiddleware, async (req, res) => {
 
         res.json(cart);
     } catch (error) {
-        console.error("Get cart error: ", error);
-        res.status(500).json({
-            message: "Failed to fetch cart.",
-        });
+        console.error("Get cart error:", error);
+        res.status(500).json({ message: "Failed to fetch cart" });
     }
 });
 
 // POST /api/cart
-// Add an inventory item to cart
-router.post("/", authMiddleware, async (req,res) => {
+router.post("/", async (req, res) => {
     try {
-        const { inventoryId, quantity = 1, customizations = "" } = req.body;
+        const {
+            itemType,
+            inventoryId,
+            buildId,
+            quantity = 1,
+            customizations = "",
+        } = req.body;
 
-        if (!inventoryId) {
+        if (!["inventory", "build"].includes(itemType)) {
             return res.status(400).json({
-                message: "Inventory ID is required.",
+                message: "Invalid item type",
             });
         }
 
-        const inventory = await Inventory.findById(inventoryId);
-
-        if (!inventory) {
-            return res.status(404).json({
-                message: "Inventory item not found."
+        if (!Number.isInteger(quantity) || quantity < 1) {
+            return res.status(400).json({
+                message: "Quantity must be a positive integer",
             });
+        }
+
+        // Validate the item being added
+        if (itemType === "inventory") {
+            if (
+                !inventoryId ||
+                !mongoose.Types.ObjectId.isValid(inventoryId)
+            ) {
+                return res.status(400).json({
+                    message: "Invalid inventory ID",
+                });
+            }
+
+            const inventoryItem = await Inventory.findById(inventoryId);
+
+            if (!inventoryItem) {
+                return res.status(404).json({
+                    message: "Inventory item not found",
+                });
+            }
+        }
+
+        if (itemType === "build") {
+            if (!buildId || !mongoose.Types.ObjectId.isValid(buildId)) {
+                return res.status(400).json({
+                    message: "Invalid build ID",
+                });
+            }
+
+            const build = await Build.findById(buildId);
+
+            if (!build) {
+                return res.status(404).json({
+                    message: "Build not found",
+                });
+            }
         }
 
         let cart = await Cart.findOne({
@@ -52,48 +99,80 @@ router.post("/", authMiddleware, async (req,res) => {
         });
 
         if (!cart) {
-            cart = new Cart({
+            cart = await Cart.create({
                 userId: req.user.userId,
                 items: [],
             });
         }
 
-        const existingItem = cart.items.find(
-            (item) => item.inventoryId.toString() === inventoryId
-        );
+        // Find existing matching item
+        const existingItem = cart.items.find((item) => {
+            if (itemType === "inventory") {
+                return (
+                    item.itemType === "inventory" &&
+                    item.inventoryId?.toString() === inventoryId
+                );
+            }
+
+            return (
+                item.itemType === "build" &&
+                item.buildId?.toString() === buildId
+            );
+        });
 
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
             cart.items.push({
-                inventoryId,
+                itemType,
+                inventoryId: itemType === "inventory" ? inventoryId : null,
+                buildId: itemType === "build" ? buildId : null,
                 quantity,
                 customizations,
             });
         }
 
         await cart.save();
-        await cart.populate("items.inventoryId");
 
-        res.status(200).json(cart);
+        const updatedCart = await Cart.findById(cart._id)
+            .populate("items.inventoryId")
+            .populate({
+                path: "items.buildId",
+                populate: {
+                    path: "components.inventoryId",
+                },
+            });
+
+        res.json(updatedCart);
     } catch (error) {
-        console.error("Add to cart error: ", error);
+        console.error("Add to cart error:", error);
         res.status(500).json({
-            message: "Failed to add item to cart.",
+            message: "Failed to add item to cart",
         });
     }
 });
 
-// PATCH /api/cart/:inventoryId
-// Update quantity of an item
-router.patch("/:inventoryId", authMiddleware, async (req, res) => {
+// PATCH /api/cart/:itemId
+router.patch("/:itemId", async (req, res) => {
     try {
-        const { inventoryId } = req.params;
-        const { quantity } = req.body;
+        const { quantity, itemType } = req.body;
+        const { itemId } = req.params;
 
         if (!Number.isInteger(quantity) || quantity < 0) {
             return res.status(400).json({
-                message: "Quantity must be a non-negative integer value.",
+                message: "Quantity must be a non-negative integer",
+            });
+        }
+
+        if (!["inventory", "build"].includes(itemType)) {
+            return res.status(400).json({
+                message: "Invalid item type",
+            });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).json({
+                message: "Invalid item ID",
             });
         }
 
@@ -103,17 +182,27 @@ router.patch("/:inventoryId", authMiddleware, async (req, res) => {
 
         if (!cart) {
             return res.status(404).json({
-                message: "Cart not found.",
+                message: "Cart not found",
             });
         }
 
-        const itemIndex = cart.items.findIndex(
-            (item) => item.inventoryId.toString() === inventoryId
-        );
+        const itemIndex = cart.items.findIndex((item) => {
+            if (itemType === "inventory") {
+                return (
+                    item.itemType === "inventory" &&
+                    item.inventoryId?.toString() === itemId
+                );
+            }
+
+            return (
+                item.itemType === "build" &&
+                item.buildId?.toString() === itemId
+            );
+        });
 
         if (itemIndex === -1) {
             return res.status(404).json({
-                message: "Item not found in cart.",
+                message: "Cart item not found",
             });
         }
 
@@ -124,22 +213,42 @@ router.patch("/:inventoryId", authMiddleware, async (req, res) => {
         }
 
         await cart.save();
-        await cart.populate("items.inventoryId");
 
-        res.json(cart);
+        const updatedCart = await Cart.findById(cart._id)
+            .populate("items.inventoryId")
+            .populate({
+                path: "items.buildId",
+                populate: {
+                    path: "components.inventoryId",
+                },
+            });
+
+        res.json(updatedCart);
     } catch (error) {
-        console.error("Update cart error: ", error);
+        console.error("Update cart error:", error);
         res.status(500).json({
-            message: "Failed to update cart.",
+            message: "Failed to update cart",
         });
     }
 });
 
-// DELETE /api/cart/:inventoryId
-// Remove an item from cart
-router.delete("/:inventoryId", authMiddleware, async (req, res) => {
+// DELETE /api/cart/:itemId
+router.delete("/:itemId", async (req, res) => {
     try {
-        const { inventoryId } = req.params;
+        const { itemId } = req.params;
+        const { itemType } = req.query;
+
+        if (!["inventory", "build"].includes(itemType)) {
+            return res.status(400).json({
+                message: "Invalid item type",
+            });
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).json({
+                message: "Invalid item ID",
+            });
+        }
 
         const cart = await Cart.findOne({
             userId: req.user.userId,
@@ -147,37 +256,46 @@ router.delete("/:inventoryId", authMiddleware, async (req, res) => {
 
         if (!cart) {
             return res.status(404).json({
-                message: "Cart not found.",
+                message: "Cart not found",
             });
         }
 
-        const initialLength = cart.items.length;
+        cart.items = cart.items.filter((item) => {
+            if (itemType === "inventory") {
+                return !(
+                    item.itemType === "inventory" &&
+                    item.inventoryId?.toString() === itemId
+                );
+            }
 
-        cart.items = cart.items.filter(
-            (item) => item.inventoryId.toString() !== inventoryId
-        );
-
-        if (cart.items.length === initialLength) {
-            return res.status(404).json({
-                message: "Item not found in cart.",
-            });
-        }
+            return !(
+                item.itemType === "build" &&
+                item.buildId?.toString() === itemId
+            );
+        });
 
         await cart.save();
-        await cart.populate("items.inventoryId");
 
-        res.json(cart);
+        const updatedCart = await Cart.findById(cart._id)
+            .populate("items.inventoryId")
+            .populate({
+                path: "items.buildId",
+                populate: {
+                    path: "components.inventoryId",
+                },
+            });
+
+        res.json(updatedCart);
     } catch (error) {
-        console.error("Remove from cart error: ", error);
+        console.error("Remove cart item error:", error);
         res.status(500).json({
-            message: "Failed to remove item from cart.",
+            message: "Failed to remove item from cart",
         });
     }
 });
 
 // DELETE /api/cart
-// Clear current user's cart
-router.delete("/", authMiddleware, async (req, res) => {
+router.delete("/", async (req, res) => {
     try {
         const cart = await Cart.findOne({
             userId: req.user.userId,
@@ -185,20 +303,19 @@ router.delete("/", authMiddleware, async (req, res) => {
 
         if (!cart) {
             return res.json({
-                message: "Cart already empty.",
+                userId: req.user.userId,
+                items: [],
             });
         }
 
         cart.items = [];
         await cart.save();
 
-        res.json({
-            message: "Cart cleared successfully.",
-        });
+        res.json(cart);
     } catch (error) {
-        console.error("Clear cart errors: ", error);
+        console.error("Clear cart error:", error);
         res.status(500).json({
-            message: "Failed to clear cart.",
+            message: "Failed to clear cart",
         });
     }
 });
