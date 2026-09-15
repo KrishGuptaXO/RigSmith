@@ -1,8 +1,8 @@
+import { useState } from "react";
 import Card from "../../../../components/common/Card";
 import WishlistButton from "../../../../components/common/WishlistButton";
-import toast from "react-hot-toast";
 import useCartStore from "../../../../store/useCartStore";
-import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function InventoryCard({ product }) {
     const addItem = useCartStore((state) => state.addItem);
@@ -35,7 +35,7 @@ export default function InventoryCard({ product }) {
                     />
 
                     <div className="absolute right-2 top-2">
-                        <WishlistButton build={product} size="sm" />
+                        <WishlistButton build={product} itemType="inventory" size="sm" />
                     </div>
 
                 </div>

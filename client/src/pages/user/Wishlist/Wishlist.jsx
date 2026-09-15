@@ -2,10 +2,17 @@ import useWishlistStore from "../../../store/wishlistStore";
 import WishlistGrid from "./components/WishlistGrid";
 import EmptyWishlist from "./components/EmptyWishlist";
 
-export default function Wishlist () {
-    const wishlist = useWishlistStore(
-        (state) => state.wishlist
+export default function Wishlist() {
+    const buildWishlist = useWishlistStore(
+        (state) => state.buildWishlist
     );
+
+    const inventoryWishlist = useWishlistStore(
+        (state) => state.inventoryWishlist
+    );
+
+    const totalWishlistItems =
+        buildWishlist.length + inventoryWishlist.length;
 
     return (
         <section className="space-y-8">
@@ -15,16 +22,15 @@ export default function Wishlist () {
                 </h1>
 
                 <p className="mt-2 text-zinc-400">
-                    Your saved builds for future purchases.
+                    Your saved builds and components for future purchases.
                 </p>
             </div>
 
-            {wishlist.length === 0 ? (
+            {totalWishlistItems === 0 ? (
                 <EmptyWishlist />
             ) : (
                 <WishlistGrid />
             )}
-
         </section>
     );
 }

@@ -22,7 +22,13 @@ const userSchema = new mongoose.Schema(
             minlength: 6,
         },
 
-        wishlist: [
+        buildWishlist: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Build",
+            },
+        ],
+        inventoryWishlist: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Inventory",

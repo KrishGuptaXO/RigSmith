@@ -3,7 +3,7 @@
 - Add hidden tags to PC cards for admin role. For user role they serve as filter tags to show them builds upon choosing.
 - Build the PPP link parser.
 - Build the page for mobile responsiveness.
-- Make a payment options page for various options.
+- Make the payment multiple options thingy working.
 - Custom Avatar options (compressing image, uploading image, storing in DB or local cache?, selecting image size UI, etc.)
 - For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
 
@@ -11,7 +11,10 @@
 - Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
 - Add a footer (why choose us) for the Dashboard page.
 - Merge conflicted removed Avatar card changes. Revisit them and fix it...
-- Fix the weird animation for wishlist button (Heart). (Make all image bgs black/ darker).
 - Logo loading animation has a blend of both cyan and orange for outline-animation.
+- Import builds link regex not built yet.
+- Build data not configured for Custom user builds which was actually our selling point to begin with. 
+- If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart.
 
-## Current (AG):
+## Current:
+- Customer portal is done BUT PARTNER PORTAL IS NOT YET STARTED.

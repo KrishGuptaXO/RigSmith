@@ -2,31 +2,42 @@ import { Heart } from "lucide-react";
 import useWishlistStore from "../../store/wishlistStore";
 import toast from "react-hot-toast";
 
-export default function WishlistButton({build, size="md"}) {
-    const toggleBuild = useWishlistStore(
-        (state) => state.toggleBuild
+export default function WishlistButton({
+    build,
+    itemType = "build",
+    size = "md",
+}) {
+    const buildWishlist = useWishlistStore((state) => state.buildWishlist);
+    const inventoryWishlist = useWishlistStore(
+        (state) => state.inventoryWishlist
     );
 
-    const isWishlisted = useWishlistStore(
-        (state) => state.isWishlisted(build.id)
+    const toggleBuild = useWishlistStore((state) => state.toggleBuild);
+    const toggleInventory = useWishlistStore(
+        (state) => state.toggleInventory
     );
+
+    const itemId = build._id || build.id;
+
+    const isWishlisted =
+        itemType === "build"
+            ? buildWishlist.some((item) => item.id === itemId)
+            : inventoryWishlist.some((item) => item.id === itemId);
 
     const sizes = {
-        sm: {
-            btn: "h-8 w-8",
-            icon: 16,
-        },
-        md: {
-            btn: "h-10 w-10",
-            icon: 20,
-        }
+        sm: { btn: "h-8 w-8", icon: 16 },
+        md: { btn: "h-10 w-10", icon: 20 },
     };
 
     const currentSize = sizes[size];
 
-    const handleToggle = async() => {
+    const handleToggle = async () => {
         try {
-            await toggleBuild(build);
+            if (itemType === "build") {
+                await toggleBuild(build);
+            } else {
+                await toggleInventory(build);
+            }
 
             if (isWishlisted) {
                 toast(`${build.name} removed from wishlist`, {
@@ -43,20 +54,19 @@ export default function WishlistButton({build, size="md"}) {
     };
 
     return (
-        <button 
-            onClick={handleToggle} 
-            className={`flex ${currentSize.btn} items-center justify-center rounded-full bg-[#111827]/80 backdrop-blur-sm transition-all duration-300 hover:bg-[#191528] hover:scale-110 active:scale-90 cursor-pointer ${
+        <button
+            onClick={handleToggle}
+            className={`flex ${currentSize.btn} items-center justify-center rounded-full border border-gray-700 bg-[#151515]/80 backdrop-blur-sm transition-all duration-200 hover:scale-105 ${
                 isWishlisted
-                    ? "bg-red-500/20"
-                    : "bg-[#111827]/80 hover:bg-[#191528]"
+                    ? "text-red-500"
+                    : "text-gray-400 hover:text-red-400"
             }`}
         >
-            <Heart 
-            size={currentSize.icon} 
-            className={`transition-all duration-300 
-                ${isWishlisted 
-                    ? "fill-red-400 text-red-400 scale-110" 
-                    : "text-zinc-400 hover:text-red-400 hover:scale-110"}`} 
+            <Heart
+                size={currentSize.icon}
+                className={`transition-all duration-200 ${
+                    isWishlisted ? "fill-current scale-110" : ""
+                }`}
             />
         </button>
     );
