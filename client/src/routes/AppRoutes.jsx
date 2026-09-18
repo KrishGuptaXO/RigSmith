@@ -3,7 +3,6 @@ import Layout from "../components/layout/Layout";
 import ProtectedRoutes from "./ProtectedRoutes";
 
 /* ── Page Imports ─────────────────────────────────────────────── */
-
 // Dashboard
 import Dashboard from "../pages/user/Dashboard";
 
@@ -18,6 +17,7 @@ import Inventory from "../pages/user/Inventory/Inventory";
 // Orders & Cart
 import Orders from "../pages/user/Orders";
 import Checkout from "../pages/Checkout/Checkout";
+import OrderDetails from "../pages/user/orders/OrderDetails";
 
 // User
 import Settings from "../pages/user/Settings/Settings";
@@ -42,7 +42,8 @@ function AppRoutes(){
                 <Route element={<Layout />}>
                     <Route path="/saved-builds" element={<SavedBuilds />} />    {/* User's saved builds (Future Scope) */}
                     <Route path="/orders" element={<Orders />} />               {/* Orders & history */}
-                    <Route path="/wishlisted-builds" element={<Wishlist />} />   {/* Wishlist */}
+                    <Route path="/orders/:id" element={<OrderDetails />} />     {/* Order Details */}
+                    <Route path="/wishlisted-builds" element={<Wishlist />} />  {/* Wishlist */}
                 </Route>
 
                 <Route element={<Layout showSearchBar={false} showGreeting={false} />}>
@@ -51,7 +52,6 @@ function AppRoutes(){
                     <Route path="/cart" element={<Checkout />} />               {/* Cart / Checkout */}
                     <Route path="/settings" element={<Settings />} />           {/* Account settings */}
                 </Route>
-
             </Route>
 
             {/* Public */}

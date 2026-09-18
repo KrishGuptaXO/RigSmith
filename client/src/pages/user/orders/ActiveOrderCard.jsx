@@ -4,8 +4,10 @@ import {
     CalendarClock,
     Truck,
     Package,
+    ChevronRight,
 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
+import { useNavigate } from "react-router-dom";
 
 function InfoRow({ icon: Icon, label, value, highlight = false }) {
     if (!value) return null;
@@ -47,6 +49,8 @@ function formatPrice(amount) {
 }
 
 export default function ActiveOrderCard({ order }) {
+    const navigate = useNavigate();
+
     const isDelivery =
         order.shippingAddress?.city !== "RigSmith Facility";
 
@@ -56,7 +60,10 @@ export default function ActiveOrderCard({ order }) {
     );
 
     return (
-        <div className="rounded-xl border border-[#1e1e2e] bg-[#0f0f18] p-4 transition-all duration-200 hover:border-cyan-400/20 hover:bg-[#111118] group">
+        <div
+            onClick={() => navigate(`/orders/${order._id}`)}
+            className="rounded-xl border border-[#1e1e2e] bg-[#0f0f18] p-4 transition-all duration-200 hover:border-cyan-400/20 hover:bg-[#111118] group cursor-pointer"
+        >
 
             {/* Header */}
             <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -138,9 +145,16 @@ export default function ActiveOrderCard({ order }) {
 
             {/* Footer */}
             <div className="flex items-center justify-between gap-4 mt-4 pt-3 border-t border-[#1e1e2e]">
-                <span className="text-gray-500 text-xs">
-                    Total
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className="text-gray-500 text-xs">
+                        Total
+                    </span>
+
+                    <ChevronRight
+                        size={14}
+                        className="text-gray-600 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all duration-200"
+                    />
+                </div>
 
                 <span className="text-white font-bold text-sm">
                     {formatPrice(order.totalAmount)}
