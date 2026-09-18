@@ -11,7 +11,7 @@ const inventory = [
     {
         id: 1,
         category: "GPU",
-        name: "RTX 5070 Ti Gaming OC",
+        name: "GeForce RTX 5070 Ti Gaming OC",
         brand: "Gigabyte",
         image: "/images/inventory/Gb-5070-Ti.webp",
         price: 79999,
@@ -26,8 +26,8 @@ const inventory = [
     {
         id: 2,
         category: "GPU",
-        name: "RTX 5080 16GB",
-        brand: "NVIDIA",
+        name: "GeForce RTX 5080",
+        brand: "ZOTAC",
         image: "/images/inventory/RTX-5080.webp",
         price: 129999,
         stock: 8,
@@ -41,8 +41,8 @@ const inventory = [
     {
         id: 3,
         category: "GPU",
-        name: "RTX 4070 Super 32GB",
-        brand: "NVIDIA",
+        name: "GeForce RTX 4070 Super",
+        brand: "ZOTAC",
         image: "/images/inventory/RTX-4070-Super.webp",
         price: 84999,
         stock: 6,
@@ -56,13 +56,13 @@ const inventory = [
     {
         id: 4,
         category: "GPU",
-        name: "RTX 5070 Ti White Edition",
+        name: "GeForce RTX 5070 Ti Gaming Trio OC White",
         brand: "MSI",
         image: "/images/inventory/MSI-5070-Ti-White.webp",
         price: 82999,
         stock: 7,
         specs: [
-            "16GB GDDR7",
+            "12GB GDDR7",
             "PCIe 5.0",
             "White Edition",
             "RGB",
@@ -71,7 +71,7 @@ const inventory = [
     {
         id: 5,
         category: "GPU",
-        name: "RTX 5060 Ti 16GB",
+        name: "GeForce RTX 5060 Ti",
         brand: "PNY",
         image: "/images/inventory/PNY-5060-Ti.webp",
         price: 54999,
@@ -86,13 +86,13 @@ const inventory = [
     {
         id: 6,
         category: "GPU",
-        name: "GeForce GTX Titan 6GB",
+        name: "GeForce GTX Titan",
         brand: "NVIDIA",
         image: "/images/inventory/GTX-Titan.webp",
         price: 39999,
         stock: 4,
         specs: [
-            "6GB GDDR5",
+            "6GB GDDR3",
             "384-bit",
             "PCIe 3.0",
             "Legacy GPU",
@@ -180,9 +180,9 @@ const inventory = [
     {
         id: 12,
         category: "CPU",
-        name: "Xeon X5675",
+        name: "Xeon X5600",
         brand: "Intel",
-        image: "/images/inventory/Xeon-X5675.webp",
+        image: "/images/inventory/Xeon-X5600.webp",
         price: 12999,
         stock: 2,
         specs: [
