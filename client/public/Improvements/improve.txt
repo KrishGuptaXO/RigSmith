@@ -6,6 +6,7 @@
 - Make the payment multiple options thingy working.
 - Custom Avatar options (compressing image, uploading image, storing in DB or local cache?, selecting image size UI, etc.)
 - For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
+- After pressing "View All notifs" what should happen? Build a separate page for it to show all notifs OR expand the notifs side bar page to fit the entire viewport.
 
 ## Future fixes (Low Priority):
 - Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
@@ -13,8 +14,8 @@
 - Merge conflicted removed Avatar card changes. Revisit them and fix it...
 - Logo loading animation has a blend of both cyan and orange for outline-animation.
 - Import builds link regex not built yet.
-- Build data not configured for Custom user builds which was actually our selling point to begin with. 
-- If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart.
+- Build data NOT CONFIGURED for Custom user builds which was actually our selling point to begin with. 
+- If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
 
 ## Current:
 - Customer portal is done BUT PARTNER PORTAL IS NOT YET STARTED.
