@@ -7,10 +7,14 @@ const timeOptions = [
     { id: "3m", label: "Past 3 months" },
 ];
 
-const shipOptions = [
+const statusOptions = [
     { id: "all", label: "All orders" },
+    { id: "pending", label: "Pending" },
+    { id: "confirmed", label: "Confirmed" },
+    { id: "processing", label: "Processing" },
     { id: "shipped", label: "Shipped" },
-    { id: "not-shipped", label: "Not Shipped" },
+    { id: "delivered", label: "Delivered" },
+    { id: "cancelled", label: "Cancelled" },
 ];
 
 export default function FilterDropdown({ filters, onChange }) {
@@ -69,14 +73,14 @@ export default function FilterDropdown({ filters, onChange }) {
 
                     {/* Shipping Status */}
                     <div className="px-4 pt-2 pb-3">
-                        <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest mb-2">Shipping</p>
+                        <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest mb-2">Order Status</p>
                         <div className="space-y-1">
-                            {shipOptions.map((opt) => {
-                                const active = filters.ship === opt.id;
+                            {statusOptions.map((opt) => {
+                                const active = filters.status === opt.id;
                                 return (
                                     <button
                                         key={opt.id}
-                                        onClick={() => onChange({ ...filters, ship: opt.id })}
+                                        onClick={() => onChange({ ...filters, status: opt.id })}
                                         className={`w-full flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-all duration-150 cursor-pointer
                                             ${active ? "bg-cyan-400/10 text-cyan-400" : "text-gray-400 hover:bg-[#161622] hover:text-white"}`}
                                     >

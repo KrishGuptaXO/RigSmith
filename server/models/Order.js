@@ -1,3 +1,4 @@
+import cryto from "crypto";
 import mongoose from "mongoose";
 
 const orderItemSchema = new mongoose.Schema(
@@ -49,6 +50,13 @@ const orderItemSchema = new mongoose.Schema(
 
 const OrderSchema = new mongoose.Schema(
     {
+        orderNumber: {
+            type: String,
+            unique: true,
+            required: true,
+            immutable: true,
+        },
+
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
@@ -123,6 +131,17 @@ const OrderSchema = new mongoose.Schema(
     },
     {timestamps: true}
 );
+OrderSchema.pre("validate", function (next) {
+    if (!this.orderNumber) {
+        this.orderNumber = `RS-${cryto
+            .randomBytes(4)
+            .toString("hex")
+            .toUpperCase()
+        }`;
+    }
+
+    next();
+});
 
 const Order = mongoose.model("Order", OrderSchema);
 

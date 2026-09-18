@@ -19,3 +19,4 @@
 
 ## Current:
 - Customer portal is done BUT PARTNER PORTAL IS NOT YET STARTED.
+- Fix the UI for "Your Orders" Page.
