@@ -308,13 +308,13 @@ const inventory = [
     {
         id: 20,
         category: "RAM",
-        name: "Kingston Fury 64GB",
+        name: "Kingston Fury Beast RGB",
         brand: "Kingston",
         image: "/images/inventory/Kingston-Fury-64GB.webp",
         price: 29999,
         stock: 12,
         specs: [
-            "64GB",
+            "64GB (32 x 2)",
             "DDR5",
             "6000MHz",
             "CL30",
@@ -323,13 +323,13 @@ const inventory = [
     {
         id: 21,
         category: "RAM",
-        name: "G.Skill Trident Z 32GB",
+        name: "G.Skill Trident Z5 Neo RGB",
         brand: "G.Skill",
         image: "/images/inventory/Gskill-Trident-Z.webp",
         price: 14999,
         stock: 10,
         specs: [
-            "32GB",
+            "32GB (16 x 2)",
             "DDR4",
             "3600MHz",
             "White RGB",
@@ -338,8 +338,8 @@ const inventory = [
     {
         id: 22,
         category: "RAM",
-        name: "16GB DDR5 5600",
-        brand: "Generic",
+        name: "PNY Memory",
+        brand: "PNY",
         image: "/images/inventory/16GB-DDR5.webp",
         price: 7999,
         stock: 15,
@@ -352,15 +352,15 @@ const inventory = [
     {
         id: 23,
         category: "RAM",
-        name: "Corsair 12GB DDR4",
+        name: "Corsair Vengeance 32GB DDR4 3000",
         brand: "Corsair",
-        image: "/images/inventory/Corsair-12GB.webp",
+        image: "/images/inventory/Corsair-32GB.webp",
         price: 6999,
         stock: 2,
         specs: [
-            "12GB",
+            "32GB (16 x 2)",
             "DDR4",
-            "Triple Channel",
+            "3000 MT/s",
         ],
     },
 
@@ -440,8 +440,8 @@ const inventory = [
     {
         id: 29,
         category: "HDD",
-        name: "2TB HDD",
-        brand: "Generic",
+        name: "WD Blue 2TB HDD",
+        brand: "Western Digital",
         image: "/images/inventory/2TB-HDD.webp",
         price: 4999,
         stock: 5,
@@ -609,7 +609,7 @@ const inventory = [
         specs: [
             "Air Cooler",
             "ARGB",
-            "120mm Fan",
+            "120mm Fan (x3)",
         ],
     },
     {
