@@ -8,7 +8,7 @@ import { Outlet } from "react-router-dom";
  *  ───────────────────────
  *  showSidebar   (default: true)  → Left sidebar navigation
  *  showSearchBar (default: true)  → Search input in the header
- *  showGreeting  (default: true)  → "Good Morning, Krish 👋🏼" greeting
+ *  showGreeting  (default: true)  → "Good Morning, [User] 👋🏼" greeting
  *
  *  The Navbar (🔔 notification + 🛒 cart) is ALWAYS visible when Layout is used.
  */

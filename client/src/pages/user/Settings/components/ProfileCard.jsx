@@ -1,4 +1,4 @@
-import { Camera, Package, Heart, Wrench, ShieldCheck, Shield } from "lucide-react";
+import { Camera, Package, Heart, Wrench, ShieldCheck } from "lucide-react";
 import Av1 from "../../../../assets/images/Avatars/Avatar1.png"
 import AvatarModals from "./AvatarModal";
 import { useState } from "react";

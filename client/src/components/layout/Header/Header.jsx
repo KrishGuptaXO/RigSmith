@@ -1,14 +1,16 @@
-import { Search, Bell, ShoppingCart, CircleUser } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import Greetings from '../../common/Greetings';
 import useCartStore from '../../../store/useCartStore';
 import NotificationButton from './NotificationButton';
+import authStore from "../../../store/authStore";
 
 export default function Header({ showSearchBar = true, showGreeting = true }) {
     const navigate = useNavigate();
     const items = useCartStore((s) => s.items);
     const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
+    const user = authStore((s) => s.user);
 
     return (
         <header className='flex flex-col gap-6 bg-[#0D1117] px-8 py-6'>
@@ -54,7 +56,7 @@ export default function Header({ showSearchBar = true, showGreeting = true }) {
             </div>
 
             {/* Greetings — only shown when showGreeting is true */}
-            {showGreeting && <Greetings user="Krish" />}
+            <Greetings user={user?.name || "User"} />
 
         </header>
     );
