@@ -22,4 +22,3 @@
 - Fix the UI for "Your Orders" Page.
 - Change the salutations file to sync with who ever user is logged in.
 - Also add wherever needed user checks since we are gonna be having multiple users ordering stuff.
-- SSD is not loading in Storage filter section, neither is anything else after it.

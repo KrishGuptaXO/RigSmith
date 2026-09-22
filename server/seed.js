@@ -628,11 +628,11 @@ const inventory = [
     },
 
     // =========================
-    // Cabinets
+    // Case
     // =========================
     {
         id: 42,
-        category: "Cabinet",
+        category: "Case",
         name: "Lian Li Lancool 216 RGB",
         brand: "Lian Li",
         image: "/images/inventory/Lian-Li-Lancool-216.webp",
@@ -646,7 +646,7 @@ const inventory = [
     },
     {
         id: 43,
-        category: "Cabinet",
+        category: "Case",
         name: "HYTE Y70 Touch",
         brand: "HYTE",
         image: "/images/inventory/HYTE-Y70-Touch.webp",
@@ -660,7 +660,7 @@ const inventory = [
     },
     {
         id: 44,
-        category: "Cabinet",
+        category: "Case",
         name: "NZXT H9 Flow White",
         brand: "NZXT",
         image: "/images/inventory/NZXT-H9-Flow.webp",
@@ -674,7 +674,7 @@ const inventory = [
     },
     {
         id: 45,
-        category: "Cabinet",
+        category: "Case",
         name: "Lian Li O11 Vision",
         brand: "Lian Li",
         image: "/images/inventory/Lian-Li-O11-Vision.webp",
@@ -688,7 +688,7 @@ const inventory = [
     },
     {
         id: 46,
-        category: "Cabinet",
+        category: "Case",
         name: "Ant Esports ICE-211TG ARGB",
         brand: "Ant Esports",
         image: "/images/inventory/Ant-Esports-ICE-211TG.webp",
@@ -702,7 +702,7 @@ const inventory = [
     },
     {
         id: 47,
-        category: "Cabinet",
+        category: "Case",
         name: "Cooler Master HAF X",
         brand: "Cooler Master",
         image: "/images/inventory/CM-HAF-X.webp",

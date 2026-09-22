@@ -4,9 +4,9 @@ const categories = [
     "GPU",
     "Motherboard",
     "RAM",
-    "Storage",
+    "SSD",
     "Case",
-    "Cooler",
+    "CPU Cooler",
     "Monitor",
 ];
 
