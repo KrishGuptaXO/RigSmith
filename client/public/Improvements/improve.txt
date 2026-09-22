@@ -13,9 +13,9 @@
 - Logo loading animation has a blend of both cyan and orange for outline-animation.
 - Customer portal is done BUT PARTNER PORTAL IS NOT YET STARTED.
 - Add images for Case filter in inventory.
+- Fix dashboard's messy UI.
 
 ## Current:
-- Add a footer (why choose us) for the Dashboard page.
 - Import builds link regex not built yet.
 - Build data NOT CONFIGURED for Custom user builds which was actually our selling point to begin with. 
 - Merge conflicted removed Avatar card changes. Revisit them and fix it...
