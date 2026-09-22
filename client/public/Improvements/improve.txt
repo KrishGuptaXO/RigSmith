@@ -19,7 +19,7 @@
 - Import builds link regex not built yet.
 - Build data NOT CONFIGURED for Custom user builds which was actually our selling point to begin with. 
 - Merge conflicted removed Avatar card changes. Revisit them and fix it...
-- If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
+- (Customer Audit Chat linked) If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
 
 ## AG:
 - Fix the UI for "Your Orders" Page.

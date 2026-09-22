@@ -8,6 +8,7 @@ import wishlistRoutes from "./routes/wishlistRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import buildRoutes from "./routes/buildRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import customBuildRoutes from "./routes/customBuildRoutes.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/builds", buildRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/custom-builds", customBuildRoutes);
 
 // Connect to MongoDB, then start server
 const startServer = async () => {
