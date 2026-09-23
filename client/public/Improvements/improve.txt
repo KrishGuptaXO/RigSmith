@@ -1,7 +1,6 @@
 ## Future upgrades:
 - Categories -> Server/ Enterprise level builds (for a whole Enterprise altogether assembled).
 - Add hidden tags to PC cards for admin role. For user role they serve as filter tags to show them builds upon choosing.
-- Build the PPP link parser.
 - Build the page for mobile responsiveness.
 - Make the payment multiple options thingy working.
 - Custom Avatar options (compressing image, uploading image, storing in DB or local cache?, selecting image size UI, etc.)
@@ -14,12 +13,13 @@
 - Customer portal is done BUT PARTNER PORTAL IS NOT YET STARTED.
 - Add images for Case filter in inventory.
 - Fix dashboard's messy UI.
+- User data to be kept in sessionStorage or localStorage since localStorage will eventually store user's build data.
 
 ## Current:
 - Import builds link regex not built yet.
-- Build data NOT CONFIGURED for Custom user builds which was actually our selling point to begin with. 
+- Build data NOT CONFIGURED for Custom user builds which was actually our selling point to begin with.
 - Merge conflicted removed Avatar card changes. Revisit them and fix it...
-- (Customer Audit Chat linked) If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
+- (Concept Learning space chat linked) If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
 
 ## AG:
 - Fix the UI for "Your Orders" Page.
