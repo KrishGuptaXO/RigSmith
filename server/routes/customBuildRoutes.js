@@ -1,6 +1,8 @@
 import express from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
 import { parsePcPartPickerText, PcPartPickerError } from "../services/pcpartpicker/index.js";
+import Inventory from "../models/Inventory.js";
+import { matchComponents } from "../services/pcpartpicker/inventoryMatcher.js";
 
 const router = express.Router();
 
@@ -24,9 +26,20 @@ router.post("/import", authMiddleware, async (req, res) => {
 
         console.log("PCPartPicker text import requested by user: ", req.user.userId);
 
-        const result = parsePcPartPickerText(partList);
+        const parsedResult = parsePcPartPickerText(partList);
 
-        return res.status(200).json(result);
+        const inventoryItems = await Inventory.find().lean();
+
+        const components = matchComponents(
+            parsedResult.components,
+            inventoryItems
+        );
+
+        return res.status(200).json({
+            ...parsedResult,
+            components,
+        });
+
     } catch (error) {
         if (error instanceof PcPartPickerError) {
             console.error("PCPartPicker import failed:", error.message);
