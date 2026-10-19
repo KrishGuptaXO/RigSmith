@@ -3,8 +3,12 @@ import Button from "../../common/Button"
 import authStore from "../../../store/authStore";
 import { ClipboardPaste, ExternalLink, Info } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ImportBuild() {
+    const navigate = useNavigate();
+    const [isChecking, setIsChecking] = useState(false);
+
     const [inputValue, setInputValue] = useState("");
     const [error, setError] = useState("");
     
@@ -14,13 +18,16 @@ export default function ImportBuild() {
         window.open("https://pcpartpicker.com/list", "_blank", "noopener, noreferrer");
     };
 
-    const handleCheckAvailability = async () => {
+    
+const handleCheckAvailability = async () => {
     setError("");
 
     if (!inputValue.trim()) {
         setError("Please paste your PCPartPicker component list.");
         return;
     }
+
+    setIsChecking(true);
 
     try {
         const response = await fetch(
@@ -44,12 +51,22 @@ export default function ImportBuild() {
             return;
         }
 
-        console.log("Parsed PCPartPicker build:", data);
+        // Save the imported build for the results page.
+        localStorage.setItem(
+            "rigsmithImportedBuild",
+            JSON.stringify(data)
+        );
+
+        // Navigate to the results page.
+        navigate("/custom-build/results");
     } catch (error) {
         console.error("Build import failed:", error);
         setError("Unable to connect to the server.");
+    } finally {
+        setIsChecking(false);
     }
 };
+
     
     return (
         <section className="mt-8">
@@ -156,10 +173,10 @@ export default function ImportBuild() {
                 {/* Action */}
                 <div className="mt-6 flex justify-end">
                     <Button
-                        disabled={!inputValue.trim()}
+                        disabled={!inputValue.trim() || isChecking}
                         onClick={handleCheckAvailability}
                     >
-                        Check Availability →
+                        {isChecking ? "Checking Availability..." : "Check Availability →"}
                     </Button>
                 </div>
             </Card>

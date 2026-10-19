@@ -26,6 +26,9 @@ import Wishlist from "../pages/user/Wishlist/Wishlist";
 // Auth
 import Auth from "../pages/Auth/Auth";
 
+// Custom Build
+import CustomBuildResults from "../pages/user/CustomBuildResults";
+
 
 function AppRoutes(){
     return (
@@ -51,6 +54,7 @@ function AppRoutes(){
                     <Route path="/builds/:id" element={<ViewBuild />} />        {/* Individual build view */}
                     <Route path="/cart" element={<Checkout />} />               {/* Cart / Checkout */}
                     <Route path="/settings" element={<Settings />} />           {/* Account settings */}
+                    <Route path="/custom-build/results" element={<CustomBuildResults />} />
                 </Route>
             </Route>
 

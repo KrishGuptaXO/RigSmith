@@ -6,6 +6,7 @@
 - Custom Avatar options (compressing image, uploading image, storing in DB or local cache?, selecting image size UI, etc.)
 - For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
 - After pressing "View All notifs" what should happen? Build a separate page for it to show all notifs OR expand the notifs side bar page to fit the entire viewport.
+- Add a currency converter for the parsed inventory check coming from PPP upon matching since our storefront will entirely be Indian-based.
 
 ## Future fixes (Low Priority):
 - Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
