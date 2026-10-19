@@ -178,13 +178,13 @@ export default function Orders() {
                             Purchase History
                         </h2>
 
-                        <p className="text-gray-500 text-xs mt-0.5">
+                        <p className="text-gray-500 text-xs mt-2">
                             Past three months &nbsp;·&nbsp; Orders to be
                             shipped / picked up
                         </p>
                     </div>
 
-                    <div className="rounded-2xl border border-[#1e1e2e] overflow-hidden divide-y divide-[#1e1e2e]">
+                    <div className="space-y-4">
                         {activeOrders.map((order) => (
                             <ActiveOrderCard
                                 key={order._id}
@@ -199,16 +199,16 @@ export default function Orders() {
             {pastOrders.length > 0 && (
                 <div className="space-y-3">
                     <div>
-                        <h2 className="text-gray-400 font-semibold text-sm">
+                        <h2 className="text-white font-bold text-lg">
                             Past Orders
-                            <span className="text-gray-600 font-normal">
+                            <span className="block text-gray-600 font-normal text-sm">
                                 {" "}
                                 (up to 3 months old)
                             </span>
                         </h2>
                     </div>
 
-                    <div className="rounded-2xl border border-[#1e1e2e] overflow-hidden divide-y divide-[#1e1e2e]">
+                    <div className="space-y-4">
                         {pastOrders.map((order) => (
                             <PastOrderCard
                                 key={order._id}

@@ -41,7 +41,7 @@ export default function PastOrderCard({ order }) {
     );
 
     return (
-        <div className="rounded-xl border border-[#1e1e2e] bg-[#0a0a11] p-4 transition-all duration-200 hover:border-gray-700/50 group">
+        <div className="rounded-xl border border-[#3A2F5B] bg-[#1e1730] p-4 transition-all duration-200 hover:border-gray-500/40 group">
 
             {/* Header */}
             <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -62,7 +62,7 @@ export default function PastOrderCard({ order }) {
             </div>
 
             {/* Items */}
-            <div className="mt-4 rounded-xl border border-[#1e1e2e] bg-[#08080e] p-3">
+            <div className="mt-4 rounded-xl border border-[#2e2349] bg-[#160f22] p-3">
                 <div className="flex items-center gap-2 mb-2">
                     <Package size={13} className="text-gray-600" />
 
@@ -105,7 +105,7 @@ export default function PastOrderCard({ order }) {
             </div>
 
             {/* Total */}
-            <div className="flex items-center justify-between gap-4 mt-3 pt-3 border-t border-[#1e1e2e]">
+            <div className="flex items-center justify-between gap-4 mt-3 pt-3 border-t border-[#3A2F5B]">
                 <span className="text-gray-600 text-xs">
                     Total
                 </span>

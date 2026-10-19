@@ -62,7 +62,7 @@ export default function ActiveOrderCard({ order }) {
     return (
         <div
             onClick={() => navigate(`/orders/${order._id}`)}
-            className="rounded-xl border border-[#1e1e2e] bg-[#0f0f18] p-4 transition-all duration-200 hover:border-cyan-400/20 hover:bg-[#111118] group cursor-pointer"
+            className="rounded-xl border border-[#3A2F5B] bg-[#241C38] p-4 transition-all duration-200 hover:border-cyan-400/40 hover:bg-[#2a2040] group cursor-pointer"
         >
 
             {/* Header */}
@@ -84,7 +84,7 @@ export default function ActiveOrderCard({ order }) {
             </div>
 
             {/* Items */}
-            <div className="mt-4 rounded-xl border border-[#1e1e2e] bg-[#0b0b12] p-3">
+            <div className="mt-4 rounded-xl border border-[#2e2349] bg-[#1A1325] p-3">
                 <div className="flex items-center gap-2 mb-2">
                     <Package size={13} className="text-gray-500" />
 
@@ -144,7 +144,7 @@ export default function ActiveOrderCard({ order }) {
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between gap-4 mt-4 pt-3 border-t border-[#1e1e2e]">
+            <div className="flex items-center justify-between gap-4 mt-4 pt-3 border-t border-[#3A2F5B]">
                 <div className="flex items-center gap-2">
                     <span className="text-gray-500 text-xs">
                         Total
