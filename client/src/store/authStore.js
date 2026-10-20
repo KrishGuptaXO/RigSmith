@@ -24,6 +24,15 @@ const authStore = create (
                 });
             },
 
+            updateUser: (updatedUser) => {
+                set((state) => ({
+                    user: {
+                        ...state.user,
+                        ...updatedUser,
+                    },
+                }));
+            },
+
             restoreSession: async () => {
                 const { token } = get();
 

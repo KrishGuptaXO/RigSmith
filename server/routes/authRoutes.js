@@ -114,6 +114,7 @@ router.post("/login", async (req, res) => {
                 name: user.name,
                 email: user.email,
                 role: user.role,
+                avatarId: user.avatarId,
             }
         });
     } catch (error) {
@@ -132,10 +133,57 @@ router.get("/me", authMiddleware, async (req, res) => {
         if (!user) return res.status(404).json({message: "User not found."});
 
         res.status(200).json({
-            user: {id: user._id, name: user.name, email: user.email, role: user.role},
+            user: {id: user._id, name: user.name, email: user.email, role: user.role, avatarId: user.avatarId,},
         });
     } catch (error) {
         res.status(500).json({message: "Failed to fetch user."});
+    }
+});
+
+// PATCH /api/auth/avatar
+router.patch("/avatar", authMiddleware, async (req, res) => {
+    try {
+        const { avatarId } = req.body;
+
+        const validAvatarIds = [
+            1, 2, 3, 4, 5, 6,
+            7, 8, 9, 10, 11, 12,
+        ];
+
+        if (!validAvatarIds.includes(avatarId)) {
+            return res.status(400).json({
+                message: "Invalid avatar selection.",
+            });
+        }
+
+        const user = await User.findByIdAndUpdate(
+            req.user.userId,
+            { avatarId },
+            { new: true, runValidators: true }
+        ).select("-password");
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found.",
+            });
+        }
+
+        return res.status(200).json({
+            message: "Avatar updated successfully.",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                avatarId: user.avatarId,
+            },
+        });
+    } catch (error) {
+        console.error("Avatar update failed:", error.message);
+
+        return res.status(500).json({
+            message: "Failed to update avatar.",
+        });
     }
 });
 

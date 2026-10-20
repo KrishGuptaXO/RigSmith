@@ -11,14 +11,10 @@
 ## Future fixes (Low Priority):
 - Add the nebula animation as bg for the entire website. (Sources: Namespace BPIT website, https://pixabay.com/videos/nebula-gas-galaxy-space-25047/)
 - Logo loading animation has a blend of both cyan and orange for outline-animation.
-- Customer portal is almost done BUT PARTNER PORTAL IS NOT YET STARTED.
 - Add images for Case filter in inventory.
-- Fix dashboard's messy UI.
-- User data to be kept in sessionStorage or localStorage since localStorage will eventually store user's build data.
 
 ## Current:
-- Merge conflicted removed Avatar card changes. Revisit them and fix it...
+- Customer Portal is nearly completed. Yet we have 2 more portals: Admin (Claude), Supplier
 - (Concept Learning space chat linked) If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
 
-## AG:
-- Fix the UI for "Your Orders" Page.
+- Have Profile Settings import data from User Authentication API
