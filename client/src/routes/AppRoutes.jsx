@@ -29,6 +29,17 @@ import Auth from "../pages/Auth/Auth";
 // Custom Build
 import CustomBuildResults from "../pages/user/CustomBuildResults";
 
+// Admin
+import AdminRoute from "./AdminRoute";
+import AdminLayout from "../components/admin/AdminLayout";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
+import AdminInventory from "../pages/Admin/AdminInventory";
+import AdminCategories from "../pages/Admin/AdminCategories";
+import AdminSuppliers from "../pages/Admin/AdminSuppliers";
+import AdminCustomers from "../pages/Admin/AdminCustomers";
+import AdminOrders from "../pages/Admin/AdminOrders";
+import AdminReports from "../pages/Admin/AdminReports";
+
 
 function AppRoutes(){
     return (
@@ -55,6 +66,19 @@ function AppRoutes(){
                     <Route path="/cart" element={<Checkout />} />               {/* Cart / Checkout */}
                     <Route path="/settings" element={<Settings />} />           {/* Account settings */}
                     <Route path="/custom-build/results" element={<CustomBuildResults />} />
+                </Route>
+            </Route>
+
+            {/* Admin Portal (UI guard; the API enforces the admin role itself) */}
+            <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route index element={<AdminDashboard />} />
+                    <Route path="inventory" element={<AdminInventory />} />
+                    <Route path="categories" element={<AdminCategories />} />
+                    <Route path="suppliers" element={<AdminSuppliers />} />
+                    <Route path="customers" element={<AdminCustomers />} />
+                    <Route path="orders" element={<AdminOrders />} />
+                    <Route path="reports" element={<AdminReports />} />
                 </Route>
             </Route>
 

@@ -1,10 +1,16 @@
 import {navigation} from './navigation.js';
 import { NavLink } from 'react-router-dom';
-import { ArrowLeftToLine } from 'lucide-react';
+import { ArrowLeftToLine, ShieldCheck } from 'lucide-react';
 import Logo from "../../../assets/logos/PageLogo.png"
 import AccountsSidebar from './AccountsSidebar.jsx';
+import authStore from '../../../store/authStore.js';
 
 export default function AppSidebar ({collapsed, toggleSidebar}) {
+    const isAdmin = authStore((s) => s.user?.role === 'admin');
+    const items = isAdmin
+        ? [...navigation, {label: 'Admin Portal', path: '/admin', icon: ShieldCheck}]
+        : navigation;
+
     return (
         <aside 
             className={`
@@ -45,7 +51,7 @@ export default function AppSidebar ({collapsed, toggleSidebar}) {
 
             <div className="flex h-[calc(100%-88px)] flex-col">
                 <nav className={`mt-6 flex flex-1 flex-col gap-2 px-3 ${collapsed ? '' : 'overflow-y-auto'}`}>
-                    {navigation.map((item) => {
+                    {items.map((item) => {
                         const Icon = item.icon;
                         return (
                             <div className='group relative'>
