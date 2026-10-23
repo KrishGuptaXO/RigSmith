@@ -19,9 +19,9 @@
 
 - Have Profile Settings import data from User Authentication API
 
-High	Public inventory search regex	Unescaped search input can cause unexpected regex behavior or excessive processing.
-High	Restocking cancelled orders	Build restocking uses the build's current components rather than a snapshot from when the order was placed.
-High	Inventory/order consistency	Verify cancellation, stock deductions, and concurrent updates against real database records.
-Medium	Admin workflows	Verify form validation, filtering, pagination, empty states, and error handling across pages.
-Low	Supplier pagination	A known limitation, but probably fine for a small demonstration dataset.
-Later	Dynamic Profile Card	Replace the hardcoded order/build/wishlist counts and membership date.
+- (High) ->	Public inventory search regex (Unescaped search input can cause unexpected regex behavior or excessive processing).
+- (High) ->	Restocking cancelled orders	(Build restocking uses the build's current components rather than a snapshot from when the order was placed).
+- (High) ->	Inventory/order consistency	(Verify cancellation, stock deductions, and concurrent updates against real database records).
+- (Medium) -> Admin workflows (Verify form validation, filtering, pagination, empty states, and error handling across pages).
+- (Low) -> Supplier pagination (A known limitation, but probably fine for a small demonstration dataset).
+- (Later) -> Dynamic Profile Card (Replace the hardcoded order/build/wishlist counts and membership date).
