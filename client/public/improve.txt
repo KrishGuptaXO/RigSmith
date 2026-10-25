@@ -1,10 +1,5 @@
 ## Future upgrades:
-- Categories -> Server/ Enterprise level builds (for a whole Enterprise altogether assembled).
-- Add hidden tags to PC cards for admin role. For user role they serve as filter tags to show them builds upon choosing.
 - Build the page for mobile responsiveness.
-- Make the payment multiple options thingy working.
-- Custom Avatar options (compressing image, uploading image, storing in DB or local cache?, selecting image size UI, etc.)
-- For a user who is already LoggedIn, the LogIn/SignUp Page should not render rather the accounts button should just be a hoverable field that shows username and email and avatar.
 - After pressing "View All notifs" what should happen? Build a separate page for it to show all notifs OR expand the notifs side bar page to fit the entire viewport.
 - Add a currency converter for the parsed inventory check coming from PPP upon matching since our storefront will entirely be Indian-based.
 
@@ -16,10 +11,8 @@
 ## Current:
 - Customer Portal is nearly completed and Admin Portal needs polish, Supplier Portal is DUE.
 - (Concept Learning space chat linked) If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
-
 - Have Profile Settings import data from User Authentication API
 
-- (High) ->	Public inventory search regex (Unescaped search input can cause unexpected regex behavior or excessive processing).
 - (High) ->	Restocking cancelled orders	(Build restocking uses the build's current components rather than a snapshot from when the order was placed).
 - (High) ->	Inventory/order consistency	(Verify cancellation, stock deductions, and concurrent updates against real database records).
 - (Medium) -> Admin workflows (Verify form validation, filtering, pagination, empty states, and error handling across pages).
