@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import Inventory from "../models/Inventory.js";
+import { escapeRegex } from "../utils/helper.js";
 
 const router = express.Router();
 
@@ -44,12 +45,12 @@ router.get ("/", async (req, res) => {
 
         // Category filter
         if (category && category.toLowerCase() !== "all") {
-            filter.category = new RegExp(`^${category}$`, "i");
+            filter.category = new RegExp(`^${escapeRegex(category)}$`, "i");
         }
 
         // Search filter
         if (search) {
-            const searchRegex = new RegExp(search, "i");
+            const searchRegex = new RegExp(escapeRegex(search), "i");
 
             filter.$or = [
                 { name: searchRegex },
