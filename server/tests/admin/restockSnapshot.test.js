@@ -54,9 +54,6 @@ describe("build restock uses the order-time snapshot", () => {
         // checkout path
         stub(Cart, "findOne", () => ({ session: async () => cart }));
         stub(Inventory, "findById", () => ({ session: async () => null }));
-        stub(Inventory, "findByIdAndUpdate", async (id, u) => {
-            stockCalls.push({ id: String(id), inc: u.$inc.stock });
-        });
         stub(Build, "findById", () => {
             buildLookups++;
             return { populate() { return this; }, session: async () => buildDoc };

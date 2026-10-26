@@ -13,7 +13,6 @@
 - (Concept Learning space chat linked) If I add an item to Cart from Wishlist; that item should be deleted from the wishlist and successfully added to cart + Also check for customisations getting loaded successfully.
 - Have Profile Settings import data from User Authentication API
 
-- (High) ->	Restocking cancelled orders	(Build restocking uses the build's current components rather than a snapshot from when the order was placed).
 - (High) ->	Inventory/order consistency	(Verify cancellation, stock deductions, and concurrent updates against real database records).
 - (Medium) -> Admin workflows (Verify form validation, filtering, pagination, empty states, and error handling across pages).
 - (Low) -> Supplier pagination (A known limitation, but probably fine for a small demonstration dataset).

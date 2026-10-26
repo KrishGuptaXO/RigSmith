@@ -5,6 +5,7 @@ import Cart from "../models/Cart.js";
 import Inventory from "../models/Inventory.js";
 import Build from "../models/Build.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import { HttpError, handleError } from "../utils/helper.js";
 
 const router = express.Router();
 
@@ -23,175 +24,192 @@ router.post("/", authMiddleware, async (req, res) => {
             !shippingAddress?.state ||
             !shippingAddress?.postalCode
         ) {
-            return res.status(400).json({
-                message: "Complete shipping address is required.",
-            });
+            throw new HttpError(400, "Complete shipping address is required.");
         }
 
-        session.startTransaction();
+        let order;
 
-        const cart = await Cart.findOne({
-            userId: req.user.userId,
-        }).session(session);
+        // withTransaction retries the callback on transient errors (e.g. a write
+        // conflict with another checkout), so everything inside must be re-runnable.
+        await session.withTransaction(async () => {
+            const cart = await Cart.findOne({
+                userId: req.user.userId,
+            }).session(session);
 
-        if (!cart || cart.items.length === 0) {
-            await session.abortTransaction();
-
-            return res.status(400).json({
-                message: "Your cart is empty.",
-            });
-        }
-
-        const orderItems = [];
-        const buildSnapshots = new Map();
-        let totalAmount = 0;
-
-        for (const cartItem of cart.items) {
-            if (cartItem.itemType === "inventory") {
-                const inventoryItem = await Inventory.findById(
-                    cartItem.inventoryId
-                ).session(session);
-
-                if (!inventoryItem) {
-                    throw new Error(
-                        `Inventory item ${cartItem.inventoryId} no longer exists.`
-                    );
-                }
-
-                if (inventoryItem.stock < cartItem.quantity) {
-                    throw new Error(
-                        `${inventoryItem.name} does not have enough stock.`
-                    );
-                }
-
-                orderItems.push({
-                    itemType: "inventory",
-                    inventoryId: inventoryItem._id,
-                    name: inventoryItem.name,
-                    price: inventoryItem.price,
-                    quantity: cartItem.quantity,
-                    customizations: cartItem.customizations || "",
-                });
-
-                totalAmount +=
-                    inventoryItem.price * cartItem.quantity;
+            if (!cart || cart.items.length === 0) {
+                throw new HttpError(400, "Your cart is empty.");
             }
 
-            if (cartItem.itemType === "build") {
-                const build = await Build.findById(
-                    cartItem.buildId
-                )
-                    .populate("components.inventoryId")
-                    .session(session);
+            const orderItems = [];
+            let totalAmount = 0;
 
-                if (!build) {
-                    throw new Error(
-                        `Build ${cartItem.buildId} no longer exists.`
-                    );
+            // inventoryId -> { name, stock (as read), needed (summed over the WHOLE cart) }
+            // The same part can appear in several cart lines (two builds sharing a GPU,
+            // or a build plus the same part on its own), so stock is checked against the
+            // combined total, not line by line.
+            const demand = new Map();
+            const addDemand = (inventoryId, name, stock, quantity) => {
+                const key = String(inventoryId);
+                const entry = demand.get(key) || { inventoryId, name, stock, needed: 0 };
+                entry.needed += quantity;
+                demand.set(key, entry);
+            };
+
+            for (const cartItem of cart.items) {
+                if (!Number.isInteger(cartItem.quantity) || cartItem.quantity < 1) {
+                    throw new HttpError(400, "Cart contains an invalid quantity.");
                 }
 
-                for (const component of build.components) {
-                    const inventoryItem = component.inventoryId;
+                if (cartItem.itemType === "inventory") {
+                    const inventoryItem = await Inventory.findById(
+                        cartItem.inventoryId
+                    ).session(session);
 
                     if (!inventoryItem) {
-                        throw new Error(
-                            `A component in ${build.name} is no longer available.`
+                        throw new HttpError(
+                            400,
+                            `Inventory item ${cartItem.inventoryId} no longer exists.`
                         );
                     }
 
-                    const requiredStock =
-                        component.quantity * cartItem.quantity;
-
-                    if (inventoryItem.stock < requiredStock) {
-                        throw new Error(
-                            `${inventoryItem.name} does not have enough stock for ${build.name}.`
+                    if (inventoryItem.stock < cartItem.quantity) {
+                        throw new HttpError(
+                            400,
+                            `${inventoryItem.name} does not have enough stock.`
                         );
                     }
-                }
-                
-                const components = build.components.map((component) => ({
-                    inventoryId: component.inventoryId._id,
-                    name: component.inventoryId.name,
-                    quantity: component.quantity,
-                }));
-                buildSnapshots.set(String(build._id), components);
 
-                orderItems.push({
-                    itemType: "build",
-                    buildId: build._id,
-                    name: build.name,
-                    price: build.price,
-                    quantity: cartItem.quantity,
-                    customizations: cartItem.customizations || "",
-                    components,
-                });
+                    addDemand(
+                        inventoryItem._id,
+                        inventoryItem.name,
+                        inventoryItem.stock,
+                        cartItem.quantity
+                    );
 
-                totalAmount += build.price * cartItem.quantity;
-            }
-        }
+                    orderItems.push({
+                        itemType: "inventory",
+                        inventoryId: inventoryItem._id,
+                        name: inventoryItem.name,
+                        price: inventoryItem.price,
+                        quantity: cartItem.quantity,
+                        customizations: cartItem.customizations || "",
+                    });
 
-        // Deduct inventory stock
-        for (const cartItem of cart.items) {
-            if (cartItem.itemType === "inventory") {
-                await Inventory.findByIdAndUpdate(
-                    cartItem.inventoryId,
-                    {
-                        $inc: {
-                            stock: -cartItem.quantity,
-                        },
-                    },
-                    { session }
-                );
-            }
-
-            if (cartItem.itemType === "build") {
-                const components = buildSnapshots.get(String(cartItem.buildId));
-
-                if (!components) {
-                    throw new Error("Build no longer exists.");
+                    totalAmount += inventoryItem.price * cartItem.quantity;
                 }
 
-                // Deduct from the same snapshot that is saved on the order.
-                for (const component of components) {
-                    await Inventory.findByIdAndUpdate(
-                        component.inventoryId,
-                        { $inc: { stock: -(component.quantity * cartItem.quantity) } },
-                        { session }
+                if (cartItem.itemType === "build") {
+                    const build = await Build.findById(cartItem.buildId)
+                        .populate("components.inventoryId")
+                        .session(session);
+
+                    if (!build) {
+                        throw new HttpError(
+                            400,
+                            `Build ${cartItem.buildId} no longer exists.`
+                        );
+                    }
+
+                    for (const component of build.components) {
+                        const inventoryItem = component.inventoryId;
+
+                        if (!inventoryItem) {
+                            throw new HttpError(
+                                400,
+                                `A component in ${build.name} is no longer available.`
+                            );
+                        }
+
+                        const requiredStock =
+                            component.quantity * cartItem.quantity;
+
+                        if (inventoryItem.stock < requiredStock) {
+                            throw new HttpError(
+                                400,
+                                `${inventoryItem.name} does not have enough stock for ${build.name}.`
+                            );
+                        }
+
+                        addDemand(
+                            inventoryItem._id,
+                            inventoryItem.name,
+                            inventoryItem.stock,
+                            requiredStock
+                        );
+                    }
+
+                    // Snapshot exactly what this order will deduct, so a later cancellation
+                    // can restore the same quantities regardless of future build edits.
+                    const components = build.components.map((component) => ({
+                        inventoryId: component.inventoryId._id,
+                        name: component.inventoryId.name,
+                        quantity: component.quantity,
+                    }));
+
+                    orderItems.push({
+                        itemType: "build",
+                        buildId: build._id,
+                        name: build.name,
+                        price: build.price,
+                        quantity: cartItem.quantity,
+                        customizations: cartItem.customizations || "",
+                        components,
+                    });
+
+                    totalAmount += build.price * cartItem.quantity;
+                }
+            }
+
+            // Cheap early check on the combined demand, before any write.
+            for (const entry of demand.values()) {
+                if (entry.needed > entry.stock) {
+                    throw new HttpError(
+                        400,
+                        `${entry.name} does not have enough stock for everything in your cart.`
                     );
                 }
             }
-        }
 
-        const [order] = await Order.create(
-            [
-                {
-                    userId: req.user.userId,
-                    items: orderItems,
-                    totalAmount,
-                    shippingAddress,
-                },
-            ],
-            { session }
-        );
+            // Deduct once per part, using the combined demand. The `stock >= needed`
+            // filter makes the check and the decrement a single atomic step, so stock can
+            // never go negative even if another checkout or an admin edit lands in between.
+            for (const entry of demand.values()) {
+                const result = await Inventory.updateOne(
+                    { _id: entry.inventoryId, stock: { $gte: entry.needed } },
+                    { $inc: { stock: -entry.needed } },
+                    { session }
+                );
 
-        cart.items = [];
-        await cart.save({ session });
+                if (!result.matchedCount) {
+                    throw new HttpError(
+                        400,
+                        `${entry.name} does not have enough stock for everything in your cart.`
+                    );
+                }
+            }
 
-        await session.commitTransaction();
+            [order] = await Order.create(
+                [
+                    {
+                        userId: req.user.userId,
+                        items: orderItems,
+                        totalAmount,
+                        shippingAddress,
+                    },
+                ],
+                { session }
+            );
+
+            cart.items = [];
+            await cart.save({ session });
+        });
 
         res.status(201).json({
             message: "Order placed successfully.",
             order,
         });
     } catch (error) {
-        await session.abortTransaction();
-
-        console.error("Create order error:", error);
-
-        res.status(400).json({
-            message:
-                error.message || "Failed to place order.",
-        });
+        handleError(res, error, "Failed to place order.");
     } finally {
         session.endSession();
     }
