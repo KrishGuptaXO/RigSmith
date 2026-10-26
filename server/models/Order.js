@@ -44,6 +44,24 @@ const orderItemSchema = new mongoose.Schema(
             default: "",
             trim: true,
         },
+
+        components: {
+            type: [
+                new mongoose.Schema(
+                    {
+                        inventoryId: {
+                            type: mongoose.Schema.Types.ObjectId,
+                            ref: "Inventory",
+                            required: true,
+                        },
+                        name: {type: String, default: "", trim: true},
+                        quantity: {type: Number, required: true, min: 1},
+                    },
+                    {_id: false}
+                ),
+            ],
+            default: undefined,
+        },
     },
     {_id: false}
 );

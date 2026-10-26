@@ -43,6 +43,7 @@ router.post("/", authMiddleware, async (req, res) => {
         }
 
         const orderItems = [];
+        const buildSnapshots = new Map();
         let totalAmount = 0;
 
         for (const cartItem of cart.items) {
@@ -107,6 +108,13 @@ router.post("/", authMiddleware, async (req, res) => {
                         );
                     }
                 }
+                
+                const components = build.components.map((component) => ({
+                    inventoryId: component.inventoryId._id,
+                    name: component.inventoryId.name,
+                    quantity: component.quantity,
+                }));
+                buildSnapshots.set(String(build._id), components);
 
                 orderItems.push({
                     itemType: "build",
@@ -115,6 +123,7 @@ router.post("/", authMiddleware, async (req, res) => {
                     price: build.price,
                     quantity: cartItem.quantity,
                     customizations: cartItem.customizations || "",
+                    components,
                 });
 
                 totalAmount += build.price * cartItem.quantity;
@@ -136,26 +145,17 @@ router.post("/", authMiddleware, async (req, res) => {
             }
 
             if (cartItem.itemType === "build") {
-                const build = await Build.findById(
-                    cartItem.buildId
-                ).session(session);
+                const components = buildSnapshots.get(String(cartItem.buildId));
 
-                if (!build) {
+                if (!components) {
                     throw new Error("Build no longer exists.");
                 }
 
-                for (const component of build.components) {
+                // Deduct from the same snapshot that is saved on the order.
+                for (const component of components) {
                     await Inventory.findByIdAndUpdate(
                         component.inventoryId,
-                        {
-                            $inc: {
-                                stock:
-                                    -(
-                                        component.quantity *
-                                        cartItem.quantity
-                                    ),
-                            },
-                        },
+                        { $inc: { stock: -(component.quantity * cartItem.quantity) } },
                         { session }
                     );
                 }

@@ -84,20 +84,31 @@ const restockOrder = async (order, session) => {
                 { session }
             );
             if (!r.matchedCount) warnings.push(`"${item.name}" no longer exists in inventory; not restocked.`);
-        } else if (item.itemType === "build" && item.buildId) {
-            // Orders store only the build id, so this uses the build's CURRENT components.
-            const build = await Build.findById(item.buildId).session(session);
-            if (!build) {
-                warnings.push(`Build "${item.name}" no longer exists; its components were not restocked.`);
-                continue;
+        } else if (item.itemType === "build") {
+            // New orders carry the exact components that were deducted at checkout.
+            let components = item.components;
+
+            if (!components?.length) {
+                // Legacy order placed before snapshots existed: best effort using the
+                // build's current components, and say so.
+                const build = item.buildId
+                    ? await Build.findById(item.buildId).session(session)
+                    : null;
+                if (!build) {
+                    warnings.push(`Build "${item.name}" has no saved components and no longer exists; its components were not restocked.`);
+                    continue;
+                }
+                components = build.components;
+                warnings.push(`"${item.name}" was ordered before component snapshots existed; restocked using the build's current components, which may differ from what was deducted.`);
             }
-            for (const c of build.components) {
+
+            for (const c of components) {
                 const r = await Inventory.updateOne(
                     { _id: c.inventoryId },
                     { $inc: { stock: c.quantity * item.quantity } },
                     { session }
                 );
-                if (!r.matchedCount) warnings.push(`A component of "${item.name}" no longer exists; not restocked.`);
+                if (!r.matchedCount) warnings.push(`A component of "${item.name}"${c.name ? ` (${c.name})` : ""} no longer exists; not restocked.`);
             }
         }
     }
