@@ -99,52 +99,17 @@ router.post("/", authMiddleware, async (req, res) => {
                 }
 
                 if (cartItem.itemType === "build") {
-                    const build = await Build.findById(cartItem.buildId)
-                        .populate("components.inventoryId")
-                        .session(session);
+                    // Pre-built systems are ready-made units that are already sold as a
+                    // product: their parts are not separate stock lines. So checkout only
+                    // needs the build itself and never validates or deducts component stock.
 
+                    const build = await Build.findById(cartItem.buildId).session(session);
                     if (!build) {
                         throw new HttpError(
                             400,
                             `Build ${cartItem.buildId} no longer exists.`
                         );
                     }
-
-                    for (const component of build.components) {
-                        const inventoryItem = component.inventoryId;
-
-                        if (!inventoryItem) {
-                            throw new HttpError(
-                                400,
-                                `A component in ${build.name} is no longer available.`
-                            );
-                        }
-
-                        const requiredStock =
-                            component.quantity * cartItem.quantity;
-
-                        if (inventoryItem.stock < requiredStock) {
-                            throw new HttpError(
-                                400,
-                                `${inventoryItem.name} does not have enough stock for ${build.name}.`
-                            );
-                        }
-
-                        addDemand(
-                            inventoryItem._id,
-                            inventoryItem.name,
-                            inventoryItem.stock,
-                            requiredStock
-                        );
-                    }
-
-                    // Snapshot exactly what this order will deduct, so a later cancellation
-                    // can restore the same quantities regardless of future build edits.
-                    const components = build.components.map((component) => ({
-                        inventoryId: component.inventoryId._id,
-                        name: component.inventoryId.name,
-                        quantity: component.quantity,
-                    }));
 
                     orderItems.push({
                         itemType: "build",
@@ -153,7 +118,11 @@ router.post("/", authMiddleware, async (req, res) => {
                         price: build.price,
                         quantity: cartItem.quantity,
                         customizations: cartItem.customizations || "",
-                        components,
+                        
+                        // An EMPTY array means "no component stock was deducted for this
+                        // order", so cancelling must not restock anything. (A missing field
+                        // is a legacy order and takes the legacy path in restockOrder.)
+                        components: [],
                     });
 
                     totalAmount += build.price * cartItem.quantity;

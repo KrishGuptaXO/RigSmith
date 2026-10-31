@@ -6,6 +6,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "seed": "node seed.js",
+    "seed:builds": "node seedBuilds.js",
     "test": "node --test tests/pcpartpicker/*.test.js tests/admin/*.test.js tests/inventory/*.test.js"
   },
   "dependencies": {

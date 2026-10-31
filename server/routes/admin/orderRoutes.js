@@ -88,7 +88,7 @@ const restockOrder = async (order, session) => {
             // New orders carry the exact components that were deducted at checkout.
             let components = item.components;
 
-            if (!components?.length) {
+            if (!Array.isArray(components)) {
                 // Legacy order placed before snapshots existed: best effort using the
                 // build's current components, and say so.
                 const build = item.buildId

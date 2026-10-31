@@ -84,53 +84,57 @@ describe("checkout stock consistency", () => {
         cart = { items: [], save: async () => {} };
     });
 
-    test("rejects two builds that share a part when the combined need exceeds stock", async () => {
-        // Each build alone needs 3 GPUs (ok vs stock 5), together they need 6.
-        const gpu = part(GPU, "GPU", 5);
-        builds[B1] = buildOf(B1, [[gpu, 3]]);
-        builds[B2] = buildOf(B2, [[gpu, 3]]);
-        cart.items = [
-            { itemType: "build", buildId: B1, quantity: 1 },
-            { itemType: "build", buildId: B2, quantity: 1 },
-        ];
+    test("pre-built checkout ignores component stock entirely", async () => {
+        // Component stock is 0 and one component link is dangling (null): a ready-made
+        // build must still be orderable, and no inventory is touched.
+        builds[B1] = buildOf(B1, [[part(GPU, "GPU", 0), 1], [null, 1]]);
+        cart.items = [{ itemType: "build", buildId: B1, quantity: 2, customizations: "RTX upgrade" }];
 
         const res = await checkout();
-        assert.equal(res.status, 400);
-        assert.match((await res.json()).message, /GPU/);
-        assert.equal(created.length, 0, "no order may be created");
+        assert.equal(res.status, 201);
+        assert.equal(updates.length, 0, "no stock may be deducted for a pre-built");
+        assert.equal(created.length, 1);
+
+        const item = created[0].items[0];
+        assert.equal(item.itemType, "build");
+        assert.equal(item.quantity, 2);
+        assert.equal(item.customizations, "RTX upgrade");
+        assert.deepEqual(item.components, [], "empty snapshot marks 'nothing deducted'");
+        assert.equal(created[0].totalAmount, 2000);
     });
 
-    test("rejects a standalone part plus a build using the same part", async () => {
+    test("a build in the cart does not consume a standalone part's stock", async () => {
         const gpu = part(GPU, "GPU", 4);
         inventory[GPU] = gpu;
         builds[B1] = buildOf(B1, [[gpu, 3]]);
         cart.items = [
-            { itemType: "inventory", inventoryId: GPU, quantity: 2 },
+            { itemType: "inventory", inventoryId: GPU, quantity: 4 },
             { itemType: "build", buildId: B1, quantity: 1 },
-        ];
-
-        const res = await checkout();
-        assert.equal(res.status, 400);
-        assert.equal(created.length, 0);
-    });
-
-    test("deducts each shared part once, using the combined quantity", async () => {
-        const gpu = part(GPU, "GPU", 10);
-        const cpu = part(CPU, "CPU", 10);
-        builds[B1] = buildOf(B1, [[gpu, 3], [cpu, 1]]);
-        builds[B2] = buildOf(B2, [[gpu, 2]]);
-        cart.items = [
-            { itemType: "build", buildId: B1, quantity: 1 },
-            { itemType: "build", buildId: B2, quantity: 2 },
         ];
 
         const res = await checkout();
         assert.equal(res.status, 201);
         assert.deepEqual(
             updates.map((u) => [String(u.filter._id), u.update.$inc.stock]),
-            [[GPU, -7], [CPU, -1]] // 3 + 2*2 GPUs, 1 CPU
+            [[GPU, -4]]
         );
-        assert.equal(created.length, 1);
+    });
+
+    test("standalone parts are still limited by stock", async () => {
+        inventory[GPU] = part(GPU, "GPU", 2);
+        cart.items = [{ itemType: "inventory", inventoryId: GPU, quantity: 3 }];
+
+        const res = await checkout();
+        assert.equal(res.status, 400);
+        assert.match((await res.json()).message, /GPU/);
+        assert.equal(created.length, 0);
+    });
+
+    test("a missing build is a 400", async () => {
+        cart.items = [{ itemType: "build", buildId: B1, quantity: 1 }];
+        const res = await checkout();
+        assert.equal(res.status, 400);
+        assert.match((await res.json()).message, /no longer exists/);
     });
 
     test("the decrement is atomic: filtered on stock >= needed", async () => {

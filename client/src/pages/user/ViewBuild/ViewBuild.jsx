@@ -6,6 +6,7 @@ import BuildDetails from "./components/BuildDetails";
 import EmiCard from "./components/EmiCard";
 import WarrantyCard from "./components/WarrantyCard";
 import UpgradeSection from "./components/UpgradeSection";
+import upgradeOptions from "../../../data/upgradeOptions";
 
 export default function ViewBuild() {
     const { id } = useParams();
@@ -13,6 +14,7 @@ export default function ViewBuild() {
     const [build, setBuild] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [selectedUpgrades, setSelectedUpgrades] = useState([]);
 
     useEffect(() => {
         const fetchBuild = async () => {
@@ -38,6 +40,19 @@ export default function ViewBuild() {
         fetchBuild();
     }, [id]);
 
+    const toggleUpgrade = (upgradeId) =>
+        setSelectedUpgrades((prev) =>
+            prev.includes(upgradeId)
+                ? prev.filter((idValue) => idValue !== upgradeId)
+                : [...prev, upgradeId]
+        );
+
+    // Sent to the cart as the item's customization note (shown in cart and on the order).
+    const customizations = upgradeOptions
+        .filter((option) => selectedUpgrades.includes(option.id))
+        .map((option) => `${option.category}: ${option.name}`)
+        .join("; ");
+
     if (loading) {
         return (
             <div className="flex min-h-[400px] items-center justify-center">
@@ -55,7 +70,11 @@ export default function ViewBuild() {
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                 <BuildImage build={build} />
 
-                <BuildDetails build={build} />
+                <BuildDetails
+                    build={build}
+                    customizations={customizations}
+                    upgradeCount={selectedUpgrades.length}
+                />
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -63,7 +82,10 @@ export default function ViewBuild() {
                 <WarrantyCard build={build} />
             </div>
 
-            <UpgradeSection build={build} />
+            <UpgradeSection
+                selected={selectedUpgrades}
+                onToggle={toggleUpgrade}
+            />
         </div>
     );
 }

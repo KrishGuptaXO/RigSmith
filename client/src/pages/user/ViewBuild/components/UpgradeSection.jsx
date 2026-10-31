@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp, Wrench } from "lucide-react";
 import upgradeOptions from "../../../../data/upgradeOptions";
 import UpgradeOption from "./UpgradeOption";
 
-export default function UpgradeSection() {
+export default function UpgradeSection({ selected = [], onToggle = () => {} }) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -37,12 +37,20 @@ export default function UpgradeSection() {
 
                     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                         {upgradeOptions.map((option) => (
-                            <UpgradeOption key={option.id} option={option} />
+                            <UpgradeOption
+                                key={option.id}
+                                option={option}
+                                selected={selected.includes(option.id)}
+                                onToggle={() => onToggle(option.id)}
+                            />
                         ))}
                     </div>
 
                     <p className="text-xs text-gray-500 mt-4 text-center">
-                        Contact our team to customize your build with any of these upgrades.
+                        {selected.length > 0
+                            ? `${selected.length} selected. They are saved with your cart item when you click Add to Cart; our team confirms pricing.`
+                            : "Select the upgrades you want, then click Add to Cart. Our team confirms pricing."
+                        }
                     </p>
                 </div>
             )}

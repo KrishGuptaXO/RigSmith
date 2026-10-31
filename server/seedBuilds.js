@@ -169,11 +169,18 @@ const seedDatabase = async () => {
             })),
         }));
 
-        await Build.deleteMany();
-        await Build.insertMany(buildDocuments);
+        await Build.bulkWrite(
+            buildDocuments.map((doc) => ({
+                updateOne: {
+                    filter: { name: doc.name },
+                    update: { $set: doc },
+                    upsert: true,
+                },
+            }))
+        );
 
         console.log("Builds seeded successfully.");
-        console.log(`Seeded ${buildDocuments.length} builds.`);
+        console.log(`Seeded/updated ${buildDocuments.length} builds.`);
 
         await mongoose.connection.close();
         console.log("Database connection closed.");

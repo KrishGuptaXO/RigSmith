@@ -1,4 +1,4 @@
-import { ArrowUp, Star, Zap, TrendingUp } from "lucide-react";
+import { ArrowUp, Star, Zap, TrendingUp, Check } from "lucide-react";
 
 const badgeConfig = {
     cyan: {
@@ -27,11 +27,20 @@ const badgeConfig = {
     },
 };
 
-export default function UpgradeOption({ option }) {
+export default function UpgradeOption({ option, selected = false, onToggle }) {
     const badge = option.badge ? (badgeConfig[option.badgeColor] || badgeConfig.cyan) : null;
 
     return (
-        <div className="group flex items-center justify-between gap-4 rounded-xl border border-[#3A2F5B] bg-[#1a1230] px-5 py-4 transition-all duration-200 hover:border-cyan-400/50 hover:bg-[#1f1540] hover:shadow-lg hover:shadow-cyan-500/5 cursor-pointer">
+        <button
+            type="button"
+            onClick={onToggle}
+            aria-pressed={selected}
+            className={`group flex w-full items-center justify-between gap-4 rounded-xl border px-5 py-4 text-left transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/5 cursor-pointer ${
+                selected
+                    ? "border-cyan-400 bg-[#1f1540]"
+                    : "border-[#3A2F5B] bg-[#1a1230] hover:border-cyan-400/50 hover:bg-[#1f1540]"
+            }`}
+        >
             {/* Left: Info */}
             <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
@@ -62,7 +71,12 @@ export default function UpgradeOption({ option }) {
                     <ArrowUp size={10} />
                     {option.priceDelta}
                 </p>
+                {selected && (
+                    <p className="mt-1 flex items-center justify-end gap-1 text-[11px] font-semibold text-green-400">
+                        <Check size={12} /> Selected
+                    </p>
+                )}
             </div>
-        </div>
+        </button>
     );
 }

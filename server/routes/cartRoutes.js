@@ -52,6 +52,13 @@ router.post("/", async (req, res) => {
             });
         }
 
+        if (typeof customizations !== "string" || customizations.length > 500) {
+            return res.status(400).json({
+                message: "Customizations must be text of 500 characters or fewer.",
+            });
+        }
+        const cleanCustomizations = customizations.trim();
+
         if (!Number.isInteger(quantity) || quantity < 1) {
             return res.status(400).json({
                 message: "Quantity must be a positive integer",
@@ -122,13 +129,16 @@ router.post("/", async (req, res) => {
 
         if (existingItem) {
             existingItem.quantity += quantity;
+
+            // Keep the latest customization request instead of silently dropping it.
+            if (cleanCustomizations) existingItem.customizations = cleanCustomizations;
         } else {
             cart.items.push({
                 itemType,
                 inventoryId: itemType === "inventory" ? inventoryId : null,
                 buildId: itemType === "build" ? buildId : null,
                 quantity,
-                customizations,
+                customizations: cleanCustomizations,
             });
         }
 

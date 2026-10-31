@@ -130,6 +130,15 @@ describe("build restock uses the order-time snapshot", () => {
             assert.match(warnings[0], /before component snapshots/);
         });
 
+        test("pre-built order (empty snapshot) restocks nothing and never looks up the build", async () => {
+            order.items[0].components = [];
+            const res = await adminPatch("cancelled");
+            assert.equal(res.status, 200);
+            assert.equal(stockCalls.length, 0);
+            assert.equal(buildLookups, 0);
+            assert.deepEqual((await res.json()).warnings, []);
+        });
+
         test("legacy order whose build is gone warns and restocks nothing", async () => {
             delete order.items[0].components;
             buildDoc = null;
@@ -141,7 +150,7 @@ describe("build restock uses the order-time snapshot", () => {
     });
 
     describe("checkout", () => {
-        test("saves the snapshot on the order and deducts exactly that snapshot", async () => {
+        test("pre-built orders store an empty snapshot and deduct no component stock", async () => {
             role = "customer";
             cart = {
                 items: [{ itemType: "build", buildId: BUILD, quantity: 2, customizations: "" }],
@@ -163,14 +172,8 @@ describe("build restock uses the order-time snapshot", () => {
                 }),
             });
             assert.equal(res.status, 201);
-
-            const item = createdOrders[0].items[0];
-            assert.deepEqual(
-                item.components.map((c) => ({ id: String(c.inventoryId), name: c.name, quantity: c.quantity })),
-                [{ id: CPU, name: "CPU", quantity: 1 }, { id: GPU, name: "GPU", quantity: 3 }]
-            );
-            assert.deepEqual(stockCalls, [{ id: CPU, inc: -2 }, { id: GPU, inc: -6 }]);
-            assert.equal(buildLookups, 1, "build is read once, so deduction and snapshot cannot diverge");
+            assert.deepEqual(createdOrders[0].items[0].components, []);
+            assert.deepEqual(stockCalls, []);
         });
     });
 });

@@ -13,29 +13,38 @@ const specIconMap = {
 
 const quickCategories = ["CPU", "GPU", "RAM"];
 
-export default function BuildDetails({ build }) {
+export default function BuildDetails({ build, customizations = "", upgradeCount = 0 }) {
     const [expanded, setExpanded] = useState(false);
     const [added, setAdded] = useState(false);
 
     const addItem = useCartStore((s) => s.addItem);
 
-    const components = build.components || [];
+    // Skip any component whose inventory item no longer exists, instead of crashing.
+    const components = (build.components || []).filter(
+        (component) => component?.inventoryId
+    );
     const specs = build.specs || [];
 
     const quickComponents = components.filter((component) =>
-        quickCategories.includes(component.inventoryId?.category)
+        quickCategories.includes(component.inventoryId.category)
     );
-    
-    const remainingComponents = components.filter((component) => 
-        !quickCategories.includes(component.inventoryId?.category)
+
+    const remainingComponents = components.filter(
+        (component) => !quickCategories.includes(component.inventoryId.category)
     );
+
+    const hasMoreDetails = remainingComponents.length > 0 || specs.length > 0;
 
     const handleAddToCart = async () => {
         try {
-            await addItem(build);
+            await addItem(build, customizations);
 
             setAdded(true);
-            toast.success(`${build.name} added to cart.`);
+            toast.success(
+                upgradeCount > 0
+                    ? `${build.name} added to cart with ${upgradeCount} upgrade request${upgradeCount > 1 ? "s" : ""}.`
+                    : `${build.name} added to cart.`
+            );
 
             setTimeout(() => setAdded(false), 2000);
         } catch (error) {
@@ -94,25 +103,27 @@ export default function BuildDetails({ build }) {
             </div>
 
             {/* Expand / Collapse */}
-            <button
-                onClick={() => setExpanded(!expanded)}
-                className="mb-3 flex w-fit cursor-pointer items-center gap-1 text-sm text-cyan-400 transition-colors hover:text-cyan-300"
-            >
-                {expanded ? (
-                    <>
-                        <ChevronUp size={14} />
-                        Show less
-                    </>
-                ) : (
-                    <>
-                        <ChevronDown size={14} />
-                        Expand to see more details…
-                    </>
-                )}
-            </button>
+            {hasMoreDetails && (
+                <button
+                    onClick={() => setExpanded(!expanded)}
+                    className="mb-3 flex w-fit cursor-pointer items-center gap-1 text-sm text-cyan-400 transition-colors hover:text-cyan-300"
+                >
+                    {expanded ? (
+                        <>
+                            <ChevronUp size={14} />
+                            Show less
+                        </>
+                    ) : (
+                        <>
+                            <ChevronDown size={14} />
+                            Expand to see more details…
+                        </>
+                    )}
+                </button>
+            )}
 
             {/* Expanded Hardware Components */}
-            {expanded && (
+            {expanded && hasMoreDetails && (
                 <div className="mb-4 space-y-2">
                     {remainingComponents.map((component) => {
                         const inventoryItem = component.inventoryId;
@@ -170,6 +181,11 @@ export default function BuildDetails({ build }) {
             </div>
 
             {/* Add to Cart */}
+            {upgradeCount > 0 && (
+                <p className="mb-3 rounded-lg border border-purple-500/30 bg-purple-500/10 px-3 py-2 text-xs text-purple-200">
+                    {upgradeCount} upgrade request{upgradeCount > 1 ? "s" : ""} will be added to this item. Our team confirms final pricing.
+                </p>
+            )}
             <div className="mt-auto">
                 <Button
                     onClick={handleAddToCart}
