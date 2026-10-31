@@ -16,3 +16,7 @@
 - (Medium) -> Admin workflows (Verify form validation, filtering, pagination, empty states, and error handling across pages).
 - (Low) -> Supplier pagination (A known limitation, but probably fine for a small demonstration dataset).
 - (Later) -> Dynamic Profile Card (Replace the hardcoded order/build/wishlist counts and membership date).
+
+- (Bug) -> After view build, i cannot see build's features when clicked on expand to see more details + the card looks really odd with no info and expanded.
+- Unable to place orders for the default builds -> Its treating every component within it separate products BUT if its a pre-built all the components are already ready within the store and that shouldn't cause "Error: A component in Phantom V4 is no longer available." error at all to begin with.
+- Also no way/ toaster notif to verify whether my customisation was even added or not... i dont think it got wired right!
