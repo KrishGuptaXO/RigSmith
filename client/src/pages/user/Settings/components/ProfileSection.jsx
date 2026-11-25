@@ -16,10 +16,10 @@ export default function ProfileSection() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
-                <AuthInput label="First Name" placeholder="Krish" />
-                <AuthInput label="Last Name" placeholder="Gupta" />
-                <AuthInput type="email"  label="Email" placeholder="krish@email.com" />
-                <AuthInput label="Phone Number" placeholder="+91 9876543210" />
+                <AuthInput label="First Name" placeholder="John" />
+                <AuthInput label="Last Name" placeholder="Doe" />
+                <AuthInput type="email"  label="Email" placeholder="name@example.com" />
+                <AuthInput label="Phone Number" placeholder="+XX XXX-XXXX-XXX"/>
             </div>
 
             <div className="mt-8 flex justify-end">
