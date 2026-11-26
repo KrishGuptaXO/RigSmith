@@ -4,6 +4,7 @@ import authStore from "../../../store/authStore";
 import { ClipboardPaste, ExternalLink, Info } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../../../config.js";
 
 export default function ImportBuild() {
     const navigate = useNavigate();
@@ -31,7 +32,7 @@ const handleCheckAvailability = async () => {
 
     try {
         const response = await fetch(
-            "http://localhost:5000/api/custom-builds/import",
+            `${API_BASE}/api/custom-builds/import`,
             {
                 method: "POST",
                 headers: {

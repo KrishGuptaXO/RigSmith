@@ -9,8 +9,9 @@ import PaymentOptions from "./components/PaymentOptions";
 import DeliveryOptions from "./components/DeliveryOptions";
 import EmptyCart from "./components/EmptyCart";
 import toast from "react-hot-toast";
+import { API_BASE } from "../../config.js";
 
-const API_URL = "http://localhost:5000/api/orders";
+const API_URL = `${API_BASE}/api/orders`;
 
 export default function Checkout() {
     const navigate = useNavigate();

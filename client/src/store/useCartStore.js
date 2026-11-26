@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import  authStore from "./authStore.js";
+import { API_BASE } from "../config.js";
 
-const API_URL = "http://localhost:5000/api/cart";
+const API_URL = `${API_BASE}/api/cart`;
 
 const getHeaders = () => ({
     "Content-Type": "application/json",

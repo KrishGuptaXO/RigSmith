@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import BuildCard from "./BuildCard";
 import "./FeaturedBuilds.css";
 import { useEffect, useState } from "react";
+import { API_BASE } from "../../../config.js";
 
 export default function FeaturedBuilds(){
     const [featuredBuilds, setFeaturedBuilds] = useState([]);
@@ -10,7 +11,7 @@ export default function FeaturedBuilds(){
         const fetchBuilds = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:5000/api/builds"
+                    `${API_BASE}/api/builds`
                 );
 
                 if (!response.ok) throw new Error("Failed to fetch builds.");

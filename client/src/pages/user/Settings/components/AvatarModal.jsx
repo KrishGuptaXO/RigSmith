@@ -4,6 +4,7 @@ import AvatarGrid from "./AvatarGrid";
 import Button from "../../../../components/common/Button";
 import Avatar from "../../../../data/Avatars";
 import authStore from "../../../../store/authStore";
+import { API_BASE } from "../../../../config.js";
 
 export default function AvatarModal({ open, onClose, avatarId, onSave }) {
     const [selectedAvatar, setSelectedAvatar] = useState(
@@ -39,7 +40,7 @@ export default function AvatarModal({ open, onClose, avatarId, onSave }) {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:5000/api/auth/avatar", {
+            const response = await fetch(`${API_BASE}/api/auth/avatar`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

@@ -12,8 +12,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import authStore from "../../../store/authStore";
 import StatusBadge from "./StatusBadge";
 import toast from "react-hot-toast";
+import { API_BASE } from "../../../config.js";
 
-const API_URL = "http://localhost:5000/api/orders";
+const API_URL = `${API_BASE}/api/orders`;
 
 function formatDate(dateStr) {
     if (!dateStr) return "—";

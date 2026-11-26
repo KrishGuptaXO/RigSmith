@@ -1,6 +1,7 @@
 import authStore from "../../store/authStore";
+import { API_BASE } from "../../config.js";
 
-const API = "http://localhost:5000/api/admin";
+const API = `${API_BASE}/api/admin`;
 
 // Thin fetch wrapper: adds the JWT, parses JSON, throws Error(message) on non-2xx.
 export async function adminFetch(path, { method = "GET", body, params } = {}) {

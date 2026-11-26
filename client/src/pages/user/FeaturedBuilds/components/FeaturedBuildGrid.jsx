@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FeaturedBuildCard from "./FeaturedBuildCard";
+import { API_BASE } from "../../../../config.js";
 
 export default function FeaturedBuildGrid() {
     const [builds, setBuilds] = useState([]);
@@ -9,7 +10,7 @@ export default function FeaturedBuildGrid() {
     useEffect(() => {
         const fetchBuilds = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/builds");
+                const response = await fetch(`${API_BASE}/api/builds`);
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch builds.");

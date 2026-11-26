@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
+import { API_BASE } from "../../../config.js";
 
 import BuildImage from "./components/BuildImage";
 import BuildDetails from "./components/BuildDetails";
@@ -20,7 +21,7 @@ export default function ViewBuild() {
         const fetchBuild = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/api/builds/${id}`
+                    `${API_BASE}/api/builds/${id}`
                 );
 
                 if (!response.ok) {

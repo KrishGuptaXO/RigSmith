@@ -3,37 +3,30 @@ import argon2 from "argon2";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import authMiddleware from "../middleware/authMiddleware.js";
+import { loginLimiter, registerLimiter } from "../middleware/rateLimiters.js";
+import { validateRegistration, validateLogin } from "../utils/authValidation.js";
 
 const router = express.Router();
 
 // POST /api/auth/register
-router.post("/register", async (req, res) => {
+router.post("/register", registerLimiter, async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { error, value } = validateRegistration(req.body);
 
-        // Basic Validation
-        if (!name || !email || !password) {
-            return res.status(400).json({
-                message: "Name, email, and password are required.",
-            });
+        if (error) {
+            return res.status(400).json({ message: error });
         }
 
-        if (password.length < 6) {
-            return res.status(400).json({
-                message: "Password must be atleast 6 characters long.",
-            });
-        }
+        const { name, email, password } = value;
 
         // Check if user already exists
-        const existingUser = await User.findOne({email});
+        const existingUser = await User.findOne({ email });
 
         if (existingUser) {
             return res.status(409).json({
                 message: "An account with this email already exists."
             });
         }
-
-        // Hash password
         const hashPassword = await argon2.hash(password, {
             type: argon2.argon2id,
             memoryCost: 65536,
@@ -58,6 +51,12 @@ router.post("/register", async (req, res) => {
             },
         });
     } catch (error) {
+        // Two sign-ups racing for the same email: the unique index rejects the second.
+        if (error?.code === 11000) {
+            return res.status(409).json({
+                message: "An account with this email already exists."
+            });
+        }
         console.error("Registration failed: ", error.message);
 
         res.status(500).json({
@@ -67,27 +66,24 @@ router.post("/register", async (req, res) => {
 });
 
 // POST /api/auth/login
-router.post("/login", async (req, res) => {
+router.post("/login", loginLimiter, async (req, res) => {
     try {
-        const {email, password} = req.body;
+        const { error, value, status } = validateLogin(req.body);
 
-        // Basic validation
-        if (!email || !password) {
-            return res.status(400).json({
-                message: "Email and password are required."
-            });
+        if (error) {
+            return res.status(status || 400).json({ message: error });
         }
 
+        const { email, password } = value;
+
         // Find user
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(401).json({
                 message: "Invalid email or password."
             });
         }
-
-        // Verify password
         const isPasswordValid = await argon2.verify(user.password, password);
         if (!isPasswordValid) {
             return res.status(401).json({

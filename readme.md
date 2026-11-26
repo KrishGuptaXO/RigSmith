@@ -182,11 +182,12 @@ Configure the required values using the variable names expected by the existing 
 
 ```env
 PORT=5000
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_long_random_secret
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_long_random_secret_32_chars_or_more
+CLIENT_URL=http://localhost:5173
 ```
 
-Check the backend configuration for any additional required variables before starting the application.
+See server/.env.example for all variables.
 
 **Security:** Never commit `.env` files, database credentials, or JWT secrets to Git.
 

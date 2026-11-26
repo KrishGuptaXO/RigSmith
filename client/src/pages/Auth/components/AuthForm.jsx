@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import authStore from "../../../store/authStore";
+import { API_BASE } from "../../../config.js";
 
 export default function AuthForm ({isLogin, setIsLogin}) {
     const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ export default function AuthForm ({isLogin, setIsLogin}) {
         setLoading(true);
         setError("");
 
-        const endpoint = isLogin ? "http://localhost:5000/api/auth/login" : "http://localhost:5000/api/auth/register";
+        const endpoint = isLogin ? `${API_BASE}/api/auth/login` : `${API_BASE}/api/auth/register`;
 
         try {
             const response = await fetch(endpoint, {

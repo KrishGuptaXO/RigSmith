@@ -3,6 +3,7 @@ import InventorySearch from "./components/InventorySearch";
 import InventoryGrid from "./components/InventoryGrid";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { API_BASE } from "../../../config.js";
 
 export default function Inventory() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -69,8 +70,8 @@ export default function Inventory() {
             const queryString = params.toString();
 
             const url = queryString
-                ? `http://localhost:5000/api/inventory?${queryString}`
-                : "http://localhost:5000/api/inventory";
+                ? `${API_BASE}/api/inventory?${queryString}`
+                : `${API_BASE}/api/inventory`;
 
             setError("");
 
